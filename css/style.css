@@ -6,7 +6,6 @@ nav ul li a.links {
     padding: 10px 15px;
 }
 
-.navbar-toggler-icon {}
 
 .navbar {
     background-color: transparent;
@@ -142,9 +141,85 @@ nav ul li a.links {
         justify-content: center;
         border: 1px solid #9e9797;
     }
+
+    .panel-hero {
+        background-color: #e5ff00;
+        padding-left: 35%;
+        margin-bottom: 100px;
+        margin: 100px 0 0 0;
+
+    }
+
+    .panel-hero img {
+        font-size: 2.5rem;
+        font-weight: 700;
+        top: 100px;
+        width: 70%;
+        background-color: yellowgreen;
+    }
+
+    .panel-hero h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000;
+    }
+
+    .op {
+        margin: -100px 0 0 0;
+    }
+
+    .skill-item {
+        margin-bottom: 25px !important;
+        margin-top: 55px;
+        max-width: 45%;
+
+        
+    }
+
+    .skill-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+
+    .progress-background  {
+        height: 8px;
+        /* Hauteur fine comme sur la maquette */
+        background-color: rgba(0, 0, 0, 0.1);
+        /* Fond de la barre discret */
+        border-radius: 0;
+        /* Barres carrées */
+    }
+
+    .progress-noir {
+        background-color: #000000;
+        /* Couleur noire des barres de progression */
+    }
+
 }
 
 @media (max-width: 700px) {
+
+
+    #navbarNav {
+        background-color: rgba(255, 255, 255, 0.603) !important;
+        color: black;
+
+        backdrop-filter: blur(10px);
+        font-weight: 500;
+        -webkit-backdrop-filter: blur(8px);
+        padding: 15px 10px;
+        border-radius: 0 0 10px 10px;
+    }
+
+    #navbarNav a {
+        color: rgb(27, 26, 26) !important;
+    }
 
     .hero-content img {
         position: relative;
@@ -237,6 +312,13 @@ nav ul li a.links {
         border: 1px solid #9e9797;
         min-width: 100%;
     }
+        .panel-hero {
+            background-color: #e5ff00;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
 
 
 
