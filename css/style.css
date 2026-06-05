@@ -6,7 +6,78 @@ nav ul li a.links {
     padding: 10px 15px;
 }
 
+/* Style du Titre */
+.project-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* À adapter avec votre police */
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+}
 
+/* Wrapper Flexbox pour aligner les 3 images par slide */
+.cards-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espace entre les blocs */
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Image centrale (Mise en avant) */
+.card-center {
+    position: relative;
+    width: 500px; /* Largeur de l'image centrale */
+    height: 450px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.card-center img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Texte superposé sur l'image centrale */
+.card-custom-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+}
+
+/* Images latérales (Aperçus coupés) */
+.card-side {
+    width: 150px; /* Largeur visible sur les côtés */
+    height: 450px;
+    opacity: 0.6; /* Un peu plus sombre pour focus le centre */
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0; /* Empêche l'image de s'écraser */
+}
+
+.card-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Customisation des indicateurs (petits points) pour correspondre au design */
+.carousel-indicators [data-bs-target] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #000;
+    border: none;
+    margin: 0 5px;
+    opacity: 0.3;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+}
 .navbar {
     background-color: transparent;
     position: absolute;
@@ -200,6 +271,7 @@ nav ul li a.links {
         background-color: #000000;
         /* Couleur noire des barres de progression */
     }
+    
 
 }
 
@@ -318,7 +390,7 @@ nav ul li a.links {
             margin: 20px 0;
             text-align: center;
         }
-        
+
 
 
 
