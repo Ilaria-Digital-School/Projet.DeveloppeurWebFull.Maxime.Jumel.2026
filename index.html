@@ -206,72 +206,148 @@
   </section>
 
 
-  <section class="project-section py-5 bg-white text-center">
-    <div class="container-fluid px-0">
 
-      <h2 class="fw-bold mb-5 project-title">Discover Our Selected<br>Projects</h2>
 
-      <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
 
-        <div class="carousel-inner text-start ">
-
-          <!-- Slide 1 -->
-          <div class="carousel-item active row align-items-center justify-content-center mx-auto m-5 " >
-            <div class="cards-wrapper d-flex justify-content-center align-items-center gap-4 ">
-              <div class="card-start position-relative text-center col-lg-6 col-md-4 col-3 p-4 rounded-4 m-4 mx-auto px-0 " >
-                <img src="./images/Gemini_Generated_Image_bdxdmfbdxdmfbdxd.png" alt="Decentralized Platform" height="300px" >
-                <div class="card-custom-overlay">
-                  <span class="text-muted small text-uppercase">Branding</span>
-                  <h3 class="h4 text-white fw-bold mt-1">Decentralized Platform</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="carousel-item row align-items-center justify-content-center mx-auto m-5 " >
-            <div class="cards-wrapper d-flex justify-content-center align-items-center gap-4 ">
-              <div class="card position-relative text-center col-lg-4 col-md-6 col-8 p-4 rounded-4 m-3 mx-auto px-0 " >
-                <img src="./images/Gemini_Generated_Image_bdxdmfbdxdmfbdxd.png" alt="Project 2" height="300px" >
-                <div class="card-custom-overlay">
-                  <span class="text-muted small text-uppercase">UI/UX</span>
-                  <h3 class="h4 text-white fw-bold mt-1">Project Two</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div class="carousel-item row align-items-center justify-content-center mx-auto m-5 " >
-            <div class="cards-wrapper d-flex justify-content-center align-items-center gap-4 ">
-              <div class="card position-relative text-center col-lg-4 col-md-6 col-8 p-4 rounded-4 m-3 mx-auto px-0 " >
-                <img src="./images/Gemini_Generated_Image_bdxdmfbdxdmfbdxd.png" alt="Project 3" height="300px">
-                <div class="card-custom-overlay">
-                  <span class="text-muted small text-uppercase">Branding</span>
-                  <h3 class="h4 text-white fw-bold mt-1">Project Three</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-
+<div class="page-shell d-flex align-items-center">
+      <section class="container">
+        <div class="text-center">
+          <span class="section-kicker">Portfolio</span>
+          <h1 class="section-title">Plusieurs cards qui slide ensemble avec Bootstrap 5</h1>
+          <p class="text-muted mt-3 mb-0">Chaque slide affiche un groupe de cards. Quand le carousel avance, tout le groupe change en meme temps.</p>
         </div>
 
-        <div class="carousel-indicators position-relative mt-4">
-          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active"
-            aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
+        <div id="cardsCarousel" class="carousel slide cards-carousel" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="4500">
+              <div class="row g-4 px-lg-5">
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1011/700/460" alt="Projet branding">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-brush"></i></span>
+                      <h3>Branding Creative</h3>
+                      <p class="mb-0">Identite visuelle moderne pour une marque digitale ambitieuse.</p>
+                    </div>
+                  </article>
+                </div>
 
-      </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1025/700/460" alt="Projet interface">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-layout-text-window"></i></span>
+                      <h3>Interface Web</h3>
+                      <p class="mb-0">Dashboard clair, responsive et facile a utiliser au quotidien.</p>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1035/700/460" alt="Projet mobile">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-phone"></i></span>
+                      <h3>Mobile First</h3>
+                      <p class="mb-0">Experience adaptee aux petits ecrans avec une navigation simple.</p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item" data-bs-interval="4500">
+              <div class="row g-4 px-lg-5">
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1043/700/460" alt="Projet developpement">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-code-slash"></i></span>
+                      <h3>Developpement</h3>
+                      <p class="mb-0">Code propre, structure maintenable et integration Bootstrap 5.</p>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1050/700/460" alt="Projet marketing">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-megaphone"></i></span>
+                      <h3>Marketing</h3>
+                      <p class="mb-0">Pages efficaces pour presenter une offre et guider les visiteurs.</p>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1067/700/460" alt="Projet SEO">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-graph-up-arrow"></i></span>
+                      <h3>Performance SEO</h3>
+                      <p class="mb-0">Contenu organise, chargement rapide et base technique solide.</p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item" data-bs-interval="4500">
+              <div class="row g-4 px-lg-5">
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1076/700/460" alt="Projet e-commerce">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-bag-check"></i></span>
+                      <h3>E-commerce</h3>
+                      <p class="mb-0">Cards produits, appels a l'action et parcours d'achat lisible.</p>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1080/700/460" alt="Projet application">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-window-stack"></i></span>
+                      <h3>Application Web</h3>
+                      <p class="mb-0">Composants reutilisables pour construire une interface complete.</p>
+                    </div>
+                  </article>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                  <article class="slide-card">
+                    <img src="https://picsum.photos/id/1084/700/460" alt="Projet support">
+                    <div class="slide-card-body">
+                      <span class="slide-card-icon"><i class="bi bi-headset"></i></span>
+                      <h3>Support Client</h3>
+                      <p class="mb-0">Section claire pour rassurer et accompagner les utilisateurs.</p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-control-prev" type="button" data-bs-target="#cardsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Precedent</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#cardsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+          </button>
+
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#cardsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Groupe 1"></button>
+            <button type="button" data-bs-target="#cardsCarousel" data-bs-slide-to="1" aria-label="Groupe 2"></button>
+            <button type="button" data-bs-target="#cardsCarousel" data-bs-slide-to="2" aria-label="Groupe 3"></button>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
-  <section class="container-fluid">
-
-  </section>
-
-
-
 
 
 
