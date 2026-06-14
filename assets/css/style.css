@@ -131,23 +131,25 @@ nav ul li a.links {
         margin-bottom: 200px;
         z-index: 1;
         margin-top: 100px;
-        
+
     }
-   
+
 
     .yellow-img-col {
         min-height: 500px !important;
         overflow: visible;
         padding-left: 100px;
     }
-} 
-.bine{
-       position: absolute;
-       margin: 0 auto;
-       width: 50%;
-       height: 75%;
-       border: none;
-    }
+}
+
+.bine {
+    position: absolute;
+    margin: 0 auto;
+    width: 50%;
+    height: 75%;
+    border: none;
+}
+
 /* repartition des elements sur mobile */
 @media (max-width: 991.98px) {
     .yellow-overlap-img {
@@ -158,16 +160,38 @@ nav ul li a.links {
         margin-top: 2rem !important;
         margin-bottom: 2rem !important;
     }
-    .bine{
+
+    .bine {
         position: relative;
         margin: 0 auto;
         width: 100%;
         height: 300px;
         border: none;
-        
+
     }
-    
+
 }
+
+h4 {
+    font-size: 24px;
+    border-left: 2px solid white;
+    padding-left: 8px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blinkCursor 0.8s infinite;
+}
+
+@keyframes blinkCursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+
+
+
+
 
 @media (min-width: 700px) {
     .hero-content img {
