@@ -4,27 +4,15 @@
 
 // ── Data ──────────────────────────────────────────────────────
 const clients = [
-    { id: 1,  name: "Maxime Jumel",    email: "maxime.jumel@email.com",    message: "Bonjour, je suis intéressé par vos services.", date: "2026-01-15", status: "Approved" },
-    { id: 2,  name: "Lucas Dupont",    email: "lucas.dupont@email.com",    message: "Je cherche un développeur pour un projet e-commerce.", date: "2026-02-03", status: "Pending" },
-    { id: 3,  name: "Léa Martin",      email: "lea.martin@email.com",      message: "Pouvez-vous me proposer un devis pour un site vitrine ?", date: "2026-02-18", status: "Approved" },
-    { id: 4,  name: "Hugo Bernard",    email: "hugo.bernard@email.com",    message: "Intéressé par vos services SEO.", date: "2026-03-05", status: "Declined" },
-    { id: 5,  name: "Sarah Moreau",    email: "sarah.moreau@email.com",    message: "Refonte de mon portfolio professionnel.", date: "2026-03-12", status: "Pending" },
-    { id: 6,  name: "Nathalie Simon",  email: "nathalie.simon@email.com",  message: "Application mobile pour mon restaurant.", date: "2026-03-22", status: "Approved" },
-    { id: 7,  name: "Nicolas Thomas",  email: "nicolas.thomas@email.com",  message: "Optimisation SEO de mon site existant.", date: "2026-04-01", status: "Pending" },
-    { id: 8,  name: "Morgane Petit",   email: "morgane.petit@email.com",   message: "Site e-commerce pour une boutique de mode.", date: "2026-04-10", status: "Pending" },
-    { id: 9,  name: "Manon Leroy",     email: "manon.leroy@email.com",     message: "Blog professionnel pour un cabinet juridique.", date: "2026-04-18", status: "Approved" },
-    { id: 10, name: "Mathilde Robert", email: "mathilde.robert@email.com", message: "Intégration de paiement en ligne sur mon site.", date: "2026-04-25", status: "Pending" },
-    { id: 11, name: "Alexandre Roy",   email: "alexandre.roy@email.com",   message: "Dashboard admin sur-mesure.", date: "2026-05-02", status: "Declined" },
-    { id: 12, name: "Camille Blanc",   email: "camille.blanc@email.com",   message: "Landing page pour un lancement produit.", date: "2026-05-09", status: "Approved" },
-    { id: 13, name: "Antoine Morel",   email: "antoine.morel@email.com",   message: "Maintenance et mises à jour de mon site.", date: "2026-05-14", status: "Pending" },
-    { id: 14, name: "Julie Fontaine",  email: "julie.fontaine@email.com",  message: "Audit de performance de mon site web.", date: "2026-05-20", status: "Pending" },
-    { id: 15, name: "Romain Girard",   email: "romain.girard@email.com",   message: "Création d'un portfolio créatif.", date: "2026-05-28", status: "Approved" },
-    { id: 16, name: "Elisa Dupuis",    email: "elisa.dupuis@email.com",    message: "Développement d'une API REST.", date: "2026-06-01", status: "Pending" },
-    { id: 17, name: "Pierre Leclerc",  email: "pierre.leclerc@email.com",  message: "Migration vers un nouveau CMS.", date: "2026-06-05", status: "Pending" },
-    { id: 18, name: "Sophie Renard",   email: "sophie.renard@email.com",   message: "Stratégie de contenu et SEO.", date: "2026-06-08", status: "Approved" },
-    { id: 19, name: "Thomas Poirier",  email: "thomas.poirier@email.com",  message: "Site multilingue pour export international.", date: "2026-06-10", status: "Pending" },
-    { id: 20, name: "Clara Mercier",   email: "clara.mercier@email.com",   message: "Intégration d'outils analytics avancés.", date: "2026-06-13", status: "Pending" },
-    { id: 21, name: "Florian Bonnet",  email: "florian.bonnet@email.com",  message: "Refonte complète avec design system.", date: "2026-06-17", status: "Approved" },
+    { id: 1, name: "Antoine Morel",   email: "antoine.morel@email.com",   message: "Maintenance et mises à jour de mon site.", date: "2026-05-14", status: "Pending" },
+    { id: 2, name: "Julie Fontaine",  email: "julie.fontaine@email.com",  message: "Audit de performance de mon site web.", date: "2026-05-20", status: "Pending" },
+    { id: 3, name: "Romain Girard",   email: "romain.girard@email.com",   message: "Création d'un portfolio créatif.", date: "2026-05-28", status: "Approved" },
+    { id: 4, name: "Elisa Dupuis",    email: "elisa.dupuis@email.com",    message: "Développement d'une API REST.", date: "2026-06-01", status: "Pending" },
+    { id: 5, name: "Pierre Leclerc",  email: "pierre.leclerc@email.com",  message: "Migration vers un nouveau CMS.", date: "2026-06-05", status: "Pending" },
+    { id: 6, name: "Sophie Renard",   email: "sophie.renard@email.com",   message: "Stratégie de contenu et SEO.", date: "2026-06-08", status: "Approved" },
+    { id: 7, name: "Thomas Poirier",  email: "thomas.poirier@email.com",  message: "Site multilingue pour export international.", date: "2026-06-10", status: "Pending" },
+    { id: 8, name: "Clara Mercier",   email: "clara.mercier@email.com",   message: "Intégration d'outils analytics avancés.", date: "2026-06-13", status: "Pending" },
+    { id: 9, name: "Florian Bonnet",  email: "florian.bonnet@email.com",  message: "Refonte complète avec design system.", date: "2026-06-17", status: "Approved" },
 ];
 
 // ── DOM refs ──────────────────────────────────────────────────

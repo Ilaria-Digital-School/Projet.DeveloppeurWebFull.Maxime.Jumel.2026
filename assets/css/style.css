@@ -1,10 +1,11 @@
 nav ul li a.links {
     color: #fff;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 500;
     padding: 10px 15px;
 }
+
 
 /* Style du Titre */
 .project-title {
@@ -84,34 +85,269 @@ nav ul li a.links {
     opacity: 1;
 }
 
-.navbar {
-    background-color: transparent;
+/* ── .navbar : pas de position fixe globale, géré par le wrapper relatif ── */
+
+/* ════════════════════════════════════════
+   MAIN NAVBAR — Design de référence
+   ════════════════════════════════════════ */
+.main-navbar {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    height: 68px;
+    background-color: #0a0a0a;
+    z-index: 9999;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    gap: 2rem;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.nav-logo img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Nav links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.25rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.nav-links .nav-item {
+    color: #d1d5db;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-links .nav-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-links .nav-item.active {
+    color: #c8ff00;
+}
+
+/* Search button */
+.nav-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: none;
+    color: #d1d5db;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.45rem 0.75rem;
+    border-radius: 4px;
+    transition: color 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+}
+
+.nav-search:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-search i {
+    font-size: 1rem;
+}
+
+/* Burger (mobile) */
+.nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.nav-burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .nav-burger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background-color: #0a0a0a;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        gap: 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links .nav-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-search span {
+        display: none;
+    }
 }
 
 .hero-content {
-    background-color: rgb(0, 0, 0);
+    background-color: #0a0a0a;
     color: white;
-    padding: 20px;
+    padding: 0;
     max-width: 100%;
-    min-height: 80vh;
-
+    min-height: 85vh;
     margin: 0 auto;
-
+    display: flex;
+    align-items: center;
 }
+
+/* Padding-top pour que le texte ne passe pas sous la nav (68px) */
+.hero-content .container {
+    padding-top: 100px;
+    padding-bottom: 60px;
+    z-index: 4;
+    position: relative;
+}
+
+/* ─────────────────────────────────────────────────
+   Image positionnée dans le WRAPPER (position:relative)
+   → top:0 = niveau exact du haut de la navbar
+   → le personnage "dépasse" dans la navbar
+   ───────────────────────────────────────────────── */
+.hero-overflow-img {
+    position: absolute;
+    top: 0;                     /* aligne avec le haut de la navbar */
+    right: 0;
+    width: 52%;
+    height: 100%;               /* toute la hauteur du wrapper (nav + hero) */
+    object-fit: contain;        /* personnage entier, pas de rognage */
+    object-position: right top; /* ancré en haut à droite */
+    z-index: 20;                /* au-dessus de la nav (z-index:10) */
+    display: block;
+    pointer-events: none;
+}
+
+/* Colonne réservatrice de l'espace côté droit */
+.hero-img-col {
+    min-height: 1px;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .hero-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-overflow-img {
+        order: 1;               /* Affiche l'image en premier (en haut) */
+        position: relative;
+        top: 0;
+        display: block;
+        margin: 0 auto;
+        width: 90%;
+        max-width: 450px;       /* Empêche l'image de devenir trop grande sur tablette/mobile */
+        height: auto;
+    }
+
+    .hero-content {
+        order: 2;               /* Affiche le texte en deuxième (en dessous) */
+        min-height: auto;       /* Retire les 85vh de hauteur minimale sur mobile */
+    }
+
+    .hero-content .container {
+        padding-top: 40px;      /* Plus besoin de 80px de padding car la nav est au-dessus de l'image */
+        padding-bottom: 30px;
+    }
+}
+
+
 
 .hero-btn {
-    display: inline-block;
-    padding: 10px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 13px 28px;
     background-color: #e5ff00;
-    color: rgb(0, 0, 0);
+    color: #000000;
     text-decoration: none;
-    border-radius: 5px;
-    margin-top: 25px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 20px;
+    transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 20px rgba(229, 255, 0, 0.25);
 }
+
+.hero-btn:hover {
+    background-color: #f0ff33;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(229, 255, 0, 0.40);
+    color: #000;
+}
+
 
 .contact-info {
     font-size: 1rem;
@@ -634,4 +870,4 @@ body {
 /* ── About yellow section overflow fix ── */
 .container-fluid.p-0 {
     overflow: visible !important;
-}
+}
