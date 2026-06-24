@@ -542,6 +542,14 @@ body {
         text-align: center;
     }
 }
+#searchBar {
+    display: none;
+    padding: 10px;
+}
+
+#searchBar.active {
+    display: block;
+}
 
 /*  mode tablette et superieur (en gros ecran)*/
 @media (min-width: 700px) {
