@@ -367,8 +367,9 @@ h4 {
 /*  mode tablette et inferieur (en plus petit ecran)*/
 
 
-body {
+body, html {
     font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
 }
 
 .team-card {
