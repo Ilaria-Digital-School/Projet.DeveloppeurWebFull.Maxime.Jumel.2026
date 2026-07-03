@@ -5,18 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Soulfydev - Dashboard</title>
-    <meta name="description" content="Soulfydev admin dashboard — monitor web traffic, manage client projects, publish articles and track SEO results in real-time.">
+    <meta name="description"
+        content="Soulfydev admin dashboard — monitor web traffic, manage client projects, publish articles and track SEO results in real-time.">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 
-<body>
+<body class="bg-black ">
 
     <div class="container-fluid g-0">
         <div class="row g-0">
@@ -79,45 +81,7 @@
                             </nav>
                         </div>
 
-                        <div class="d-flex align-items-center gap-3 ms-auto">
-                            <!-- Notification Dropdown -->
-                            <div class="dropdown">
-                                <button class="btn btn-link position-relative text-dark p-1" type="button"
-                                    id="notifDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false"
-                                    aria-label="Notifications">
-                                    <i class="bi bi-bell fs-5"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notif-badge">3</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2 rounded-3" style="min-width:280px">
-                                    <li><h6 class="dropdown-header fw-bold text-dark">Notifications</h6></li>
-                                    <li>
-                                        <a class="dropdown-item py-2 small d-flex align-items-center gap-2" href="#">
-                                            <span class="notif-dot bg-primary"></span>
-                                            <span><i class="bi bi-envelope-open me-1 text-primary"></i>New message from client</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item py-2 small d-flex align-items-center gap-2" href="#">
-                                            <span class="notif-dot bg-success"></span>
-                                            <span><i class="bi bi-check2-circle me-1 text-success"></i>SEO optimization complete</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item py-2 small d-flex align-items-center gap-2" href="#">
-                                            <span class="notif-dot bg-warning"></span>
-                                            <span><i class="bi bi-star me-1 text-warning"></i>New project review pending</span>
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item py-2 text-center text-primary small fw-semibold" href="#">View all alerts →</a></li>
-                                </ul>
-                            </div>
 
-                            <!-- Avatar -->
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp"
-                                alt="User avatar" class="rounded-circle border border-2 border-primary d-none d-md-block"
-                                width="36" height="36" style="object-fit:cover; cursor:pointer;">
-                        </div>
                     </div>
                 </header>
 
@@ -125,26 +89,163 @@
                 <main class="dashboard-main container-fluid p-4">
 
                     <!-- Welcome Banner -->
-                    <div class="welcome-banner p-4 p-md-5 mb-4">
-                        <div class="welcome-banner-glow"></div>
+                    <div class="bg-black text-white p-4 p-md-5 mb-4 rounded-4">
+
                         <div class="col-lg-7 position-relative">
-                            <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-25 mb-3 px-3 py-2">
-                                <i class="bi bi-circle-fill text-success me-2" style="font-size:.55rem"></i>Live • June 2026
+                            <span
+                                class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-25 mb-3 px-3 py-2">
+                                <i class="bi bi-circle-fill text-success me-2" style="font-size:.55rem"></i>Live • June
+                                2026
                             </span>
-                            <h1 class="mb-2 title-content">Welcome back, Maxime 👋</h1>
-                            <p class="lead text-white-50 mb-4 content-text">Monitor your web traffic, manage client projects, publish articles, and track SEO results in real-time.</p>
+                            <h1 class="mb-2 title-content"><i class="bi bi-person-fill" style="color: #ffffff;"></i>
+                                Bienvenue, Maxime </h1>
+                            <p class="lead text-white-50 mb-4 content-text">Monitor your web traffic, manage client
+                                projects, publish articles, and track SEO results in real-time.</p>
                             <div class="d-flex flex-wrap gap-2">
-                                <button class="btn btn-accent" id="openNewArticleBtn" data-bs-toggle="modal" data-bs-target="#newArticleModal">
+                                <button class="btn btn-dark bg-black border-0 px-3 py-2 cursor-pointer"
+                                    id="openNewArticleBtn" data-bs-toggle="modal" data-bs-target="#newArticleModal">
                                     <i class="bi bi-plus-lg me-2"></i>Créer un article
                                 </button>
-                                <button class="btn btn-outline-light btn-sm px-3">
+                                <button
+                                    class="btn btn-outline-light btn-sm border-0 border-secondary px-3 cursor-pointer">
                                     <i class="bi bi-download me-1"></i>Exporter rapport
                                 </button>
                             </div>
                         </div>
                     </div>
+                    <section class="w-100 mx-auto p-0 m-0 border-0">
+                        <h4 class="text-white">
+                            <i class="bi bi-bar-chart-steps"></i> Statistiques
+                        </h4>
+                        <p class="text-muted small mb-3">
+                            <i class="bi bi-bar-chart-steps"></i> Gérez et suivez vos statistiques
+                        </p>
 
-                   
+                        <div class="row g-3 mb-3">
+
+                            <!-- Carte 1 -->
+                            <div class="col-md-3">
+                                <div class="p-3 border-dark rounded-4 bg-success">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i>
+                                        <span class="text-white">Statistiques</span>
+                                    </div>
+                                    <h4 class="text-white">98</h4>
+                                    <p class="text-muted small mb-2">Nombre de visites sur google</p>
+
+                                    <p class="text-white fw-bold text-center text-success" style="font-size: 14px;">+ 3%
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i> par rapport à la semaine
+                                        dernière
+                                    </p>
+
+                                </div>
+                            </div>
+
+                            <!-- Carte 2 -->
+                            <div class="col-md-3 mt-3">
+                                <div class="p-3 border-dark rounded-4 bg-danger">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i>
+                                        <span class="text-white">Statistiques</span>
+                                    </div>
+                                    <h4 class="text-white">123</h4>
+                                    <p class="text-muted small mb-2">Nombre de visites via le partage sur les réseaux
+                                    </p>
+                                    <p class="text-white fw-bold text-center text-danger" style="font-size: 14px;">- 3%
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i> par rapport à la semaine
+                                        dernière
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-3">
+                                <div class="p-3 border-dark rounded-4 bg-warning">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i>
+                                        <span class="text-white">Statistiques</span>
+                                    </div>
+                                    <h4 class="text-white">25</h4>
+                                    <p class="text-muted small mb-2">Nombre de visites via le partage sur les réseaux
+                                    </p>
+                                    <p class="text-white fw-bold text-center text-danger" style="font-size: 14px;">- 3%
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i> par rapport à la semaine
+                                        dernière
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 mt-3">
+                                <div class="p-3 border-dark rounded-4 bg-info">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i>
+                                        <span class="text-white">Statistiques</span>
+                                    </div>
+                                    <h4 class="text-white">25</h4>
+                                    <p class="text-muted small mb-2">Nombre de visites via le partage de ressources
+                                    </p>
+                                    <p class="text-white fw-bold text-center text-success" style="font-size: 14px;">+ 3%
+                                        <i class="bi bi-bar-chart-steps text-white me-2"></i> par rapport à la semaine
+                                        dernière
+                                    </p>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+
+                    <div class="bg-black rounded-4 text-white p-4 p-md-5 mb-4 w-100 mx-auto p-0 m-0 border-0">
+                        <h3 class="fw-bold text-white"><i class="bi bi-bar-chart-steps" style="color: #ffffff;"></i> Mes
+                            derniers projets</h3>
+                        <p class="text-muted small mb-0">Gérez et suivez vos projets</p>
+
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <!-- ===================== Clients Table ===================== -->
                     <section class="clients-section rounded-4 mb-4">
@@ -154,7 +255,8 @@
                                 <p class="text-muted small mb-0">Gérez et suivez vos contacts clients</p>
                             </div>
                             <div class="d-flex gap-2">
-                                <span class="badge bg-primary-subtle text-primary px-3 py-2" id="table-count-badge">21 contacts</span>
+                                <span class="badge bg-primary-subtle text-primary px-3 py-2" id="table-count-badge">21
+                                    contacts</span>
                             </div>
                         </div>
 
@@ -195,7 +297,8 @@
                         </div>
 
                         <!-- Pagination -->
-                        <div class="d-flex justify-content-between align-items-center px-3 py-3 flex-wrap gap-2 border-top" id="pagination-container"></div>
+                        <div class="d-flex justify-content-between align-items-center px-3 py-3 flex-wrap gap-2 border-top"
+                            id="pagination-container"></div>
                     </section>
                 </main>
             </div>
@@ -203,7 +306,8 @@
     </div>
 
     <!-- ===================== New Article Modal ===================== -->
-    <div class="modal fade" id="newArticleModal" tabindex="-1" aria-labelledby="newArticleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newArticleModal" tabindex="-1" aria-labelledby="newArticleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4">
                 <div class="modal-header border-0 pb-0 px-4 pt-4">
@@ -213,13 +317,16 @@
                         </h5>
                         <p class="text-muted small mb-0">Publiez un nouvel article sur votre blog</p>
                     </div>
-                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"
+                        aria-label="Fermer"></button>
                 </div>
                 <div class="modal-body px-4 py-3">
                     <form id="newArticleForm" novalidate>
                         <div class="mb-3">
-                            <label for="articleTitle" class="form-label fw-semibold small">Titre de l'article <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="articleTitle" placeholder="Ex : Les tendances SEO en 2026" required>
+                            <label for="articleTitle" class="form-label fw-semibold small">Titre de l'article <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="articleTitle"
+                                placeholder="Ex : Les tendances SEO en 2026" required>
                             <div class="invalid-feedback">Le titre est requis.</div>
                         </div>
                         <div class="row g-3 mb-3">
@@ -244,14 +351,17 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="articleContent" class="form-label fw-semibold small">Contenu <span class="text-danger">*</span></label>
+                            <label for="articleContent" class="form-label fw-semibold small">Contenu <span
+                                    class="text-danger">*</span></label>
                             <textarea class="form-control" id="articleContent" rows="5"
                                 placeholder="Rédigez le contenu de votre article ici…" required></textarea>
                             <div class="invalid-feedback">Le contenu est requis.</div>
                         </div>
                         <div class="mb-1">
-                            <label for="articleTags" class="form-label fw-semibold small">Tags (séparés par des virgules)</label>
-                            <input type="text" class="form-control" id="articleTags" placeholder="Ex : seo, web, design">
+                            <label for="articleTags" class="form-label fw-semibold small">Tags (séparés par des
+                                virgules)</label>
+                            <input type="text" class="form-control" id="articleTags"
+                                placeholder="Ex : seo, web, design">
                         </div>
                     </form>
                 </div>
