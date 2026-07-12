@@ -1,7 +1,7 @@
 // Default project data
 const defaultProjectData = {
     idproject: "01",
-    ImageURL: "assets/images/upload/soulfydev.png",
+    ImageURL: "assets/images/upload/soulfydev.webp",
     title: "Luck jumper",
     client_pseudo: "Luck jamus",
     projetType: "site web",

@@ -146,8 +146,12 @@ body {
 
 .content-text {
   font-size: clamp(0.9rem, 2vw, 1.05rem);
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.82);
   line-height: 1.6;
+}
+
+.text-white-75 {
+  color: rgba(255,255,255,0.75) !important;
 }
 
 /* ── Banner Buttons ── */
