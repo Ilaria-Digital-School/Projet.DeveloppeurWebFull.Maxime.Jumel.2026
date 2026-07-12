@@ -538,9 +538,10 @@ body, html {
 
     .panel-hero {
         background-color: #e5ff00;
-        padding: 20px;
-        margin: 20px 0;
+        padding: 30px 20px;
+        margin: 40px 0 0 0;
         text-align: center;
+        border-radius: 16px;
     }
 }
 #searchBar {
@@ -631,14 +632,14 @@ body, html {
 
     .panel-hero {
         background-color: #e5ff00;
-        padding-left: 35%;
-        margin: 100px 0 0 0;
+        padding: 50px;
+        margin: 120px 0 0 0;
+        border-radius: 20px;
     }
 
     .panel-hero img {
-        top: 100px;
-        width: 70%;
-        background-color: yellowgreen;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     }
 
     .panel-hero h3 {
@@ -653,30 +654,32 @@ body, html {
 
     .skill-item {
         margin-bottom: 25px !important;
-        margin-top: 55px;
-        max-width: 45%;
+        margin-top: 30px;
+        width: 100%;
     }
+}
 
-    .skill-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.9rem;
-    }
+/* progress bar global styling */
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
 
-    .progress-background {
-        height: 8px;
-        background-color: rgba(0, 0, 0, 0.1);
-        border-radius: 0;
-    }
+.progress-background {
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+}
 
-    .progress-noir {
-        background-color: #000000;
-    }
+.progress-noir {
+    background-color: #000000;
+    height: 100%;
 }
 
 
