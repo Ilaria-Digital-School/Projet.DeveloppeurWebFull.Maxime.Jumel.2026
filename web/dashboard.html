@@ -3,59 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <title>Dashboard soufly</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- IMPORT ICON BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- IMPORT FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..1000;1,14..32,100..1000&family=Outfit:wght@100..900&display=swap');
+        body{
+            font-family: 'Outfit', sans-serif;
+        }
+        .nav-item:hover{
+            background-color: #1e2025ff;
+            border-radius: 5px;
+        }
+        .nav-item .nav-link{
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .nav-item .nav-link:hover{
+            background-color: #1e2025ff;
+            border-radius: 5px;
+        }
+        .sidebar {
+            width: 260px;
+            min-width: 260px;
+            height: 100vh;
+            background-color: #181a1bff;
+        }
+        main {
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+        }
+        @media (min-width: 768px) {
+            main {
+                height: 100vh;
+            }
+        }
+    </style>
 </head>
-<body>
-        
-
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid ">
-            <a class="navbar-brand fw-bold text-black" href="../index.html">SOULFYDEV</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+<body class="d-flex flex-column flex-md-row" style="height: 100vh; overflow: hidden; background-color: #f8f9fa;">
+    
+    <header class="border-end border-secondary border-opacity-25" style="background-color: #181a1bff;">
+        <!-- Top navbar for mobile only -->
+        <div class="navbar navbar-dark bg-dark d-md-none px-3 py-2 w-100 d-flex justify-content-between align-items-center">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+                <i class="fa-solid fa-bars text-white"></i>
             </button>
-            <div class="collapse navbar-collapse " id="navbarNav">
-                <ul class="navbar-nav mx-auto gap-4">
-                    <li class="nav-item">
-                        <a class="nav-link active mx-2 fs-4" aria-current="page" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item mx-2 fs-4">
-                        <a class="nav-link fw-bold " href="./blog.html">Pages</a>
-                    </li>
-                    <li class="nav-item mx-2 fs-4">
-                        <a class="nav-link fw-bold  " href="./portefolio.html">Portfolio</a>
-                    </li>
-                    <li class="nav-item mx-2 fs-4">
-                        <a class="nav-link fw-bold " href="./blog.html">Blog</a>
-                    </li>
-                    <li class="nav-item mx-2 fs-4">
-                        <a class="nav-link fw-bold " href="./contact.html">contact</a>
-                    </li>
+            <span class="navbar-brand mb-0 h1 fs-5 fw-bold text-white">The BPT</span>
+            <div style="width: 30px;"></div> <!-- Spacer to align logo -->
+        </div>
 
-                </ul>
-                <ul class="navbar-nav">
-                    <li class=" nav-item">
-                        <a class="nav-link fw-bold " href="#"
-                            style="color: #ffffff; background-color: #000000; border-radius: 5px; padding: 0.9rem 2rem;">WORKS
-                            WITH
-                            US</a>
-                    </li>
-                </ul>
+        <!-- Sidebar offcanvas/desktop container -->
+        <div class="offcanvas-md offcanvas-start sidebar text-white border-0" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+            <div class="d-flex flex-column h-100" style="background-color: #181a1bff;">
+                <!-- Offcanvas header (visible on mobile only) -->
+                <div class="offcanvas-header d-md-none p-4 pb-2 text-white">
+                    <h5 class="offcanvas-title fw-bold" id="sidebarOffcanvasLabel">The BPT</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas" aria-label="Close"></button>
+                </div>
+                
+                <div class="items-center w-100 flex-grow-1 position-relative d-flex flex-column justify-content-between">
+                    <div class="w-100">
+                        <!-- Desktop Logo -->
+                        <div class="logo p-4 d-none d-md-flex align-items-center">
+                            <i class="fa-solid fa-bars text-white fs-5"></i>
+                            <span class="text-white mx-2 fw-bold">The BPT</span>
+                        </div>
+                        
+                        <!-- User Card -->
+                        <div class="w-100 d-flex align-items-center justify-content-center py-3">
+                            <div class="user-info text-center">
+                                <img src="https://i.pravatar.cc/150" alt="" class="rounded-circle" style="width: 80px; height: 80px;">
+                                <p class="text-white mt-2 mb-0 fw-semibold">Jean Dupont</p>
+                                <span class="text-muted text-small d-block" style="font-size: 0.75rem;">Developpeur Web</span>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Nav -->
+                        <div class="nav-links p-2">
+                            <nav class="row mx-0">
+                                <div class="col-12 px-2">
+                                    <ul class="nav flex-column nav-items">
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-house"></i>Home</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-box"></i>Products</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-cart-shopping"></i>Cart</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-user"></i>Accounts</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-clock-rotate-left"></i>Order History</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom dropup profile menu -->
+                    <div class="w-100 p-3 border-top border-secondary border-opacity-25 mt-auto">
+                        <div class="dropup">
+                            <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="profile_avatar.png" alt="Avatar" width="32" height="32" class="rounded-circle me-2">
+                                <div class="flex-grow-1 min-w-0 me-2">
+                                    <span class="d-block text-truncate fw-semibold text-light" style="font-size: 0.85rem;">Jean Dupont</span>
+                                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Admin</small>
+                                </div>
+                                <i class="fa-solid fa-ellipsis-vertical text-muted fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary border-opacity-50 w-100" aria-labelledby="profileDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                        <i class="fa-solid fa-user me-2 text-muted" style="width: 16px;"></i>
+                                        <span style="font-size: 0.85rem;">Avatar</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                        <i class="fa-solid fa-gear me-2 text-muted" style="width: 16px;"></i>
+                                        <span style="font-size: 0.85rem;">Paramètres</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider border-secondary border-opacity-50"></li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2 text-danger" href="#">
+                                        <i class="fa-solid fa-right-from-bracket me-2" style="width: 16px;"></i>
+                                        <span style="font-size: 0.85rem;">Déconnexion</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-    <!-- end navbar -->
+    </header>
     
-    
-        
-        
+    <main class="flex-grow-1 p-4">
+        <div class="container-fluid">
+            <!-- Header section of the main content -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 pb-2 border-bottom border-secondary border-opacity-10 gap-3">
+                <div>
+                    <h1 class="h3 mb-1 fw-bold text-dark">Table de Contrôle</h1>
+                    <p class="text-muted mb-0" style="font-size: 0.9rem;">Aperçu général et statistiques de votre activité.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>Derniers 30 jours</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm d-flex align-items-center gap-2" style="background-color: #4f46e5; border-color: #4f46e5;">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Nouveau rapport</span>
+                    </button>
+                </div>
+            </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Stats grid -->
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 12px;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-euro-sign fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-medium">+12.5%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Chiffre d'Affaires</span>
+                            <h3 class="fw-bold mb-0 text-dark">45 289,00 €</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 12px;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-info bg-opacity-10 text-info p-3 rounded-3" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-users fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-medium">+8.2%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Nouveaux Membres</span>
+                            <h3 class="fw-bold mb-0 text-dark">1 245</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 12px;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-success bg-opacity-10 text-success p-3 rounded-3" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-shopping-cart fs-5"></i>
+                                </div>
+                                <span class="badge bg-danger bg-opacity-10 text-danger fw-medium">-2.4%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Ventes Globales</span>
+                            <h3 class="fw-bold mb-0 text-dark">856</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 12px;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3" style="width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-clock fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-medium">+15.1%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Temps de Session</span>
+                            <h3 class="fw-bold mb-0 text-dark">24m 12s</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area: Example Table or Chart representation -->
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-xl-8">
+                    <div class="card border-0 shadow-sm p-4" style="border-radius: 12px;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold text-dark mb-0">Dernières Commandes</h5>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" style="background-color: #4f46e5; border-color: #4f46e5;">
+                                    <i class="fa-solid fa-plus" style="font-size: 0.75rem;"></i>
+                                    <span>Ajouter</span>
+                                </button>
+                                <a href="#" class="btn btn-link btn-sm text-decoration-none text-primary p-0 ms-2">Voir tout</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr style="font-size: 0.85rem; color: #6b7280;">
+                                        <th scope="col">Commande ID</th>
+                                        <th scope="col">Produit</th>
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col" class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 0.9rem;">
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90231</td>
+                                        <td>MacBook Pro M3</td>
+                                        <td>Sophie Martin</td>
+                                        <td class="text-muted">Il y a 2h</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Complété</span></td>
+                                        <td class="fw-semibold">2 499,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90230</td>
+                                        <td>iPhone 15 Pro Max</td>
+                                        <td>Lucas Bernard</td>
+                                        <td class="text-muted">Il y a 5h</td>
+                                        <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-2.5 py-1">En cours</span></td>
+                                        <td class="fw-semibold">1 479,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90229</td>
+                                        <td>AirPods Max</td>
+                                        <td>Emma Petit</td>
+                                        <td class="text-muted">Hier</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Complété</span></td>
+                                        <td class="fw-semibold">629,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90228</td>
+                                        <td>iPad Pro 11"</td>
+                                        <td>Thomas Dubois</td>
+                                        <td class="text-muted">Il y a 2 jours</td>
+                                        <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2.5 py-1">Annulé</span></td>
+                                        <td class="fw-semibold">1 049,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 12px;">
+                        <h5 class="fw-bold text-dark mb-4">Activité Récente</h5>
+                        <div class="position-relative ps-4 border-start border-light border-2" style="border-left-style: dashed !important;">
+                            <div class="mb-4 position-relative">
+                                <span class="position-absolute start-0 top-0 translate-middle bg-primary rounded-circle" style="width: 10px; height: 10px; margin-left: -17px; margin-top: 6px;"></span>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">14:32 - Aujourd'hui</small>
+                                <span class="fw-semibold text-dark" style="font-size: 0.85rem;">Mise à jour du système effectuée</span>
+                                <p class="text-muted mb-0" style="font-size: 0.8rem;">La version v2.4.1 a été déployée avec succès.</p>
+                            </div>
+                            <div class="mb-4 position-relative">
+                                <span class="position-absolute start-0 top-0 translate-middle bg-success rounded-circle" style="width: 10px; height: 10px; margin-left: -17px; margin-top: 6px;"></span>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">11:15 - Aujourd'hui</small>
+                                <span class="fw-semibold text-dark" style="font-size: 0.85rem;">Nouveau produit ajouté</span>
+                                <p class="text-muted mb-0" style="font-size: 0.8rem;">Le produit "Apple Watch Ultra 2" a été ajouté au catalogue.</p>
+                            </div>
+                            <div class="position-relative">
+                                <span class="position-absolute start-0 top-0 translate-middle bg-warning rounded-circle" style="width: 10px; height: 10px; margin-left: -17px; margin-top: 6px;"></span>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">Hier, 18:40</small>
+                                <span class="fw-semibold text-dark" style="font-size: 0.85rem;">Alerte sécurité détectée</span>
+                                <p class="text-muted mb-0" style="font-size: 0.8rem;">Tentative de connexion échouée depuis une IP inhabituelle.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact section -->
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm p-4 animate-on-hover" style="border-radius: 12px;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold text-dark mb-0">Contact</h5>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" style="background-color: #4f46e5; border-color: #4f46e5;">
+                                    <i class="fa-solid fa-plus" style="font-size: 0.75rem;"></i>
+                                    <span>Ajouter</span>
+                                </button>
+                                <a href="#" class="btn btn-link btn-sm text-decoration-none text-primary p-0 ms-2">Voir tout</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr style="font-size: 0.85rem; color: #6b7280;">
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Sujet</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col" class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 0.9rem;">
+                                    <tr>
+                                        <td class="fw-semibold">Sophie Martin</td>
+                                        <td>sophie.martin@example.com</td>
+                                        <td>Question sur la livraison du MacBook Pro</td>
+                                        <td class="text-muted">Il y a 2h</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Répondu</span></td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">Lucas Bernard</td>
+                                        <td>l.bernard@example.com</td>
+                                        <td>Problème de paiement avec ma carte visa</td>
+                                        <td class="text-muted">Il y a 5h</td>
+                                        <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-2.5 py-1">En cours</span></td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">Emma Petit</td>
+                                        <td>emma.petit@example.com</td>
+                                        <td>Demande de devis pour commande groupée</td>
+                                        <td class="text-muted">Hier</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Répondu</span></td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">Thomas Dubois</td>
+                                        <td>t.dubois@example.com</td>
+                                        <td>Demande de partenariat commercial</td>
+                                        <td class="text-muted">Il y a 2 jours</td>
+                                        <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2.5 py-1">Archivé</span></td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

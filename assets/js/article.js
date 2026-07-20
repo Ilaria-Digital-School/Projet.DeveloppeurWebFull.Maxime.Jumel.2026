@@ -1,15 +1,14 @@
 // Default project data
 const defaultProjectData = {
     idproject: "01",
-    ImageURL: "assets/images/upload/soulfydev.webp",
+    ImageURL: "../assets/images/projetct/menu/geralt-data-4404730.webp",
     title: "Luck jumper",
     client_pseudo: "Luck jamus",
-    projetType: "site web",
+    projetType: "application e-commerce",
     Location: "France",
     date: "2024",
     budjet: "~ 2000 $",
-    duration: "~ 3 mois",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, dolorum recusandae. Beatae aut et exercitationem dolorum, cumque consequatur architecto veritatis nisi aliquam vel harum eius consequatur. Quibusdam, ad."
+    description: "Application d'e-commerce pour la vente de bonbons en ligne. pour permettre de vendre est gerer les stock  est la facturation des produits est des commande est le suivi des commande est envoie des email professional"
 };
 
 // Retrieve data from localStorage with fallbacks
@@ -65,10 +64,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const durEl = document.querySelector(".duration");
 
     const ImageEl = document.querySelector(".image-project");
+    const allImageEls = document.querySelectorAll(".image-project");
 
     // Populate innerText/innerHTML
     if (titleEl) titleEl.innerHTML = `<h2 class="fw-bold">${data.title}</h2>`;
-    if (ImageEl) ImageEl.src = data.ImageURL || data.Image || defaultProjectData.ImageURL;
+
+    // If the project has an imgArray, populate all carousel slides
+    if (data.imgArray) {
+        try {
+            const imgs = JSON.parse(data.imgArray);
+            allImageEls.forEach((el, i) => {
+                if (imgs[i]) el.src = imgs[i];
+            });
+        } catch (e) {
+            // imgArray not valid JSON, fall back to single image
+            if (ImageEl) ImageEl.src = data.ImageURL || defaultProjectData.ImageURL;
+        }
+    } else {
+        // Only replace the first slide image
+        if (ImageEl) ImageEl.src = data.ImageURL || defaultProjectData.ImageURL;
+    }
+
     if (descEl) descEl.innerText = data.description;
     if (pseudoEl) pseudoEl.innerText = data.client_pseudo;
     if (typeEl) typeEl.innerText = data.projetType;
