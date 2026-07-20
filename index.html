@@ -95,7 +95,7 @@
 
   <body>
     <!-- Wrapper position:relative → nav absolute flotte sur le hero -->
-    <div class="hero-wrapper bg-dark" style="position: relative">
+    <div id="hero-top" class="hero-wrapper bg-dark" style="position: relative">
       <nav
         class="navbar navbar-expand-lg navbar-dark d-block"
         style="
@@ -130,7 +130,7 @@
           >
             <ul class="navbar-nav mx-auto gap-3">
               <li class="nav-item">
-                <a class="links nav-link active" href="./index.html">Home</a>
+                <a class="links nav-link active" href="#hero-top">Home</a>
               </li>
               <li class="nav-item">
                 <a class="links nav-link" href="./web/page.html">Pages</a>
@@ -204,10 +204,10 @@
         123 Main Street<br />
         Anytown 789875 12345, USA
       </p>
-      <p class="text-center">
-        (123) 456-7890 <br />
-        988fishfriends@gmail.com
-      </p>
+      <span class="text-center">
+        <a href="tel:+33647497528" class="text-white text-decoration-none">+33 6 47 49 75 28</a>  
+        <a href="mailto:contact-me@souflyhub.fr" class="text-white text-decoration-none">contact-me@souflyhub.fr</a>
+      </span>
     </div>
 
     <div
@@ -820,7 +820,7 @@
       </section>
     </div>
 
-    <footer class="text-dark py-5">
+   <footer class="text-dark py-5">
       <div class="container">
         <div class="row gy-5">
           <div class="col-md-6">
@@ -850,7 +850,7 @@
                 </button>
               </div>
             </form>
-            <p class="text-secondary mt-3 mb-0">
+            <p class="text-secondary fw-bold text-black mt-3 mb-0 ">
               By signing up to receive emails from Motto, you agree to our
               <a href="#" class="text-dark text-decoration-underline"
                 >Privacy Policy</a
@@ -930,16 +930,16 @@
             <p class="mb-0">Copyright © 2026</p>
           </div>
           <div class="col-6 text-end">
-            <a href="#" class="text-dark mx-2" aria-label="Facebook"
+            <a href="https://facebook.com" class="text-dark mx-2" aria-label="Facebook" target="_blank" rel="noopener noreferrer"
               ><i class="bi bi-facebook fs-5" aria-hidden="true"></i
             ></a>
-            <a href="#" class="text-dark mx-2" aria-label="Instagram"
+            <a href="https://instagram.com" class="text-dark mx-2" aria-label="Instagram" target="_blank" rel="noopener noreferrer"
               ><i class="bi bi-instagram fs-5" aria-hidden="true"></i
             ></a>
-            <a href="#" class="text-dark mx-2" aria-label="X / Twitter"
+            <a href="https://x.com" class="text-dark mx-2" aria-label="X / Twitter" target="_blank" rel="noopener noreferrer"
               ><i class="bi bi-twitter-x fs-5" aria-hidden="true"></i
             ></a>
-            <a href="#" class="text-dark mx-2" aria-label="Dribbble"
+            <a href="https://dribbble.com" class="text-dark mx-2" aria-label="Dribbble" target="_blank" rel="noopener noreferrer"
               ><i class="bi bi-dribbble fs-5" aria-hidden="true"></i
             ></a>
           </div>
