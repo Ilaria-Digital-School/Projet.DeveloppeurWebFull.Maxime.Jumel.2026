@@ -143,10 +143,10 @@ function displayClients() {
             <td class="text-muted">${escHtml(last)}</td>
             <td><code class="text-primary" style="font-size:0.8rem">${escHtml(handle)}</code></td>
             <td class="text-center">
-                <span class="badge badge-scope ${scope.cls}" style="border-radius:6px;font-size:.68rem">${scope.label}</span>
+                <span class="badge badge-scope ${scope.cls}" style="border-radius: 0.375rem;font-size:.68rem">${scope.label}</span>
             </td>
             <td class="text-center">
-                <span class="badge badge-status ${stat.cls}" style="border-radius:6px;font-size:.68rem">
+                <span class="badge badge-status ${stat.cls}" style="border-radius: 0.375rem;font-size:.68rem">
                     <i class="bi ${stat.icon} me-1"></i>${escHtml(client.status)}
                 </span>
             </td>
@@ -200,7 +200,7 @@ function openViewModal(id) {
 
     clientModalBody.innerHTML = `
         <div class="d-flex align-items-center gap-3 mb-4">
-            <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#003bfd,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem;flex-shrink:0">
+            <div style="width: 3.25rem;height: 3.25rem;border-radius:50%;background:linear-gradient(135deg,#003bfd,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem;flex-shrink:0">
                 ${escHtml(first.charAt(0))}${escHtml(last !== "-" ? last.charAt(0) : "")}
             </div>
             <div>
