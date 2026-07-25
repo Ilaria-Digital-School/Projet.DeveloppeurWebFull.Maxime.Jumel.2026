@@ -1,35 +1,35 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Souflydev - Blog</title>
+    <title>Souflydev - My Blog</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- seo optimization  -->
     <meta
       name="description"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta
       name="keywords"
-      content="Portfolio, Developpeur web, application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta
       property="og:title"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta
       property="og:description"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta property="og:image" content="./assets/images/upload/soulfydev.webp">
-    <meta property="og:url" content="">
+    <meta property="og:url" content="https://soulfyhub.fr">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale" content="en_US">
     <meta
       property="og:site_name"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta property="og:image:width" content="1920">
     <meta property="og:image:height" content="1080">
     <meta
       property="og:image:alt"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta property="og:image:type" content="image/jpeg">
     <meta
       property="og:image:secure_url"
@@ -38,15 +38,15 @@
     <meta property="og:image:secure_url:height" content="1080">
     <meta
       property="og:image:secure_url:alt"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta property="og:image:secure_url:type" content="image/jpeg">
     <meta name="twitter:card" content="summary_large_image">
     <meta
       name="twitter:title"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta
       name="twitter:description"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta
       name="twitter:image"
       content="./assets/images/upload/soulfydev.webp">
@@ -54,13 +54,13 @@
     <meta name="twitter:image:height" content="1080">
     <meta
       name="twitter:image:alt"
-      content="Portfolio Developpeur web et application mobile">
+      content="My Blog, Web and mobile application developer">
     <meta name="twitter:image:type" content="image/jpeg">
     <meta name="twitter:site" content="@soulfydev">
     <meta name="twitter:creator" content="@soulfydev">
     <meta name="author" content="Maxime Jumel">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="French">
+    <meta name="language" content="English">
     <meta name="revisit-after" content="7 days">
     <meta name="expires" content="Fri, 14 Jun 2026 17:34:25 GMT">
     <meta name="rating" content="general">
@@ -80,12 +80,13 @@
   </head>
 
   <body>
-    <!-- nav bar  -->
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-black" href="../index.html"
-          >SOULFYDEV</a
-        >
+      <div class="container-fluid px-4 px-lg-5">
+        <a class="navbar-brand fw-bold text-dark" href="../index.html" aria-label="Retour à l'accueil - SOULFYDEV">
+          <span class="text-success fw-bold">SOUFLY</span>DEV
+        </a>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -93,46 +94,35 @@
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-label="Ouvrir ou fermer le menu de navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto gap-4">
             <li class="nav-item">
-              <a
-                class="nav-link active mx-2 fs-4"
-                aria-current="page"
-                href="../index.html#hero-top"
-                >Home</a
-              >
+              <a class="nav-link fw-bold" href="../index.html">Home</a>
             </li>
-            <li class="nav-item mx-2 fs-4">
+            <li class="nav-item">
               <a class="nav-link fw-bold" href="./page.html">Pages</a>
             </li>
-            <li class="nav-item mx-2 fs-4">
-              <a class="nav-link fw-bold" href="./portefolio.html">Portfolio</a>
+            <li class="nav-item">
+              <a class="nav-link fw-bold" href="./portfolio.html">Portfolio</a>
             </li>
-            <li class="nav-item mx-2 fs-4">
-              <a class="nav-link fw-bold" href="./blog.html">Blog</a>
+            <li class="nav-item">
+              <a class="nav-link active fw-bold" aria-current="page" href="./blog.html">Blog</a>
             </li>
-            <li class="nav-item mx-2 fs-4">
-              <a class="nav-link fw-bold" href="./contact.html">contact</a>
+            <li class="nav-item">
+              <a class="nav-link fw-bold" href="./contact.html">Contact</a>
             </li>
           </ul>
           <ul class="navbar-nav">
             <li class="nav-item">
               <a
-                class="nav-link fw-bold"
-                href="#"
-                style="
-                  color: #ffffff;
-                  background-color: #000000;
-                  border-radius: 0.3125rem;
-                  padding: 0.9rem 2rem;
-                "
-                >WORKS WITH US</a
-              >
+                class="nav-link fw-bold text-white bg-dark rounded px-4 py-2"
+                href="./contact.html?section=work"
+              >WORKS WITH US</a>
             </li>
           </ul>
         </div>
@@ -150,20 +140,20 @@
             <div
               class="col-12 col-md-6 col-lg-4 d-flex align-items-center justify-content-center"
             >
-              <h1 class="text-white fs-1 fw-bold hero-title">Blog</h1>
+              <h1 class="text-white fs-1 fw-bold hero-title">My Blog</h1>
             </div>
             <div
               class="col-12 col-md-6 col-lg-8 d-flex align-items-center justify-content-center hero-text"
             >
               <p class="text-white fs-5 text-start" style="max-width: 50rem">
-                Les articles publiés ici sont rédigés par le fondateur de
-                SoulfyDev. Vous pouvez retrouver toutes mes nouveautés, mes
-                projets et mes articles de blog directement sur cet espace. Le
-                blog a été créé pour partager mes connaissances, mes découvertes
-                et mes expériences avec vous. Que ce soit du développement, de
-                l’infrastructure, des tutoriels ou des retours d’expérience,
-                chaque article a pour but d’apporter quelque chose d’utile et
-                inspirant.
+                    The articles published here are written by the founder of
+                    SoulfyDev. You can find all my latest updates, my
+                    projects and my blog posts right here. The
+                    blog was created to share my knowledge, my discoveries
+                    and my experiences with you. Whether it’s about development,
+                    infrastructure, tutorials or insights from my own experience,
+                    each article aims to offer something useful and
+                    inspiring.
               </p>
             </div>
           </div>
@@ -174,7 +164,7 @@
       <div class="container py-5">
         <div class="row">
           <div class="col-12 mb-4">
-            <h2 class="fw-bold display-5">Liste des articles</h2>
+            <h2 class="fw-bold display-5">List of articles</h2>
             <hr class="border-dark">
           </div>
         </div>
@@ -183,11 +173,11 @@
         <div class="row">
           <div class="col-12 col-md-4 col-lg-3 mb-4">
             <div class="card border-0 shadow-sm p-4">
-              <h3 class="h5 fw-bold mb-3">Catégories</h3>
+              <h3 class="h5 fw-bold mb-3">Categories</h3>
               <ul class="list-unstyled">
                 <li class="mb-2">
                   <a href="#" class="text-dark text-decoration-none"
-                    >Développement</a
+                    >Development</a
                   >
                 </li>
                 <li class="mb-2">
@@ -195,7 +185,7 @@
                 </li>
                 <li class="mb-2">
                   <a href="#" class="text-dark text-decoration-none"
-                    >Tutoriels</a
+                    >Tutorials</a
                   >
                 </li>
                 <li class="mb-2">
@@ -205,7 +195,7 @@
                 </li>
                 <li class="mb-2">
                   <a href="#" class="text-dark text-decoration-none"
-                    >Retour d'expérience</a
+                    >Feedback</a
                   >
                 </li>
               </ul>
@@ -242,16 +232,16 @@
                     class="img-fluid card-img-top bg-black"
                     alt="Illustration d'avis clients positifs et notation étoiles">
                   <div class="card-body d-flex flex-column">
-                    <h3 class="card-title h5 fw-bold">Les avis clients</h3>
+                    <h3 class="card-title h5 fw-bold">Customer Testimonials</h3>
                     <p class="card-text text-muted flex-grow-1">
-                      Les témoignages clients sont de puissants outils de preuve
-                      sociale qui renforcent la crédibilité d’une entreprise.
+                      Customer testimonials are powerful tools for social proof
+                      that boost a company’s credibility.
                     </p>
                     <a
                       href="#"
                       class="btn btn-dark text-white fw-bold px-4 py-2 align-self-start"
                       style="border-radius: 3.125rem"
-                      >Lire plus</a
+                      >Read more</a
                     >
                   </div>
                 </div>
@@ -263,16 +253,16 @@
                     class="card-img-top bg-black img-fluid"
                     alt="Illustration marketing digital avec différents canaux">
                   <div class="card-body d-flex flex-column">
-                    <h3 class="card-title h5 fw-bold">Marketing digital</h3>
+                    <h3 class="card-title h5 fw-bold">Digital Marketing</h3>
                     <p class="card-text text-muted flex-grow-1">
-                      Aujourd'hui, être visible en ligne n'est plus une option,
-                      c'est une nécessité. Que vous soyez
+                      Today, being visible online is no longer an option,
+                      it’s a necessity. Whether you are a
                     </p>
                     <a
                       href="#"
                       class="btn btn-dark text-white fw-bold px-4 py-2 align-self-start"
                       style="border-radius: 3.125rem"
-                      >Lire plus</a
+                      >Read more</a
                     >
                   </div>
                 </div>
@@ -284,16 +274,16 @@
                     class="card-img-top"
                     alt="Illustration 3D du développement web et du codage">
                   <div class="card-body d-flex flex-column">
-                    <h3 class="card-title h5 fw-bold">Developpement web</h3>
+                    <h3 class="card-title h5 fw-bold">Web Development</h3>
                     <p class="card-text text-muted flex-grow-1">
-                      Ouvrir une entreprise est un rêve pour beaucoup, mais cela
-                      demande du courage, de la détermination et de la pré
+                      Starting a business is a dream for many, but it requires
+                      courage, determination and preparation
                     </p>
                     <a
                       href="#"
                       class="btn btn-dark text-white fw-bold px-4 py-2 align-self-start"
                       style="border-radius: 3.125rem"
-                      >Lire plus</a
+                      >Read more</a
                     >
                   </div>
                 </div>
@@ -306,18 +296,18 @@
                     alt="Illustration sur comment héberger son site web de manière optimale">
                   <div class="card-body d-flex flex-column">
                     <h3 class="card-title h5 fw-bold">
-                      Comment heberger mon site web
+                      How to host my website
                     </h3>
                     <p class="card-text text-muted flex-grow-1">
-                      Grace a ce partenaire partez a la decoupe des meilleur
-                      promos sur le site souflyhub.com pour heberger votre site
-                      web .
+                      Thanks to this partner, discover the best deals on the
+                      site souflyhub.com to host your website
+                      .
                     </p>
                     <a
                       href="#"
                       class="btn btn-dark text-white fw-bold px-4 py-2 align-self-start"
                       style="border-radius: 3.125rem"
-                      >Lire plus</a
+                      >Read more</a
                     >
                   </div>
                 </div>
@@ -338,7 +328,7 @@
             </h3>
             <form class="mt-4" style="max-width: 25rem">
               <label for="newsletter-email" class="visually-hidden"
-                >Votre adresse email</label
+                >Your email here</label
               >
               <div
                 class="d-flex align-items-center border-bottom border-dark pb-2"
@@ -383,16 +373,6 @@
               <li class="mb-2">
                 <a href="./contact.html" class="text-dark text-decoration-none"
                   >Contact</a
-                >
-              </li>
-              <li class="mb-2">
-                <a href="./register.html" class="text-dark text-decoration-none"
-                  >register</a
-                >
-              </li>
-              <li class="mb-2">
-                <a href="./login.html" class="text-dark text-decoration-none"
-                  >login</a
                 >
               </li>
               <li class="mb-2">
