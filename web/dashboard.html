@@ -40,14 +40,14 @@
                         <!-- Desktop Logo -->
                         <div class="logo p-4 d-none d-md-flex align-items-center">
                             <i class="fa-solid fa-bars text-white fs-5"></i>
-                            <span class="text-white mx-2 fw-bold">The BPT</span>
+                            <span class="text-white mx-2 fw-bold">The Souflyhub.fr</span>
                         </div>
                         
                         <!-- User Card -->
                         <div class="w-100 d-flex align-items-center justify-content-center py-3">
                             <div class="user-info text-center">
                                 <img src="https://i.pravatar.cc/150" alt="Avatar d'une personne inconnue" class="rounded-circle" style="width: 5rem; height: 5rem;">
-                                <p class="text-white mt-2 mb-0 fw-semibold">Jean Dupont</p>
+                                <p class="text-white mt-2 mb-0 fw-semibold">Souflydev</p>
                                 <span class="text-muted text-small d-block" style="font-size: 0.75rem;">Developpeur Web</span>
                             </div>
                         </div>
@@ -58,10 +58,10 @@
                                 <div class="col-12 px-2">
                                     <ul class="nav flex-column nav-items">
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-house"></i>Home</a>
+                                            <a href="../index.html" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-house"></i>Home</a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-box"></i>Products</a>
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalProducts"><i class="fa-solid fa-box"></i>Products</a>
                                         </li>
                                         <li class="nav-item mb-2">
                                             <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalAccountProfile"><i class="fa-solid fa-user"></i>Accounts</a>
@@ -81,7 +81,7 @@
                             <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://i.pravatar.cc/150" alt="Avatar d'une personne inconnue" width="32" height="32" class="rounded-circle me-2">
                                 <div class="flex-grow-1 min-w-0 me-2">
-                                    <span class="d-block text-truncate fw-semibold text-light" style="font-size: 0.85rem;">Jean Dupont</span>
+                                    <span class="d-block text-truncate fw-semibold text-light" style="font-size: 0.85rem;">Soufly</span>
                                     <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Admin</small>
                                 </div>
                                 <i class="fa-solid fa-ellipsis-vertical text-muted fs-6"></i>
@@ -766,6 +766,7 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
                 <div class="modal-footer border-top bg-light">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -774,6 +775,86 @@
         </div>
      </div>
 
+     <!-- producte list  -->
+      <div class="modal fade" id="modalProducts" tabindex="-1" aria-labelledby="modalProductsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalProductsLabel">Product List</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    
+                    <th scope="row">1</th>
+                    <td>Product 1</td>
+                    <td>$10</td>
+                    <td>100</td>
+                    <td><button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProduct1">Edit</button></td>
+                  
+                  </tr>
+                  <tr>
+                    
+                    <th scope="row">2</th>
+                    <td>Product 2</td>
+                    <td>$20</td>
+                    <td>200</td>
+                     <td><button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProduct1">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalProduct1" tabindex="-1" aria-labelledby="modalProduct1Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalProduct1Label">Product 1</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="productName" class="form-label">Product Name</label>
+                  <input type="text" class="form-control" id="productName" value="Product 1">
+                </div>
+                <div class="mb-3">
+                  <label for="productPrice" class="form-label">Product Price</label>
+                  <input type="text" class="form-control" id="productPrice" value="$10">
+                </div>
+                <div class="mb-3">
+                  <label for="productStock" class="form-label">Product Stock</label>
+                  <input type="text" class="form-control" id="productStock" value="100">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
         
     
 
