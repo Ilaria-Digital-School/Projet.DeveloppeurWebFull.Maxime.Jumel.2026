@@ -283,6 +283,9 @@
                     Logo typographique minimaliste moderne pour une agence
                     marketing.
                   </p>
+                  <a class="btn start-0 d-block display-6 border-1 border-light text-white mt-3" id="read-article-btn" data-bs-toggle="modal" data-bs-target="#projectModal"
+                    href="#" aria-label="Lire l'article : Doing business in the digital age">Read Article
+                  </a>
                 </div>
               </div>
             </div>
@@ -303,6 +306,9 @@
                   <p class="card-text text-light mb-0">
                     Learning digital skills through practical, project-based activities.
                   </p>
+                  <a class="btn start-0 d-block display-6 border-1 border-light text-white mt-3" id="read-article-btn" data-bs-toggle="modal" data-bs-target="#projectModal"
+                    href="#" aria-label="Lire l'article : Doing business in the digital age">Read Article
+                  </a>
                 </div>
               </div>
             </div>
@@ -323,6 +329,10 @@
                   <p class="card-text text-light mb-0">
                     Managing and optimising databases for businesses.
                   </p>
+                  <a class="btn start-0 d-block display-6 border-1 border-light text-white mt-3" data-bs-toggle="modal" data-bs-target="#projectModal"
+                    href="#" aria-label="Lire l'article : Data Mining">Read Article
+
+                  </a>
                 </div>
               </div>
             </div>
@@ -451,7 +461,7 @@
               digital transformation of your business.
             </p>
             <a href="#" class="btn start-0 d-block display-6 border-1 border-light text-white"
-              aria-label="Lire l'article : Intelligence Artificielle">Read Article</a>
+              aria-label="Lire l'article : Intelligence Artificielle" data-bs-toggle="modal" data-bs-target="#articleModal">Read Article</a>
           </div>
         </div>
         <div class="card" style="max-width: 20rem; min-height: 20rem">
@@ -471,7 +481,7 @@
               implementing solutions tailored to your needs.
             </p>
             <a href="#" class="btn start-0 d-block display-6 border-1 border-light text-white"
-              aria-label="Lire l'article : Data Management">Read Article</a>
+              aria-label="Lire l'article : Data Management" data-bs-toggle="modal" data-bs-target="#articleModal">Read Article</a>
           </div>
         </div>
         <div class="card" style="max-width: 20rem; min-height: 20rem">
@@ -490,7 +500,7 @@
               Our marketing experts will support you in the digital transformation of your business.
             </p>
             <a href="#" class="btn start-0 d-block display-6 border-1 border-light text-white"
-              aria-label="Lire l'article : Marketing">Read Article</a>
+              aria-label="Lire l'article : Marketing" data-bs-toggle="modal" data-bs-target="#articleModal">Read Article</a>
           </div>
         </div>
       </article>
@@ -630,6 +640,47 @@
           </div>
         </div>
       </footer>
+
+
+
+
+      <!-- modal recource projet -->
+      <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="projectModalLabel">Project Title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img src="./assets/images/img-random/pexels-william-fortunato-6140477.webp" alt="" class="img-fluid mb-3" id="projectModalImage">
+              <p id="projectModalDescription">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal article -->
+      <div class="modal fade" id="articleModal" tabindex="-1" aria-labelledby="articleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="articleModalLabel">Article Title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <img src="./assets/images/img-random/pexels-william-fortunato-6140477.webp" alt="" class="img-fluid mb-3" id="articleModalImage">
+              <p id="articleModalDescription">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <span id="articleModalDate">
+                Published on: March 26, 2024
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <script src="./assets/js/recherche.js"></script>
       <script src="./assets/js/script.js"></script>

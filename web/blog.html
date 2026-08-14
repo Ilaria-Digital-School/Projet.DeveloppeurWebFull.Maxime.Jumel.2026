@@ -305,7 +305,7 @@
                     <a
                       href="#"
                       class="btn btn-dark text-white fw-bold px-4 py-2 align-self-start"
-                      style="border-radius: 3.125rem"
+                      style="border-radius: 3.125rem" data-bs-toggle="modal" data-bs-target="#projectModal"
                       >Read more</a
                     >
                   </div>
@@ -448,8 +448,45 @@
 
 
 
-    <!-- modal projects -->
-     
+    <!-- modal blog -->
+    <div
+      class="modal fade"
+      id="projectModal"
+      tabindex="-1"
+      aria-labelledby="projectModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="projectModalLabel">Project Title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+            <img src="../assets/images/projet/menu/geralt-data-4404730.webp" alt="" class="img-fluid mb-3" id="projectModalImage">
+
+            <p id="projectModalDate" class="text-muted text-end mb-3" style="max-width: 39rem; margin: 0 auto;">
+              Published on: March 26, 2024
+            </p>
+            <p id="projectModalDescription" style="text-align: justify; text-justify: inter-word; max-width: 39rem; text-align: justify; text-justify: inter-word; max-width: 35rem; margin: 0 auto;">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur veritatis sint dignissimos asperiores autem ipsam non facere qui error, voluptates quidem voluptas rem totam repellat quam voluptate aliquid. Harum, veniam!
+              Consequatur numquam exercitationem vero aliquid? Molestiae inventore, cum dolor odit atque quas nesciunt aspernatur velit totam officiis eligendi iure pariatur rerum. Quidem consequuntur numquam illum vitae inventore eaque iusto laboriosam?
+              Alias unde voluptatum sapiente nobis tempore corporis possimus enim consequatur reiciendis ab! Maxime, voluptatem natus? Ipsam, eaque? Inventore, eaque ea minima, unde dicta tempora, explicabo eos obcaecati maiores nobis deleniti?
+              Aliquam ab delectus iusto obcaecati fugit labore magni explicabo alias atque assumenda dolores suscipit quaerat et quidem, in, optio enim illo veritatis sequi vitae voluptates officia quo quae! Voluptates, ipsum.
+              Laboriosam perspiciatis quaerat cumque eos quas totam illum illo, corrupti nisi assumenda nam voluptas blanditiis obcaecati ducimus explicabo iure adipisci fugit facere vel autem iusto. Iusto porro mollitia nobis quia.
+              Repudiandae beatae minima ullam quia et, suscipit ad magni ipsum tempora qui mollitia in soluta natus, voluptatibus excepturi rem accusantium quis. Quia explicabo minus aut nihil aperiam doloribus molestias perspiciatis.
+              Numquam nisi libero, magnam praesentium nihil obcaecati vitae ullam eos, magni tempore, dignissimos repellendus ex nam aliquid facilis doloremque ipsa aspernatur possimus exercitationem blanditiis autem! Soluta, sint! Mollitia, perferendis facilis?
+
+            </p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
