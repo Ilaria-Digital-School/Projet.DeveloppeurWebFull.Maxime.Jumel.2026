@@ -42,10 +42,35 @@ const upload = multer({
     }
 });
 
-// Routes GET
+// Routes GET — Pages publiques
 router.get("/", (req, res) => {
-    res.render("index");
+    res.render("index", { user: req.session?.user || null });
 });
+
+router.get("/about", (req, res) => {
+    res.render("about", { user: req.session?.user || null });
+});
+
+router.get("/blog", (req, res) => {
+    res.render("blog", { user: req.session?.user || null });
+});
+
+router.get("/contact", (req, res) => {
+    res.render("contact", { user: req.session?.user || null });
+});
+
+router.get("/portfolio", (req, res) => {
+    res.render("portfolio", { user: req.session?.user || null });
+});
+
+router.get("/project", (req, res) => {
+    res.render("project", { user: req.session?.user || null });
+});
+
+router.get("/page", (req, res) => {
+    res.render("page", { user: req.session?.user || null });
+});
+
 
 // register routes
 router.get("/register", (req, res) => {
@@ -344,19 +369,39 @@ router.post("/api/admin/tickets/:userId/:ticketId/reply", isAdmin, async (req, r
     }
 });
 
-// Admin : Supprimer un ticket client
-router.get("/api/admin/tickets/:userId/:ticketId/delete", isAdmin, async (req, res) => {
+// Admin : Supprimer un ticket client (POST — convention REST)
+router.post("/api/admin/tickets/:userId/:ticketId/delete", isAdmin, async (req, res) => {
     try {
         const { userId, ticketId } = req.params;
         const clientUser = await User.findById(userId);
-        if (clientUser) {
-            clientUser.ticketClient = clientUser.ticketClient.filter(t => t._id.toString() !== ticketId);
-            clientUser.ticket = clientUser.ticketClient.length;
-            await clientUser.save();
+        if (!clientUser) {
+            if (req.xhr || req.headers.accept?.includes("json")) {
+                return res.status(404).json({ success: false, errcode: 404, message: "Utilisateur introuvable" });
+            }
+            return res.redirect("/dashboard?error=client_not_found");
+        }
+
+        const ticketExists = clientUser.ticketClient.some(t => t._id.toString() === ticketId);
+        if (!ticketExists) {
+            if (req.xhr || req.headers.accept?.includes("json")) {
+                return res.status(404).json({ success: false, errcode: 404, message: "Ticket introuvable" });
+            }
+            return res.redirect("/dashboard?error=ticket_not_found");
+        }
+
+        clientUser.ticketClient = clientUser.ticketClient.filter(t => t._id.toString() !== ticketId);
+        clientUser.ticket = clientUser.ticketClient.length;
+        await clientUser.save();
+
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(200).json({ success: true, message: "Ticket supprimé avec succès" });
         }
         return res.redirect("/dashboard?success=ticket_deleted");
     } catch (error) {
         console.error("Erreur suppression ticket:", error);
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(500).json({ success: false, errcode: 500, message: "Erreur serveur" });
+        }
         return res.redirect("/dashboard?error=server_error");
     }
 });
