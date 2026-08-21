@@ -3,3 +3,4 @@ node_modules/
 public/uploads/*.webp
 *.log
 .DS_Store
+.bat
