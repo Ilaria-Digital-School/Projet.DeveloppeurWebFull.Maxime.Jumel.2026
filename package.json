@@ -1,0 +1,49 @@
+{
+  "name": "back-end",
+  "version": "0.0.1",
+  "description": "un back end avec une bases de donne est stcoker des donner pour le projet files rouge du projet de exeamin de ilaria digital school validation de projet exam ce projet seras devloper en nodejs express ejs avec ue bases de donner en mongodb",
+  "keywords": [
+    "portfolio",
+    "dev",
+    "html",
+    "css",
+    "bootrap",
+    "nodejs",
+    "express",
+    "mongoose",
+    "jwtkey",
+    "login",
+    "models"
+  ],
+  "homepage": "https://github.com/Ilaria-Digital-School/Projet.DeveloppeurWebFull.Maxime.Jumel.2026#readme",
+  "bugs": {
+    "url": "https://github.com/Ilaria-Digital-School/Projet.DeveloppeurWebFull.Maxime.Jumel.2026/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ilaria-Digital-School/Projet.DeveloppeurWebFull.Maxime.Jumel.2026.git"
+  },
+  "license": "MIT",
+  "author": "soufly9009",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "chalk": "^4.1.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.3",
+    "multer": "^2.2.0",
+    "nodemon": "^3.1.14"
+  }
+}
