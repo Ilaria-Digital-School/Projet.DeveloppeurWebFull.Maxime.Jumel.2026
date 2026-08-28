@@ -26,4 +26,4 @@ Disallow: /js/
 Disallow: /api/
 
 # Emplacement du sitemap (à adapter avec ton vrai nom de domaine)
-Sitemap: https://www.portfolio.souflyhub.fr/sitemap.xml
+Sitemap: https://portfolio.souflyhub.fr/sitemap.xml
