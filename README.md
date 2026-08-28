@@ -10,11 +10,10 @@ Le projet contient une page d'accueil principale et plusieurs pages dans le doss
 - `web/about.html`
 - `web/blog.html`
 - `web/contact.html`
-- `web/contact_admin.html`
-- `web/dasboard.html`
+- `web/dashboard.html`
 - `web/login.html`
-- `web/portefolio.html`
-- `web/project.html`
+- `web/portfolio.html`
+- `web/projet.html`
 - `web/register.html`
 
 ## Technologies
