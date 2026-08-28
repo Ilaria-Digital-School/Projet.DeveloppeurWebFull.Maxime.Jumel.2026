@@ -1,0 +1,29 @@
+# robots.txt pour Souflydev
+# Indique aux robots d'exploration (Googlebot, Bingbot, etc.) quelles pages indexer
+
+User-agent: *
+
+# Pages publiques à indexer (bon pour le SEO)
+Allow: /index.html
+Allow: /about.html
+Allow: /blog.html
+Allow: /contact.html
+Allow: /portfolio.html
+Allow: /project.html
+Allow: /page.html
+
+# Pages privées / sans intérêt SEO à exclure de l'indexation
+Disallow: /dashboard.html
+Disallow: /devis.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /ticketClient.html
+
+# Dossiers techniques à ne jamais exposer aux robots
+Disallow: /.gitignore
+Disallow: /css/
+Disallow: /js/
+Disallow: /api/
+
+# Emplacement du sitemap (à adapter avec ton vrai nom de domaine)
+Sitemap: https://www.souflydev.com/sitemap.xml
