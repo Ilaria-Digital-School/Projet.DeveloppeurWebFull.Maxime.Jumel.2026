@@ -46,6 +46,7 @@ Le projet est statique, il ne requiert pas d'installation de dependances.
 - Hero section avec visuels
 - Cartes de services
 - Carousel de projets
+- Modal boostrap script
 - Section articles et partenaires
 - Pied de page avec liens et contact
 
