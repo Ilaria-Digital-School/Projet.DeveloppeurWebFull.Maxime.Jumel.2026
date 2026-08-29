@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://portfolio.souflyhub.fr/#website",
+      "url": "https://portfolio.souflyhub.fr/",
+      "name": "Souflydev",
+      "alternateName": "Maxime Jumel Portfolio",
+      "description": "Portfolio, Web and mobile application developer. Creating high-performance websites, applications, and digital experiences.",
+      "inLanguage": ["en", "fr"],
+      "publisher": {
+        "@id": "https://portfolio.souflyhub.fr/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://portfolio.souflyhub.fr/#person",
+      "name": "Maxime Jumel",
+      "alternateName": "Souflydev",
+      "url": "https://portfolio.souflyhub.fr/",
+      "image": "https://portfolio.souflyhub.fr/assets/images/upload/soulfydev.webp",
+      "jobTitle": "Full Stack Web & Mobile Developer",
+      "description": "Full Stack Web and Mobile Developer specialized in modern JavaScript, responsive interfaces, and scalable architectures.",
+      "worksFor": {
+        "@id": "https://portfolio.souflyhub.fr/#organization"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Coulommiers",
+        "addressRegion": "Île-de-France",
+        "postalCode": "77120",
+        "addressCountry": "FR"
+      },
+      "sameAs": [
+        "https://github.com/soulfydev",
+        "https://twitter.com/soulfydev"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://portfolio.souflyhub.fr/#organization",
+      "name": "Souflydev Studio",
+      "url": "https://portfolio.souflyhub.fr/",
+      "logo": "https://portfolio.souflyhub.fr/assets/images/upload/soulfydev.webp",
+      "image": "https://portfolio.souflyhub.fr/assets/images/upload/soulfydev.webp",
+      "description": "Souflydev creates modern websites, mobile applications, and digital experiences tailored to business growth.",
+      "priceRange": "$$",
+      "email": "contact@souflyhub.fr",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Coulommiers",
+        "addressRegion": "Île-de-France",
+        "postalCode": "77120",
+        "addressCountry": "FR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.8096,
+        "longitude": 3.0822
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Digital & Development Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Web Application Development",
+              "description": "Full stack web applications built with modern frontend and backend frameworks."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Mobile Application Development",
+              "description": "Cross-platform mobile apps for iOS and Android with responsive design."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "UI/UX Design & SEO Strategy",
+              "description": "Accessible, search engine optimized interfaces compliant with WCAG standards."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

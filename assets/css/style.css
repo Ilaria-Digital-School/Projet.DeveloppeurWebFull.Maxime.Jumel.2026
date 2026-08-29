@@ -156,6 +156,36 @@ nav ul li a.links,
   color: #c8ff00;
 }
 
+/* ── Navigation CTA Button ('WORKS WITH US') ── */
+.nav-cta-btn,
+.navbar-nav .nav-link.bg-dark,
+.navbar-nav .nav-link.text-white.bg-dark {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border-radius: 0.375rem !important;
+  padding: 0.5rem 1.25rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease-in-out !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.nav-cta-btn:hover,
+.nav-cta-btn:focus,
+.navbar-nav .nav-link.bg-dark:hover,
+.navbar-nav .nav-link.bg-dark:focus,
+.navbar-nav .nav-link.text-white.bg-dark:hover,
+.navbar-nav .nav-link.text-white.bg-dark:focus {
+  background-color: #000000 !important;
+  color: #c8ff00 !important;
+  border-color: #c8ff00 !important;
+  box-shadow: 0 0 12px rgba(200, 255, 0, 0.25) !important;
+}
+
 .nav-search {
   display: flex;
   align-items: center;
@@ -855,13 +885,42 @@ html {
     text-align: center !important;
   }
   #navbarNav {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(0.625rem);
-    padding: 0.9375rem;
+    padding: 1.25rem 1rem;
     border-radius: 0 0 0.75rem 0.75rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
   }
-  #navbarNav a {
-    color: #000 !important;
+  #navbarNav a.nav-link:not(.bg-dark):not(.nav-cta-btn) {
+    color: #1a1a1a !important;
+    padding: 0.625rem 1rem;
+  }
+  #navbarNav a.nav-link:not(.bg-dark):not(.nav-cta-btn):hover,
+  #navbarNav a.nav-link.active:not(.bg-dark):not(.nav-cta-btn) {
+    color: #0d6efd !important;
+  }
+  #navbarNav a.bg-dark,
+  #navbarNav a.nav-link.bg-dark,
+  #navbarNav .nav-cta-btn {
+    color: #ffffff !important;
+    background-color: #111827 !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 0.75rem !important;
+    padding: 0.65rem 1rem !important;
+    border-radius: 0.375rem !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+  }
+  #navbarNav a.bg-dark:hover,
+  #navbarNav a.nav-link.bg-dark:hover,
+  #navbarNav .nav-cta-btn:hover,
+  #navbarNav a.bg-dark:focus,
+  #navbarNav a.nav-link.bg-dark:focus,
+  #navbarNav .nav-cta-btn:focus {
+    color: #c8ff00 !important;
+    background-color: #000000 !important;
   }
 }
 @media (max-width: 35.9375rem) {
