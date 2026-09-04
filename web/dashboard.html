@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Souflydev - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- IMPORT ICON BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.3/font/bootstrap-icons.min.css">
+    <!-- IMPORT FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- import css dashboard -->
+    <link rel="stylesheet" href="../assets/css/_dashboard.css">
+
+    <!-- seo optimization  -->
+    <meta name="description" content="Souflydev, web and mobile application developer. Professional services for businesses and individuals.">
+    <meta name="keywords" content="Web and mobile application developer">
+    <meta property="og:title" content="Web and mobile application developer">
+    <meta property="og:description" content="Web and mobile application developer">
+    <meta property="og:image" content="https://portfolio.souflyhub.fr/assets/images/upload/soulfydev.webp">
+    <meta property="og:url" content="https://portfolio.souflyhub.fr/web/dashboard.html">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Web and mobile application developer">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="1080">
+    <meta property="og:image:alt" content="Web and mobile application developer">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:secure_url" content="https://portfolio.souflyhub.fr/assets/images/upload/soulfydev.webp">
+    <meta property="og:image:secure_url:width" content="1920">
+    <meta property="og:image:secure_url:height" content="1080">
+    <meta property="og:image:secure_url:alt" content="Web and mobile application developer">
+    <meta property="og:image:secure_url:type" content="image/jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web and mobile application developer">
+    <meta name="twitter:description" content="Web and mobile application developer">
+    <meta name="twitter:image" content="https://portfolio.souflyhub.fr/assets/images/upload/soulfydev.webp">
+    <meta name="twitter:image:width" content="1920">
+    <meta name="twitter:image:height" content="1080">
+    <meta name="twitter:image:alt" content="Web and mobile application developer">
+    <meta name="twitter:image:type" content="image/jpeg">
+    <meta name="twitter:site" content="@soulfydev">
+    <meta name="twitter:creator" content="@soulfydev">
+    <meta name="author" content="Maxime Jumel">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="French">
+    <meta name="rating" content="general">
+    <meta name="distribution" content="global">
+    <meta name="category" content="Portfolio">
+    <meta name="geo.region" content="FR-IDF">
+    <meta name="geo.position" content="48.8096;3.0822">
+    <meta name="ICBM" content="48.8096, 3.0822">
+    <!-- JSON-LD SEO Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Souflydev Dashboard",
+      "url": "https://portfolio.souflyhub.fr/web/dashboard.html",
+      "description": "Client and project management dashboard for Souflydev web & mobile services.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "creator": {
+        "@type": "Person",
+        "name": "Maxime Jumel",
+        "alternateName": "Souflydev"
+      }
+    }
+    </script>
+    <!-- finish seo optimization  -->
+    
+</head>
+<body class="d-flex flex-column flex-md-row" style="height: 100vh; overflow: hidden; background-color: #f8f9fa;">
+    
+    <!-- slid bar section  -->
+    <header class="border-end border-secondary border-opacity-25" style="background-color: #181a1bff;">
+        <!-- Top navbar for mobile only -->
+        <div class="navbar navbar-dark bg-dark d-md-none px-3 py-2 w-100 d-flex justify-content-between align-items-center">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <span class="navbar-brand mb-0 h1 fs-5 fw-bold text-white">The BPT</span>
+            <div style="width: 1.875rem;"></div> <!-- Spacer to align logo -->
+        </div>
+
+        <!-- Sidebar offcanvas/desktop container -->
+        <div class="offcanvas-md offcanvas-start sidebar text-white border-0" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel" role="region">
+            <div class="d-flex flex-column h-100" style="background-color: #181a1bff;">
+                <!-- Offcanvas header (visible on mobile only) -->
+                <div class="offcanvas-header d-md-none p-4 pb-2 text-white">
+                    <h2 class="offcanvas-title h5 fw-bold" id="sidebarOffcanvasLabel">The BPT</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas" aria-label="Close"></button>
+                </div>
+                
+                <div class="items-center w-100 flex-grow-1 position-relative d-flex flex-column justify-content-between">
+                    <div class="w-100">
+                        <!-- Desktop Logo -->
+                        <div class="logo p-4 d-none d-md-flex align-items-center">
+                            <i class="fa-solid fa-bars text-white fs-5"></i>
+                            <span class="text-white mx-2 fw-bold">The Souflyhub.fr</span>
+                        </div>
+                        
+                        <!-- User Card -->
+                        <div class="w-100 d-flex align-items-center justify-content-center py-3">
+                            <div class="user-info text-center">
+                                <img src="https://i.pravatar.cc/150" alt="Avatar d'une personne inconnue" class="rounded-circle" style="width: 5rem; height: 5rem;">
+                                <p class="text-white mt-2 mb-0 fw-semibold">Souflydev</p>
+                                <span class="text-muted text-small d-block" style="font-size: 0.75rem;">Developpeur Web</span>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Nav -->
+                        <div class="nav-links p-2">
+                            <nav class="row mx-0">
+                                <div class="col-12 px-2">
+                                    <ul class="nav flex-column nav-items">
+                                        <li class="nav-item mb-2">
+                                            <a href="../index.html" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-house"></i>Home</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalProducts"><i class="fa-solid fa-box"></i>Products</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalAccountProfile"><i class="fa-solid fa-user"></i>Accounts</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalOrdersHistory"><i class="fa-solid fa-clock-rotate-left"></i>Order History</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="./ticketClient.html" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-ticket"></i>Tickets</a>
+                                        </li> 
+                                        <li class="nav-item mb-2">
+                                            <a href="./devis.html" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-user-lock"></i>Devis</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Bottom dropup profile menu -->
+                    <div class="w-100 p-3 border-top border-secondary border-opacity-25 mt-auto">
+                        <div class="dropup">
+                            <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://i.pravatar.cc/150" alt="Avatar d'une personne inconnue" width="32" height="32" class="rounded-circle me-2">
+                                <div class="flex-grow-1 min-w-0 me-2">
+                                    <span class="d-block text-truncate fw-semibold text-light" style="font-size: 0.85rem;">Soufly</span>
+                                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">Admin</small>
+                                </div>
+                                <i class="fa-solid fa-ellipsis-vertical text-muted fs-6"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary border-opacity-50 w-100" aria-labelledby="profileDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAccountProfile">
+                                        <i class="fa-solid fa-user me-2 text-muted" style="width: 1rem;"></i>
+                                        <span style="font-size: 0.85rem;">Avatar</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAccountProfile">
+                                        <i class="fa-solid fa-gear me-2 text-muted" style="width: 1rem;"></i>
+                                        <span style="font-size: 0.85rem;">Paramètres</span>
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider border-secondary border-opacity-50"></li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2 text-danger" href="#">
+                                        <i class="fa-solid fa-right-from-bracket me-2" style="width: 1rem;"></i>
+                                        <span style="font-size: 0.85rem;">Déconnexion</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="flex-grow-1 p-4">
+        <div class="container-fluid">
+            <!-- Header section of the main content -->
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 pb-2 border-bottom border-secondary border-opacity-10 gap-3">
+                <div>
+                    <h1 class="h3 mb-1 fw-bold text-dark">Table de Contrôle</h1>
+                    <p class="text-muted mb-0" style="font-size: 0.9rem;">Aperçu général et statistiques de votre activité.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>Derniers 30 jours</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm d-flex align-items-center gap-2" style="background-color: #4f46e5; border-color: #4f46e5;" data-bs-toggle="modal" data-bs-target="#modalProjects">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Nouveau projet</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 0.75rem;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-3" style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-euro-sign fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-medium">+12.5%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Chiffre d'Affaires</span>
+                            <p class="fs-3 fw-bold mb-0 text-dark">45 289,00 €</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 0.75rem;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-info bg-opacity-10 text-info p-3 rounded-3" style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-users fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-medium">+8.2%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Nouveaux Membres</span>
+                            <p class="fs-3 fw-bold mb-0 text-dark">1 245</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 0.75rem;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-success bg-opacity-10 text-success p-3 rounded-3" style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-shopping-cart fs-5"></i>
+                                </div>
+                                <span class="badge bg-danger bg-opacity-10 text-danger fw-medium">-2.4%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Ventes Globales</span>
+                            <p class="fs-3 fw-bold mb-0 text-dark">856</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 0.75rem;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="bg-warning bg-opacity-10 text-warning p-3 rounded-3" style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fa-solid fa-clock fs-5"></i>
+                                </div>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-medium">+15.1%</span>
+                            </div>
+                            <span class="text-muted d-block mb-1" style="font-size: 0.85rem; font-weight: 500;">Temps de Session</span>
+                            <p class="fs-3 fw-bold mb-0 text-dark">24m 12s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area: Example Table or Chart representation -->
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-xl-8">
+                    <div class="card border-0 shadow-sm p-4" style="border-radius: 0.75rem;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="h5 fw-bold text-dark mb-0">Dernières Commandes</h2>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" style="background-color: #4f46e5; border-color: #4f46e5;" data-bs-toggle="modal" data-bs-target="#modalAddOrder">
+                                    <i class="fa-solid fa-plus" style="font-size: 0.75rem;"></i>
+                                    <span>Ajouter</span>
+                                </button>
+                                <a href="#" class="btn btn-link btn-sm text-decoration-none text-primary p-0 ms-2">Voir tout</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr style="font-size: 0.85rem; color: #6b7280;">
+                                        <th scope="col">Commande ID</th>
+                                        <th scope="col">Produit</th>
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col" class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 0.9rem;">
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90231</td>
+                                        <td>Serveur apache automatique</td>
+                                        <td>Sophie Martin</td>
+                                        <td class="text-muted">Il y a 2h</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Complété</span></td>
+                                        <td class="fw-semibold">2 499,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier" data-bs-toggle="modal" data-bs-target="#modalProjects">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer" data-bs-toggle="modal" data-bs-target="#modalDeleteOrder">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90230</td>
+                                        <td>Seo optimisation</td>
+                                        <td>Lucas Bernard</td>
+                                        <td class="text-muted">Il y a 5h</td>
+                                        <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-2.5 py-1">En cours</span></td>
+                                        <td class="fw-semibold">1 479,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier" data-bs-toggle="modal" data-bs-target="#modalProjects">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer" data-bs-toggle="modal" data-bs-target="#modalDeleteOrder">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90229</td>
+                                        <td>Applications shopify</td>
+                                        <td>Emma Petit</td>
+                                        <td class="text-muted">Hier</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Complété</span></td>
+                                        <td class="fw-semibold">629,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier" data-bs-toggle="modal" data-bs-target="#modalProjects">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer" data-bs-toggle="modal" data-bs-target="#modalDeleteOrder">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-semibold">#ORD-90228</td>
+                                        <td>Applications shopify "VENTE DE PRODUITS COSMETIQUES"</td>
+                                        <td>Thomas Dubois</td>
+                                        <td class="text-muted">Il y a 2 jours</td>
+                                        <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2.5 py-1">Annulé</span></td>
+                                        <td class="fw-semibold">1 049,00 €</td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Modifier" data-bs-toggle="modal" data-bs-target="#modalProjects">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer" data-bs-toggle="modal" data-bs-target="#modalDeleteOrder">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 0.75rem;">
+                        <h2 class="h5 fw-bold text-dark mb-4">Activité Récente</h2>
+                        <div class="position-relative ps-4 border-start border-light border-2" style="border-left-style: dashed !important;">
+                            <div class="mb-4 position-relative">
+                                <span class="position-absolute start-0 top-0 translate-middle bg-primary rounded-circle" style="width: 0.625rem; height: 0.625rem; margin-left: -1.0625rem; margin-top: 0.375rem;"></span>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">14:32 - Aujourd'hui</small>
+                                <span class="fw-semibold text-dark" style="font-size: 0.85rem;">Mise à jour du système effectuée</span>
+                                <p class="text-muted mb-0" style="font-size: 0.8rem;">La version v2.4.1 a été déployée avec succès.</p>
+                            </div>
+                            <div class="mb-4 position-relative">
+                                <span class="position-absolute start-0 top-0 translate-middle bg-success rounded-circle" style="width: 0.625rem; height: 0.625rem; margin-left: -1.0625rem; margin-top: 0.375rem;"></span>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">11:15 - Aujourd'hui</small>
+                                <span class="fw-semibold text-dark" style="font-size: 0.85rem;">Nouveau produit ajouté</span>
+                                <p class="text-muted mb-0" style="font-size: 0.8rem;">Le produit "Apple Watch Ultra 2" a été ajouté au catalogue.</p>
+                            </div>
+                            <div class="position-relative">
+                                <span class="position-absolute start-0 top-0 translate-middle bg-warning rounded-circle" style="width: 0.625rem; height: 0.625rem; margin-left: -1.0625rem; margin-top: 0.375rem;"></span>
+                                <small class="text-muted d-block" style="font-size: 0.75rem;">Hier, 18:40</small>
+                                <span class="fw-semibold text-dark" style="font-size: 0.85rem;">Alerte sécurité détectée</span>
+                                <p class="text-muted mb-0" style="font-size: 0.8rem;">Tentative de connexion échouée depuis une IP inhabituelle.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact section -->
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm p-4 animate-on-hover" style="border-radius: 0.75rem;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h2 class="h5 fw-bold text-dark mb-0">Contact</h2>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-primary btn-sm d-flex align-items-center gap-1" style="background-color: #4f46e5; border-color: #4f46e5;">
+                                    <i class="fa-solid fa-plus" style="font-size: 0.75rem;"></i>
+                                    <span>Ajouter</span>
+                                </button>
+                                <a href="#" class="btn btn-link btn-sm text-decoration-none text-primary p-0 ms-2">Voir tout</a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr style="font-size: 0.85rem; color: #6b7280;">
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Sujet</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Statut</th>
+                                        <th scope="col" class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 0.9rem;">
+                                    <tr>
+                                        <td class="fw-semibold">Sophie Martin</td>
+                                        <td>sophie.martin@example.com</td>
+                                        <td>site de gestion banquaire</td>
+                                        <td class="text-muted">Il y a 2h</td>
+                                        <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Répondu</span></td>
+                                        <td class="text-end">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <button class="btn btn-outline-primary btn-sm px-2 py-1" title="chat" data-bs-toggle="modal" data-bs-target="#modalChat">
+                                                    <i class="fa-solid fa-pen" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer" data-bs-toggle="modal" data-bs-target="#modalDeleteOrder">
+                                                    <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New project modal -->
+    <div class="modal fade" id="modalProjects" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouveau projet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="project-title" class="form-label">Titre du projet</label>
+                            <input type="text" class="form-control" id="project-title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="project-description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-final" class="form-label">Final</label>
+                            <input type="text" class="form-control" id="project-final">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-date" class="form-label">Date</label>
+                            <input type="text" class="form-control" id="project-date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-link" class="form-label">Lien</label>
+                            <input type="text" class="form-control" id="project-link">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="project-image">
+                            <span class="text-muted">Format: webp (unique format)</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-tags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="project-tags">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-account-outline"></i>
+                            <label for="project-client-pseudo" class="form-label">client pseudo</label>
+                            <input type="text" class="form-control" id="project-client-pseudo">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-calendar-outline"></i>
+                            <label for="project-start-date" class="form-label">Start Date</label>
+                            <input type="text" class="form-control" id="project-start-date">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-calendar-outline"></i>
+                            <label for="project-end-date" class="form-label">End Date</label>
+                            <input type="text" class="form-control" id="project-end-date">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-account-multiple-plus-outline"></i>
+                            <label for="project-collaborators" class="form-label">Collaborators</label>
+                            <input type="text" class="form-control" id="project-collaborators">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-currency-eur"></i>
+                            <label for="project-cost" class="form-label">Cost</label>
+                            <input type="text" class="form-control" id="project-cost">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-currency-eur"></i>
+                            <label for="project-profit" class="form-label">Profit</label>
+                            <input type="text" class="form-control" id="project-profit">
+                        </div>  
+                        <div class="mb-3">
+                            <i class="mdi mdi-chart-line"></i>
+                            <label for="project-progress" class="form-label">Progress</label>
+                            <input type="text" class="form-control" id="project-progress">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-link-variant"></i>
+                            <label for="project-reference-link" class="form-label">Link</label>
+                            <input type="text" class="form-control" id="project-reference-link">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- delete ofder modal -->
+    <div class="modal fade" id="modalDeleteOrder" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supprimer la commande</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer cette commande ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-danger">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- add commands modals -->
+     <div class="modal fade " id="modalAddOrder" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter un projet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="order-title" class="form-label">Titre du projet</label>
+                            <input type="text" class="form-control" id="order-title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="order-description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="order-description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="order-final" class="form-label">Final</label>
+                            <input type="text" class="form-control" id="order-final">
+                        </div>
+                        <div class="mb-3">
+                            <label for="order-date" class="form-label">Date</label>
+                            <input type="text" class="form-control" id="order-date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="order-link" class="form-label">Lien</label>
+                            <input type="text" class="form-control" id="order-link">
+                        </div>
+                        <div class="mb-3">
+                            <label for="order-image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="order-image">
+                            <span class="text-muted">Format: webp (unique format)</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="order-tags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="order-tags">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-account-outline"></i>
+                            <label for="order-client-pseudo" class="form-label">client pseudo</label>
+                            <input type="text" class="form-control" id="order-client-pseudo">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-calendar-outline"></i>
+                            <label for="order-start-date" class="form-label">Start Date</label>
+                            <input type="text" class="form-control" id="order-start-date">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-calendar-outline"></i>
+                            <label for="order-end-date" class="form-label">End Date</label>
+                            <input type="text" class="form-control" id="order-end-date">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-account-multiple-plus-outline"></i>
+                            <label for="order-collaborators" class="form-label">Collaborators</label>
+                            <input type="text" class="form-control" id="order-collaborators">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-currency-eur"></i>
+                            <label for="order-cost" class="form-label">Cost</label>
+                            <input type="text" class="form-control" id="order-cost">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-currency-eur"></i>
+                            <label for="order-profit" class="form-label">Profit</label>
+                            <input type="text" class="form-control" id="order-profit">
+                        </div>  
+                        <div class="mb-3">
+                            <i class="mdi mdi-chart-line"></i>
+                            <label for="order-progress" class="form-label">Progress</label>
+                            <input type="text" class="form-control" id="order-progress">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-link-variant"></i>
+                            <label for="order-reference-link" class="form-label">Link</label>
+                            <input type="text" class="form-control" id="order-reference-link">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="modal fade" id="modalChat" tabindex="-1" aria-labelledby="modalChatLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="modalChatLabel"><i class="fa-solid fa-comments me-2 text-primary"></i>Chat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="chat-container">
+                        <div class="chat-header mb-3">
+                            <div class="chat-header-info card bg-light border-0 w-100 p-3">
+                                <div class="chat-header-info-name fw-bold text-dark mb-1"><i class="fa-solid fa-circle-user text-success me-2"></i>Sophie Martin</div>
+                                <div class="chat-header-info-status text-muted small">hello soufly, je suis interessé par vos services pour la creation de mon site internet je souhaiterais vous confier mon projet</div>
+                            </div>
+                        </div>
+                        <div class="chat-body card border-0 bg-white w-100 p-3 mb-3 shadow-sm">
+                            <div class="chat-messages">
+                                <div class="chat-message mb-3">
+                                    <div class="chat-message-info">
+                                        <div class="chat-message-info-name fw-semibold text-primary mb-1"><i class="fa-solid fa-user-gear me-1"></i>Souflydev</div>
+                                        <div class="chat-message-info-status p-2 bg-primary bg-opacity-10 rounded text-dark small">Bonjour quel est votre projet ? comment puis-je vous aider?</div>
+                                    </div>
+                                </div>
+                                <div class="chat-message card bg-light border-0 w-100 p-3">
+                                    <div class="chat-message-info">
+                                        <div class="chat-message-info-name fw-semibold text-dark mb-1"><i class="fa-solid fa-circle-user text-success me-1"></i>Sophie Martin</div>
+                                        <div class="chat-message-info-status small text-muted">Optimisation du site web est de optimiser les performances du site web pour qu'il soit plus rapide et plus performant le serveur est faire les données necessaire pour le bon fonctionnement du site web en 2026 car le serveur est tres long pour entrer en service je veux optimiser mon serveur pour qu'il soit plus rapide et plus performant</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-footer card border-0 bg-light w-100 p-3 mb-3">
+                            <div class="chat-footer-info">
+                                <div class="chat-footer-info-name fw-semibold text-primary mb-1"><i class="fa-solid fa-user-gear me-1"></i>Souflydev</div>
+                                <div class="chat-footer-info-status small text-muted"><span class="badge bg-success rounded-circle me-1" style="width: 8px; height: 8px; display: inline-block;"></span>Pouvez me dire plus sur votre projet ? vous aviez besoin combien pour mettre ça en vigeur en sommes argent temps et les ressources humaine</div>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="#" class="d-flex flex-column w-100">
+                        <div class="mb-3">
+                            <label for="message" class="form-label fw-semibold">Message</label>
+                            <textarea name="message" id="message" cols="30" rows="4" class="form-control" placeholder="Tapez votre réponse..."></textarea>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center gap-2" style="background-color: #4f46e5; border-color: #4f46e5;">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Envoyer</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div>
+
+     <!-- Modal account profile -->
+     <div class="modal fade" id="modalAccountProfile" tabindex="-1" aria-labelledby="modalAccountProfileLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold" id="modalAccountProfileLabel">
+                        <i class="fa-solid fa-user-gear me-2 text-primary"></i>Profil du Compte
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <form action="#">
+                    <div class="modal-body p-4">
+                        <div class="text-center mb-4">
+                            <div class="position-relative d-inline-block">
+                                <img src="https://i.pravatar.cc/150" alt="Avatar de Jean Dupont" class="rounded-circle border border-3 border-white shadow-sm" style="width: 5.5rem; height: 5.5rem; object-fit: cover;">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="account-name" class="form-label fw-semibold">Nom complet</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-user text-muted"></i></span>
+                                <input type="text" class="form-control" id="account-name" value="Jean Dupont" placeholder="Nom complet">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="account-email" class="form-label fw-semibold">Adresse Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-envelope text-muted"></i></span>
+                                <input type="email" class="form-control" id="account-email" value="jean.dupont@example.com" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="account-password" class="form-label fw-semibold">Mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
+                                <input type="password" class="form-control" id="account-password" placeholder="••••••••">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="account-profile-pic" class="form-label fw-semibold">Photo de profil</label>
+                            <input type="file" class="form-control" id="account-profile-pic" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary d-flex align-items-center gap-2" style="background-color: #4f46e5; border-color: #4f46e5;">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span>Enregistrer</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+     </div>
+
+
+
+     <!-- Modal Orders History -->
+     <div class="modal fade" id="modalOrdersHistory" tabindex="-1" aria-labelledby="modalOrdersHistoryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold" id="modalOrdersHistoryLabel">
+                        <i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>Historique des Commandes
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr style="font-size: 0.85rem; color: #6b7280;">
+                                    <th scope="col">Commande</th>
+                                    <th scope="col">Service / Produit</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Statut</th>
+                                    <th scope="col">Montant</th>
+                                    <th scope="col" class="text-end">Facture</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 0.9rem;">
+                                <tr>
+                                    <td class="fw-semibold">#ORD-90231</td>
+                                    <td>Serveur Apache automatique</td>
+                                    <td class="text-muted">01/08/2026</td>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Complété</span></td>
+                                    <td class="fw-semibold">2 499,00 €</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1" title="Télécharger facture">
+                                            <i class="fa-solid fa-download" style="font-size: 0.75rem;"></i>
+                                            <span style="font-size: 0.8rem;">PDF</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold">#ORD-90230</td>
+                                    <td>SEO Optimisation</td>
+                                    <td class="text-muted">01/08/2026</td>
+                                    <td><span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-2.5 py-1">En cours</span></td>
+                                    <td class="fw-semibold">1 479,00 €</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1" title="Télécharger facture">
+                                            <i class="fa-solid fa-download" style="font-size: 0.75rem;"></i>
+                                            <span style="font-size: 0.8rem;">PDF</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold">#ORD-90229</td>
+                                    <td>Applications Shopify</td>
+                                    <td class="text-muted">31/07/2026</td>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2.5 py-1">Complété</span></td>
+                                    <td class="fw-semibold">629,00 €</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1" title="Télécharger facture">
+                                            <i class="fa-solid fa-download" style="font-size: 0.75rem;"></i>
+                                            <span style="font-size: 0.8rem;">PDF</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold">#ORD-90228</td>
+                                    <td>Application Shopify "Cosmétiques"</td>
+                                    <td class="text-muted">30/07/2026</td>
+                                    <td><span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2.5 py-1">Annulé</span></td>
+                                    <td class="fw-semibold">1 049,00 €</td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1" disabled title="Facture indisponible">
+                                            <i class="fa-solid fa-ban" style="font-size: 0.75rem;"></i>
+                                            <span style="font-size: 0.8rem;">-</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="modal-footer border-top bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+     </div>
+
+     <!-- producte list  -->
+      <div class="modal fade" id="modalProducts" tabindex="-1" aria-labelledby="modalProductsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalProductsLabel">Product List</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    
+                    <th scope="row">1</th>
+                    <td>Product 1</td>
+                    <td>$10</td>
+                    <td>100</td>
+                    <td><button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProduct1">Edit</button></td>
+                  
+                  </tr>
+                  <tr>
+                    
+                    <th scope="row">2</th>
+                    <td>Product 2</td>
+                    <td>$20</td>
+                    <td>200</td>
+                     <td><button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalProduct1">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalProduct1" tabindex="-1" aria-labelledby="modalProduct1Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalProduct1Label">Product 1</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="productName" class="form-label">Product Name</label>
+                  <input type="text" class="form-control" id="productName" value="Product 1">
+                </div>
+                <div class="mb-3">
+                  <label for="productPrice" class="form-label">Product Price</label>
+                  <input type="text" class="form-control" id="productPrice" value="$10">
+                </div>
+                <div class="mb-3">
+                  <label for="productStock" class="form-label">Product Stock</label>
+                  <input type="text" class="form-control" id="productStock" value="100">
+                </div>
+                <div class="mb-3">
+                    <label for="productImage" class="form-label">Product Image</label>
+                    <input type="text" class="form-control" id="productImage" value="100">
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >Delete</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+    
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

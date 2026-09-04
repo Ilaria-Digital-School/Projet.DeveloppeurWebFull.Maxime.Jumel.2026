@@ -34,3 +34,55 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+=======
+# Portfolio Developpeur Web
+
+Site vitrine/portfolio en HTML, CSS et JavaScript pour presenter des services, des projets, un blog et plusieurs pages secondaires.
+
+## Apercu
+Vous pouviez retrouver le site sur ce lien : https://portfolio.souflyhub.fr/
+
+Le projet contient une page d'accueil principale et plusieurs pages dans le dossier `web/` :
+
+- `index.html` : page d'accueil
+- `web/about.html`
+- `web/blog.html`
+- `web/contact.html`
+- `web/dashboard.html`
+- `web/login.html`
+- `web/portfolio.html`
+- `web/projet.html`
+- `web/register.html`
+
+## Technologies
+
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap 5 via CDN
+- Bootstrap Icons via CDN
+
+## Organisation
+
+- `assets/css/` : feuilles de style du site
+- `assets/js/` : scripts JavaScript
+- `assets/images/` : images, logos et visuels
+- `assets/source/` : fichiers multimedia
+- `web/` : pages secondaires du site
+
+## Lancer le projet
+
+Le projet est statique, il ne requiert pas d'installation de dependances.
+
+1. Ouvrir le dossier du projet dans VS Code.
+2. Ouvrir `index.html` dans le navigateur ou utiliser l'extension Live Server.
+3. Naviguer entre les differentes pages avec les liens du menu.
+
+## Fonctionnalites visibles
+
+- Navigation principale avec recherche
+- Hero section avec visuels
+- Cartes de services
+- Carousel de projets
+
+- Carousel de projets
