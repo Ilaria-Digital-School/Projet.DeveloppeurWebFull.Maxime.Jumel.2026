@@ -29,7 +29,7 @@ export default function TypingText({ text, style }: TypingTextProps) {
       animate="visible"
       aria-label={text}
       style={style}
-      className="font-monospace text-center text-lg-start"
+      className="font-monospace text-center"
     >
       {Array.from(text).map((character, index) => (
         <motion.span
@@ -37,7 +37,7 @@ export default function TypingText({ text, style }: TypingTextProps) {
           variants={childVariants}
           style={{ display: "inline-block" }}
           aria-hidden="true"
-          className="fw-bold text-white fs-1 fs-lg-2 fs-xl-3"
+          className="fw-bold text-white fs-1 fs-lg-2 fs-xl-3 text-center text-lg-start"
         >
           {character === " " ? "\u00a0" : character} 
           {/* This is a placeholder for the character */}
