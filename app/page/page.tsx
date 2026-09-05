@@ -5,6 +5,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 
 export default function PresencePage() {
   return (
+    <>
     <Navbar expand="lg" bg="body-tertiary" className="px-4 px-lg-5">
       <Container fluid>
         <Navbar.Brand
@@ -58,5 +59,6 @@ export default function PresencePage() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    </>
   );
 }

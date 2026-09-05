@@ -21,7 +21,13 @@ function App() {
     <>
       <header className="bg-dark" data-bs-theme="dark" role="banner">
         {/* Navigation Bar */}
-        <Navbar bg="dark" variant="dark" expand="lg" data-bs-theme="dark">
+        <Navbar
+          bg="dark"
+          variant="dark"
+          expand="lg"
+          data-bs-theme="dark"
+          className="site-navbar"
+        >
           <Container fluid className="px-3 px-lg-5">
             {/* Logo / Brand */}
             <Navbar.Brand
@@ -41,19 +47,19 @@ function App() {
             {/* Contenu collapsible du menu */}
             <Navbar.Collapse id="navbarNav">
               <Nav className="mx-auto gap-2 gap-lg-4 my-3 my-lg-0 text-center text-lg-start">
-                <Nav.Link href="/" active className="fw-bold">
+                <Nav.Link href="/" active className="fw-bold site-nav-link">
                   Home
                 </Nav.Link>
-                <Nav.Link href="/page" className="fw-bold text-white-50">
+                <Nav.Link href="/page" className="fw-bold site-nav-link">
                   Pages
                 </Nav.Link>
-                <Nav.Link href="/portfolio" className="fw-bold text-white-50">
+                <Nav.Link href="/portfolio" className="fw-bold site-nav-link">
                   Portfolio
                 </Nav.Link>
-                <Nav.Link href="/blog" className="fw-bold text-white-50">
+                <Nav.Link href="/blog" className="fw-bold site-nav-link">
                   Blog
                 </Nav.Link>
-                <Nav.Link href="/contact" className="fw-bold text-white-50">
+                <Nav.Link href="/contact" className="fw-bold site-nav-link">
                   Contact
                 </Nav.Link>
               </Nav>
@@ -63,7 +69,7 @@ function App() {
                 <Nav.Link
                   href="#"
                   aria-label="Search"
-                  className="fw-bold text-white-50"
+                  className="fw-bold site-nav-link site-search-link"
                 >
                   <i className="bi bi-search bg-dark" aria-hidden="true"></i>
                 </Nav.Link>
