@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import seoData from "./seo.json";
 
 // Styles CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,8 +18,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SoulfyDev App",
-  description: "Mon application Next.js avec Bootstrap",
+  metadataBase: new URL("https://portfolio.souflyhub.fr"),
+  title: {
+    default: "Souflydev | Développeur Web et Mobile",
+    template: "%s | Souflydev",
+  },
+  description:
+    "Souflydev crée des sites web, applications mobiles et expériences digitales modernes et performantes.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "/",
+    siteName: "Souflydev",
+    title: "Souflydev | Développeur Web et Mobile",
+    description:
+      "Sites web, applications mobiles et expériences digitales conçus pour développer votre activité.",
+    images: [
+      {
+        url: "/images/upload/souflydev.webp",
+        width: 900,
+        height: 900,
+        alt: "Souflydev",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Souflydev | Développeur Web et Mobile",
+    description:
+      "Sites web, applications mobiles et expériences digitales modernes.",
+    images: ["/images/upload/souflydev.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +68,18 @@ export default function RootLayout({
       lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": seoData["@context"],
+              "@graph": seoData["@graph"],
+            }),
+          }}
+        />
+      </body>
     </html>
   );
 }

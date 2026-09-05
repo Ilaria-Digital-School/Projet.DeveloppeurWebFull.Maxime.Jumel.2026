@@ -50,7 +50,7 @@ function App() {
                 <Nav.Link href="/" active className="fw-bold site-nav-link">
                   Home
                 </Nav.Link>
-                <Nav.Link href="/page" className="fw-bold site-nav-link">
+                <Nav.Link href="/pages" className="fw-bold site-nav-link">
                   Pages
                 </Nav.Link>
                 <Nav.Link href="/portfolio" className="fw-bold site-nav-link">
