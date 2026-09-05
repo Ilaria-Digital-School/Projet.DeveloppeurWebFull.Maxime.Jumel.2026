@@ -94,12 +94,12 @@ function App() {
                 data-aos-delay="300"
                 data-aos-duration="700"
               >
-                <h1 className="fw-bold display-5 display-lg-3 mb-3">
+                <h1 className="fw-bold display-5 display-lg-3 mb-3 fs-lg-1">
                   We Make{" "}
-                  <span className="text-secondary">Creative things</span>
+                  <span className="text-warning">Creative things</span>
                   <br className="d-none d-sm-inline" /> Everyday
                 </h1>
-                <p className="lead text-secondary mb-4 mx-auto mx-lg-0 col-12 col-md-10">
+                <p className="lead mb-4 mx-auto mx-lg-0 col-12 col-md-10">
                   We are a digital agency that helps create immersive and
                   engaging user experiences.
                 </p>
