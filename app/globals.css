@@ -27,6 +27,11 @@ body {
   min-height: 4.5rem;
 }
 
+/* Tailwind's .collapse utility conflicts with Bootstrap's navbar collapse. */
+.site-navbar .collapse {
+  visibility: visible;
+}
+
 .site-navbar .navbar-brand {
   letter-spacing: 0.02em;
 }

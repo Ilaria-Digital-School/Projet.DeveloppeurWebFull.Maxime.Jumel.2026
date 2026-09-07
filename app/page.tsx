@@ -2,10 +2,9 @@
 
 import TypingText from "./Composent/TypingText";
 import FormText from "./Composent/FormText";
+import SiteNavbar from "./Composent/SiteNavbar";
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import {
   Container,
   Row,
@@ -19,65 +18,7 @@ import {
 function App() {
   return (
     <>
-      <header className="bg-dark" data-bs-theme="dark" role="banner">
-        {/* Navigation Bar */}
-        <Navbar
-          bg="dark"
-          variant="dark"
-          expand="lg"
-          data-bs-theme="dark"
-          className="site-navbar"
-        >
-          <Container fluid className="px-3 px-lg-5">
-            {/* Logo / Brand */}
-            <Navbar.Brand
-              className="fw-bold text-white fs-4"
-              href="/"
-              aria-label="Retour à l'accueil SOULFYDEV"
-            >
-              <span className="text-success fw-bold">SOUFLY</span>DEV
-            </Navbar.Brand>
-
-            {/* Bouton Hamburger Mobile */}
-            <Navbar.Toggle
-              aria-controls="navbarNav"
-              aria-label="Ouvrir ou fermer le menu de navigation"
-            />
-
-            {/* Contenu collapsible du menu */}
-            <Navbar.Collapse id="navbarNav">
-              <Nav className="mx-auto gap-2 gap-lg-4 my-3 my-lg-0 text-center text-lg-start">
-                <Nav.Link href="/" active className="fw-bold site-nav-link">
-                  Home
-                </Nav.Link>
-                <Nav.Link href="/pages" className="fw-bold site-nav-link">
-                  Pages
-                </Nav.Link>
-                <Nav.Link href="/portfolio" className="fw-bold site-nav-link">
-                  Portfolio
-                </Nav.Link>
-                <Nav.Link href="/blog" className="fw-bold site-nav-link">
-                  Blog
-                </Nav.Link>
-                <Nav.Link href="/contact" className="fw-bold site-nav-link">
-                  Contact
-                </Nav.Link>
-              </Nav>
-
-              {/* Menu Recherche */}
-              <Nav className="text-center text-lg-start">
-                <Nav.Link
-                  href="#"
-                  aria-label="Search"
-                  className="fw-bold site-nav-link site-search-link"
-                >
-                  <i className="bi bi-search bg-dark" aria-hidden="true"></i>
-                </Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </header>
+      <SiteNavbar />
 
       <main className="content overflow-hidden">
         <section className="hero-content bg-dark text-white d-flex align-items-center">
@@ -606,42 +547,42 @@ function App() {
           <Row>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_0.webp" alt="Image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_0.webp" alt="Image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_1.webp" alt="Deuxième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_1.webp" alt="Deuxième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_2.webp" alt="Troisième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_2.webp" alt="Troisième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_3.webp" alt="Quatrième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_3.webp" alt="Quatrième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_4.webp" alt="Cinquième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_4.webp" alt="Cinquième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_5.webp" alt="Sixième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_5.webp" alt="Sixième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_6.webp" alt="Septième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_6.webp" alt="Septième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
             <Col lg={3} xs={12} md={6}  className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_7.webp" alt="Huitième image de logo d'entreprise partenaire" width={240} height={100} />
+                    <Image src="/images/logo/logo_7.webp" alt="Huitième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
               </div>
             </Col>
           </Row>
