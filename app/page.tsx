@@ -1,5 +1,5 @@
 "use client";
-
+import Footer from "./Composent/Footer";
 import TypingText from "./Composent/TypingText";
 import FormText from "./Composent/FormText";
 import SiteNavbar from "./Composent/SiteNavbar";
@@ -605,47 +605,10 @@ function App() {
           
         </Container>
       </main>
-      <footer className="text-white py-5 text-center">
-        <Container fluid className="text-dark w-75">
-          <Row>
-            <Col md={6} lg={6} xs={12} className="text-center text-md-start mb-3 mb-md-0">
-              <FormText />
-            </Col>
-            <Col md={6} lg={6} xs={12} className="text-center text-md-center mb-3 mb-md-0">
-              <div className="text-dark">
-                <h5 className="fw-bold mb-3">Links</h5>
-                <ul className="list-unstyled">
-                  <li>
-                    <Link href="/" className="text-dark text-decoration-none">
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="/pages" className="text-dark text-decoration-none">
-                      Pages
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/portfolio" className="text-dark text-decoration-none">
-                      Portfolio
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/blog" className="text-dark text-decoration-none">
-                      Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/contact" className="text-dark text-decoration-none">
-                      Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </footer>
+      
+      <Footer />
+    
+      
     </>
   );
 }
