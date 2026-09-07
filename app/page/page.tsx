@@ -110,7 +110,7 @@ export default function PresencePage() {
                 <Card.Title className="fw-bold">Responsive design</Card.Title>
                 <Card.Text className="text-secondary mb-0">
                   Une navigation fluide et une mise en page adaptée aux mobiles,
-                  tablettes et ordinateurs.
+                  tablettes et ordinateurs
                 </Card.Text>
               </Card>
             </Col>
