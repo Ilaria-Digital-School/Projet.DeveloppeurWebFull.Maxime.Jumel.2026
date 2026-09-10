@@ -442,6 +442,7 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="row g-4 mb-4">
                 <div class="col-12">
                     <div class="card border-0 shadow-sm p-4" style="border-radius: 0.75rem;">
@@ -485,6 +486,8 @@
                 </div>
             </div>
 
+=======
+>>>>>>> origin/dev
             <% } else { %>
             <!-- ============================================== -->
             <!--                 CLIENT VIEW                    -->
@@ -548,6 +551,7 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 0.75rem;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="h5 fw-bold text-dark mb-0">Mes demandes de devis</h2>
@@ -574,6 +578,8 @@
                 <% } %>
             </div>
 
+=======
+>>>>>>> origin/dev
             <!-- Client Orders & Projects List -->
             <div class="row g-4 mb-4">
                 <div class="col-12 col-xl-8">
@@ -661,6 +667,7 @@
         </div>
     </main>
 
+<<<<<<< HEAD
     <!-- Demande de devis -->
     <div class="modal fade" id="modalProjects" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -706,6 +713,93 @@
                         <button type="submit" class="btn btn-primary">Envoyer la demande</button>
                     </div>
                 </form>
+=======
+    <!-- New project modal -->
+    <div class="modal fade" id="modalProjects" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouveau projet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="project-title" class="form-label">Titre du projet</label>
+                            <input type="text" class="form-control" id="project-title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="project-description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-final" class="form-label">Final</label>
+                            <input type="text" class="form-control" id="project-final">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-date" class="form-label">Date</label>
+                            <input type="text" class="form-control" id="project-date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-link" class="form-label">Lien</label>
+                            <input type="text" class="form-control" id="project-link">
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="project-image">
+                            <span class="text-muted">Format: webp (unique format)</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="project-tags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="project-tags">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-account-outline"></i>
+                            <label for="project-client-pseudo" class="form-label">client pseudo</label>
+                            <input type="text" class="form-control" id="project-client-pseudo">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-calendar-outline"></i>
+                            <label for="project-start-date" class="form-label">Start Date</label>
+                            <input type="text" class="form-control" id="project-start-date">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-calendar-outline"></i>
+                            <label for="project-end-date" class="form-label">End Date</label>
+                            <input type="text" class="form-control" id="project-end-date">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-account-multiple-plus-outline"></i>
+                            <label for="project-collaborators" class="form-label">Collaborators</label>
+                            <input type="text" class="form-control" id="project-collaborators">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-currency-eur"></i>
+                            <label for="project-cost" class="form-label">Cost</label>
+                            <input type="text" class="form-control" id="project-cost">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-currency-eur"></i>
+                            <label for="project-profit" class="form-label">Profit</label>
+                            <input type="text" class="form-control" id="project-profit">
+                        </div>  
+                        <div class="mb-3">
+                            <i class="mdi mdi-chart-line"></i>
+                            <label for="project-progress" class="form-label">Progress</label>
+                            <input type="text" class="form-control" id="project-progress">
+                        </div>
+                        <div class="mb-3">
+                            <i class="mdi mdi-link-variant"></i>
+                            <label for="project-reference-link" class="form-label">Link</label>
+                            <input type="text" class="form-control" id="project-reference-link">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+>>>>>>> origin/dev
             </div>
         </div>
     </div>

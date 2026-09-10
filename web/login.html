@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Souflydev | Login</title>
-    <link rel="stylesheet" href="/css/_login.css">
+    <link rel="stylesheet" href="../assets/css/_login.css">
     <!-- seo optimization  -->
     <meta
       name="description"
@@ -19,7 +19,7 @@
     <meta
       property="og:description"
       content="Web and mobile application developer">
-    <meta property="og:image" content="/images/upload/soulfydev.webp">
+    <meta property="og:image" content="./assets/images/upload/soulfydev.webp">
     <meta property="og:url" content="">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
@@ -34,7 +34,7 @@
     <meta property="og:image:type" content="image/jpeg">
     <meta
       property="og:image:secure_url"
-      content="/images/upload/soulfydev.webp">
+      content="./assets/images/upload/soulfydev.webp">
     <meta property="og:image:secure_url:width" content="1920">
     <meta property="og:image:secure_url:height" content="1080">
     <meta
@@ -50,7 +50,7 @@
       content="Web and mobile application developer">
     <meta
       name="twitter:image"
-      content="/images/upload/soulfydev.webp">
+      content="./assets/images/upload/soulfydev.webp">
     <meta name="twitter:image:width" content="1920">
     <meta name="twitter:image:height" content="1080">
     <meta
@@ -81,7 +81,7 @@
     <div class="login-container">
       <!-- Back Link -->
       <div class="mb-4">
-        <a href="/" class="back-link">
+        <a href="../index.html" class="back-link">
           <i class="bi bi-arrow-left"></i> Back to Home
         </a>
       </div>
@@ -90,22 +90,19 @@
       <main class="login-card text-center">
         <div class="mb-4">
           <img
-            src="/images/upload/soulfydev.webp"
+            src="../assets/images/upload/soulfydev.webp"
             class="brand-logo mb-3"
             alt="Soulfydev Logo">
-          <h1 class="h3 font-weight-bold text-light mb-1">Account Login - Souflydev Web & Mobile Solutions</h1>
+          <h1 class="h3 font-weight-bold text-light mb-1">Connexion</h1>
           <p class="text-light small pt-4">
             Accédez à votre tableau de bord Soulfydev
           </p>
           <div>
-            <a href="/register" class="back-link">
+            <a href="./register.html" class="back-link">
               <i class="bi bi-arrow-left"></i> Inscrivez-vous
             </a>
           </div>
         </div>
-
-        <!-- Message d'erreur / succès -->
-        <div id="message-container" class="mb-3" style="min-height: 24px;"></div>
 
         <!-- Login Form -->
         <form id="loginForm">
@@ -113,7 +110,7 @@
             <label
               for="inputEmail"
               class="form-label text-light small font-weight-bold"
-              >Adresse Email</label
+              >Your email address</label
             >
             <input
               type="email"
@@ -128,7 +125,7 @@
             <label
               for="inputPassword"
               class="form-label text-light small font-weight-bold"
-              >Mot de passe</label
+              >Your password</labe>
             >
             <input
               type="password"
@@ -141,10 +138,9 @@
           </div>
           <button
             type="submit"
-            id="btnSubmit"
             class="btn btn-login btn-primary w-100 text-light uppercase"
           >
-            Se connecter
+            Login
           </button>
         </form>
       </main>
@@ -156,53 +152,5 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
-
-<<<<<<< HEAD
-    <script src="/js/login.js"></script>
-     
-=======
-    <script>
-      const form = document.getElementById("loginForm");
-      const msgContainer = document.getElementById("message-container");
-      const btnSubmit = document.getElementById("btnSubmit");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        msgContainer.innerHTML = "";
-
-        const email = document.getElementById("inputEmail").value.trim();
-        const password = document.getElementById("inputPassword").value;
-
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Connexion en cours...`;
-
-        try {
-          const response = await fetch("/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-            msgContainer.innerHTML = `<div class="alert alert-success py-2 px-3 small mb-0" role="alert"><i class="bi bi-check-circle-fill me-1"></i> ${data.message}</div>`;
-            setTimeout(() => {
-              window.location.href = data.redirect || "/dashboard";
-            }, 1000);
-          } else {
-            msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-exclamation-circle-fill me-1"></i> ${data.message || "Email ou mot de passe incorrect."}</div>`;
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = "Se connecter";
-          }
-        } catch (error) {
-          console.error("Erreur:", error);
-          msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-x-circle-fill me-1"></i> Impossible de contacter le serveur.</div>`;
-          btnSubmit.disabled = false;
-          btnSubmit.innerHTML = "Se connecter";
-        }
-      });
->>>>>>> origin/dev
-    </script>
   </body>
 </html>

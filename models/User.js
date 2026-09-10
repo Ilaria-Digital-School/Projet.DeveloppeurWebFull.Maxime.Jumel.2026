@@ -7,10 +7,14 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "admin", "developper"], default: "user" },
+<<<<<<< HEAD
     status: { type: String, enum: ["active", "inactive"], default: "inactive" },
     emailVerified: { type: Boolean, default: false },
     emailVerificationToken: { type: String, select: false },
     emailVerificationExpiresAt: { type: Date, select: false },
+=======
+    status: { type: String, enum: ["active", "inactive"], default: "active" },
+>>>>>>> origin/dev
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     isBan: { type: Boolean, default: false },
@@ -24,6 +28,7 @@ const UserSchema = new mongoose.Schema({
     cmd: { type: Number, default: 0 },
     ticket: { type: Number, default: 0 },
 
+<<<<<<< HEAD
     quoteRequests: [{
         title: { type: String, required: true, maxlength: 120 },
         description: { type: String, required: true, maxlength: 3000 },
@@ -36,6 +41,8 @@ const UserSchema = new mongoose.Schema({
         updatedAt: { type: Date, default: Date.now }
     }],
 
+=======
+>>>>>>> origin/dev
     // ticket client projects
     ticketClient: [{
         title: { type: String, required: true },

@@ -7,6 +7,7 @@ const port = config.port;
 const path = require("path");
 const chalk = require("chalk");
 
+<<<<<<< HEAD
 app.disable("x-powered-by");
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; connect-src 'self'; form-action 'self';");
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
   next();
 });
 
+=======
+>>>>>>> origin/dev
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 

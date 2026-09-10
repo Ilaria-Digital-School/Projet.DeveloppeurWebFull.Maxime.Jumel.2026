@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+<<<<<<< HEAD
 const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
@@ -33,6 +34,11 @@ const validateCredentials = ({ email, password, pseudo }, includePseudo = false)
     const requirement = passwordRequirements.find(({ pattern }) => !pattern.test(password));
     return requirement?.message || null;
 };
+=======
+const path = require("path");
+const multer = require("multer");
+const { isClient, isDev, isAdmin } = require("../middleware/authMiddleware");
+>>>>>>> origin/dev
 
 // Configuration stockage Multer pour les uploads dans public/uploads
 const storage = multer.diskStorage({
@@ -105,6 +111,7 @@ router.get("/register", (req, res) => {
     res.render("register");
 });
 
+<<<<<<< HEAD
 router.get("/verify-email", async (req, res) => {
     const rawToken = typeof req.query.token === "string" ? req.query.token : "";
     const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
@@ -152,15 +159,30 @@ router.post("/register", async (req, res, next) => {
         }
 
         const emailExiste = await User.findOne({ email: normalizedEmail });
+=======
+router.post("/register", async (req, res, next) => {
+    const { email, pseudo, password } = req.body;
+    try {
+        if (!email || !pseudo || !password) {
+            return res.status(400).json({ message: "Tous les champs sont requis", errcode: 400, success: false });
+        }
+
+        const emailExiste = await User.findOne({ email });
+>>>>>>> origin/dev
         if (emailExiste) {
             return res.status(400).json({ message: "Cet email est déjà utilisé", errcode: 400, success: false });
         }
 
+<<<<<<< HEAD
         const pseudoExiste = await User.findOne({ pseudo: normalizedPseudo });
+=======
+        const pseudoExiste = await User.findOne({ pseudo });
+>>>>>>> origin/dev
         if (pseudoExiste) {
             return res.status(400).json({ message: "Ce pseudo est déjà utilisé", errcode: 400, success: false });
         }
 
+<<<<<<< HEAD
         const passwordHash = await bcrypt.hash(password, 10);
         const verificationToken = crypto.randomBytes(32).toString("hex");
         const user = new User({
@@ -186,6 +208,35 @@ router.post("/register", async (req, res, next) => {
             message: process.env.EMAIL_MODE === "console"
                 ? "Inscription réussie. Ouvrez le lien de vérification affiché dans la console."
                 : "Inscription réussie. Consultez votre email pour activer votre compte.",
+=======
+        if (password.length < 6) {
+            return res.status(400).json({ message: "Mot de passe trop court (min 6 caractères)", errcode: 400, success: false });
+        }
+        if (!password.match(/[a-z]/)) {
+            return res.status(400).json({ message: "Le mot de passe doit contenir au moins une lettre minuscule", errcode: 400, success: false });
+        }
+        if (!password.match(/[A-Z]/)) {
+            return res.status(400).json({ message: "Le mot de passe doit contenir au moins une lettre majuscule", errcode: 400, success: false });
+        }
+        if (!password.match(/[0-9]/)) {
+            return res.status(400).json({ message: "Le mot de passe doit contenir au moins un chiffre", errcode: 400, success: false });
+        }
+        if (!password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)) {
+            return res.status(400).json({ message: "Le mot de passe doit contenir au moins un caractère spécial", errcode: 400, success: false });
+        }
+
+        const passwordHash = await bcrypt.hash(password, 10);
+        const user = new User({
+            email,
+            pseudo,
+            password: passwordHash,
+            role: "user"
+        });
+
+        await user.save();
+        return res.status(200).json({ 
+            message: "Utilisateur enregistré avec succès ! Redirection...", 
+>>>>>>> origin/dev
             errcode: 200, 
             success: true,
             redirect: "/login"
@@ -201,6 +252,7 @@ router.get("/login", (req, res) => {
 
 });
 router.post("/login", async (req, res) => {
+<<<<<<< HEAD
     const { email, password } = req.body || {};
     const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : email;
     try {
@@ -210,6 +262,15 @@ router.post("/login", async (req, res) => {
         }
 
         const user = await User.findOne({ email: normalizedEmail });
+=======
+    const { email, password } = req.body;
+    try {
+        if (!email || !password) {
+            return res.status(400).json({ message: "Veuillez remplir tous les champs", errcode: 400, success: false });
+        }
+
+        const user = await User.findOne({ email });
+>>>>>>> origin/dev
         if (!user) {
             return res.status(401).json({ message: "Email ou mot de passe incorrect", errcode: 401, success: false });
         }
@@ -218,10 +279,13 @@ router.post("/login", async (req, res) => {
             return res.status(403).json({ message: "Ce compte a été suspendu", errcode: 403, success: false });
         }
 
+<<<<<<< HEAD
         if (!user.emailVerified || user.status !== "active") {
             return res.status(403).json({ message: "Veuillez confirmer votre adresse email avant de vous connecter", errcode: 403, success: false });
         }
 
+=======
+>>>>>>> origin/dev
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) {
             return res.status(401).json({ message: "Email ou mot de passe incorrect", errcode: 401, success: false });
@@ -248,6 +312,7 @@ router.post("/login", async (req, res) => {
         return res.status(500).json({ message: "Erreur serveur lors de la connexion", errcode: 500, success: false });
     }
 });
+<<<<<<< HEAD
 
 // Toutes les ressources API sont privées par défaut; les contrôles de rôle restent spécifiques aux routes sensibles.
 router.use("/api", isClient);
@@ -320,6 +385,8 @@ router.post("/api/admin/quotes/:userId/:quoteId/status", isAdmin, async (req, re
     }
 });
 
+=======
+>>>>>>> origin/dev
 router.post("/profile/update/:id", isClient, upload.single("avatar"), async (req, res) => {
     try {
         const sessionUser = req.session.user;
@@ -397,7 +464,10 @@ router.get("/dashboard", async (req, res) => {
     try {
         const user = req.session.user;
         let tickets = [];
+<<<<<<< HEAD
         let quotes = [];
+=======
+>>>>>>> origin/dev
         let clients = [];
         let stats = {
             totalRevenue: 0,
@@ -429,6 +499,7 @@ router.get("/dashboard", async (req, res) => {
                         });
                     });
                 }
+<<<<<<< HEAD
                 if (u.quoteRequests && u.quoteRequests.length > 0) {
                     u.quoteRequests.forEach(quote => quotes.push({
                         ...quote.toObject(),
@@ -442,6 +513,11 @@ router.get("/dashboard", async (req, res) => {
 
             tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             quotes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+=======
+            });
+
+            tickets.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+>>>>>>> origin/dev
 
             stats.totalMembers = allUsers.length;
             stats.totalOrders = 0;
@@ -464,9 +540,12 @@ router.get("/dashboard", async (req, res) => {
                     replies: t.replies || []
                 })).reverse();
             }
+<<<<<<< HEAD
             if (clientDoc && clientDoc.quoteRequests) {
                 quotes = clientDoc.quoteRequests.slice().reverse();
             }
+=======
+>>>>>>> origin/dev
         }
 
         res.render("dashboard", {
@@ -475,7 +554,10 @@ router.get("/dashboard", async (req, res) => {
             clients,
             stats,
             tickets
+<<<<<<< HEAD
             , quotes
+=======
+>>>>>>> origin/dev
         });
     } catch (error) {
         console.error("Erreur chargement dashboard:", error);

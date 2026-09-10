@@ -12,7 +12,11 @@
   <meta name="keywords" content="Portfolio, Web and mobile application developer">
   <meta property="og:title" content="Web and mobile application developer">
   <meta property="og:description" content="Web and mobile application developer">
+<<<<<<< HEAD
     <meta property="og:image" content="/images/upload/soulfydev.webp">
+=======
+    <meta property="og:image" content="./assets/images/upload/soulfydev.webp">
+>>>>>>> origin/dev
   <meta property="og:url" content="https://soulfyhub.fr">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
@@ -120,6 +124,7 @@
     const msgContainer = document.getElementById("message-container");
     const btnSubmit = document.getElementById("btnSubmit");
 
+<<<<<<< HEAD
     const showMessage = (type, iconClass, message) => {
         const alert = document.createElement("div");
         alert.className = `alert alert-${type} py-2 px-3 small mb-0`;
@@ -133,13 +138,22 @@
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         msgContainer.replaceChildren();
+=======
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msgContainer.innerHTML = "";
+>>>>>>> origin/dev
         
         const pseudo = document.getElementById("inputPseudo").value.trim();
         const email = document.getElementById("inputEmail").value.trim();
         const password = document.getElementById("inputPassword").value;
 
         if (password.length < 6) {
+<<<<<<< HEAD
             showMessage("danger", "bi-exclamation-triangle-fill", "Le mot de passe doit faire au moins 6 caractères.");
+=======
+            msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-exclamation-triangle-fill me-1"></i> Le mot de passe doit faire au moins 6 caractères.</div>`;
+>>>>>>> origin/dev
             return;
         }
 
@@ -156,18 +170,30 @@
             const data = await response.json();
 
             if (response.ok && data.success) {
+<<<<<<< HEAD
                 showMessage("success", "bi-check-circle-fill", data.message || "Inscription réussie.");
+=======
+                msgContainer.innerHTML = `<div class="alert alert-success py-2 px-3 small mb-0" role="alert"><i class="bi bi-check-circle-fill me-1"></i> ${data.message}</div>`;
+>>>>>>> origin/dev
                 setTimeout(() => {
                     window.location.href = data.redirect || "/login";
                 }, 1500);
             } else {
+<<<<<<< HEAD
                 showMessage("danger", "bi-exclamation-circle-fill", data.message || "Une erreur est survenue.");
+=======
+                msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-exclamation-circle-fill me-1"></i> ${data.message || "Une erreur est survenue."}</div>`;
+>>>>>>> origin/dev
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = "S'inscrire";
             }
         } catch (error) {
             console.error("Erreur:", error);
+<<<<<<< HEAD
             showMessage("danger", "bi-x-circle-fill", "Impossible de contacter le serveur.");
+=======
+            msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-x-circle-fill me-1"></i> Impossible de contacter le serveur.</div>`;
+>>>>>>> origin/dev
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = "S'inscrire";
         }
