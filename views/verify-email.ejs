@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vérification du compte | Souflydev</title>
+    <link rel="stylesheet" href="/css/_login.css">
+</head>
+<body class="bg-black d-flex align-items-center justify-content-center">
+    <main class="login-container">
+        <section class="login-card text-center">
+            <img src="/images/upload/soulfydev.webp" class="brand-logo mb-3" alt="Soulfydev Logo">
+            <h1 class="h3 text-light mb-3"><%= success ? "Compte activé" : "Vérification impossible" %></h1>
+            <p class="text-light"><%= message %></p>
+            <a href="<%= success ? '/login' : '/register' %>" class="back-link">
+                <%= success ? "Se connecter" : "Retour à l'inscription" %>
+            </a>
+        </section>
+    </main>
+</body>
+</html>
