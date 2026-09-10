@@ -157,52 +157,8 @@
       crossorigin="anonymous"
     ></script>
 
-<<<<<<< HEAD
     <script src="/js/login.js"></script>
      
-=======
-    <script>
-      const form = document.getElementById("loginForm");
-      const msgContainer = document.getElementById("message-container");
-      const btnSubmit = document.getElementById("btnSubmit");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        msgContainer.innerHTML = "";
-
-        const email = document.getElementById("inputEmail").value.trim();
-        const password = document.getElementById("inputPassword").value;
-
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Connexion en cours...`;
-
-        try {
-          const response = await fetch("/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-            msgContainer.innerHTML = `<div class="alert alert-success py-2 px-3 small mb-0" role="alert"><i class="bi bi-check-circle-fill me-1"></i> ${data.message}</div>`;
-            setTimeout(() => {
-              window.location.href = data.redirect || "/dashboard";
-            }, 1000);
-          } else {
-            msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-exclamation-circle-fill me-1"></i> ${data.message || "Email ou mot de passe incorrect."}</div>`;
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = "Se connecter";
-          }
-        } catch (error) {
-          console.error("Erreur:", error);
-          msgContainer.innerHTML = `<div class="alert alert-danger py-2 px-3 small mb-0" role="alert"><i class="bi bi-x-circle-fill me-1"></i> Impossible de contacter le serveur.</div>`;
-          btnSubmit.disabled = false;
-          btnSubmit.innerHTML = "Se connecter";
-        }
-      });
->>>>>>> origin/dev
     </script>
   </body>
 </html>

@@ -17,10 +17,7 @@ const { app, port, scriptRun, cookieParser } = require("./script/serverRun");
 const apiRouter = require("./router/api");
 const db = require("./script/rundb");
 const rateLimit = require("express-rate-limit");
-<<<<<<< HEAD
 const isRateLimitEnabled = process.env.NODE_ENV !== "development";
-=======
->>>>>>> origin/dev
 
 // ──────────────────────────────────────────────
 // Rate Limiting
@@ -56,7 +53,6 @@ const authLimiter = rateLimit({
 // Middlewares
 // ──────────────────────────────────────────────
 app.use(cookieParser());
-<<<<<<< HEAD
 if (isRateLimitEnabled) {
     app.use(globalLimiter);
 
@@ -81,16 +77,6 @@ app.use((err, req, res, next) => {
     return next(err);
 });
 
-=======
-app.use(globalLimiter);
-
-// Rate limit strict sur les routes d'auth
-app.use("/login", authLimiter);
-app.use("/register", authLimiter);
-
-app.use("/", apiRouter);
-
->>>>>>> origin/dev
 // ──────────────────────────────────────────────
 // Gestion des erreurs 404 — Route non trouvée
 // ──────────────────────────────────────────────
@@ -149,18 +135,10 @@ scriptRun(port);
 if (process.env.NODE_ENV === "development") {
     console.log("🟡 Mode développement activé");
     console.log("📡 Port :", port);
-<<<<<<< HEAD
     console.log("🗄️  Database :", db.readyState === 1 ? "MongoDB connecté" : "MongoDB en attente");
 } else if (process.env.NODE_ENV === "production") {
     console.log("🟢 Mode production activé");
     console.log("📡 Port :", port);
     console.log("🗄️  Database :", db.readyState === 1 ? "MongoDB connecté" : "MongoDB en attente");
-=======
-    console.log("🗄️  Database :", db.name);
-} else if (process.env.NODE_ENV === "production") {
-    console.log("🟢 Mode production activé");
-    console.log("📡 Port :", port);
-    console.log("🗄️  Database :", db.name);
->>>>>>> origin/dev
 }
 
