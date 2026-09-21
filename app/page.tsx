@@ -230,7 +230,7 @@ function App() {
         </Container>
         <Container>
           <div className="text-center">
-            <h2 className="fw-bold display-6 mb-3 text-center fw-bold mt-5 mb-5">
+            <h2 className="fw-bold display-6 text-center fw-bold mt-5 mb-5">
               Nos Discover our selected projects
             </h2>
           </div>
@@ -397,7 +397,7 @@ function App() {
           </div>
         </Container>
         <Container className="text-dark py-5 text-center">
-          <h2 className="fw-bold display-6 mb-3 text-center fw-bold mt-5 mb-5">
+          <h2 className="fw-bold display-6  text-center fw-bold mt-5 mb-5">
             Read Our Articles And news
           </h2>
           <Row className="g-0 text-center py-5 px-3 text-lg-start justify-content-center gap-4">
@@ -415,7 +415,7 @@ function App() {
                     height={320}
                   />
                   <div
-                    className="card-body d-flex flex-column position-absolute bottom-0 start-0 end-0 p-4 bg-black bg-opacity-75 text-white"
+                    className="card-body d-flex flex-column position-absolute bottom-0  p-4 bg-black bg-opacity-75 text-white"
                     style={{
                       top: 0,
                       alignItems: "center",
@@ -427,7 +427,7 @@ function App() {
                       <span className="badge mb-2">Branding</span>
                     </div>
 
-                    <h3 className="card-title h5 fw-bold start-0">
+                    <h3 className="card-title h5 fw-bold">
                       Artificial Intelligence
                     </h3>
                     <p className="card-text">
@@ -436,7 +436,7 @@ function App() {
                     </p>
                     <a
                       href="#"
-                      className="btn start-0 d-block display-6 border-1 border-light text-white"
+                      className="btn d-block display-6 border-light text-white"
                       aria-label="Lire l'article : Intelligence Artificielle"
                       data-bs-toggle="modal"
                       data-bs-target="#articleModal"
@@ -461,7 +461,7 @@ function App() {
                     height={320}
                   />
                   <div
-                    className="card-body d-flex flex-column position-absolute bottom-0 start-0 end-0 p-4 bg-black bg-opacity-75 text-white"
+                    className="card-body d-flex flex-column position-absolute bottom-0 p-4 bg-black bg-opacity-75 text-white"
                     style={{
                       top: 0,
                       alignItems: "center",
@@ -473,7 +473,7 @@ function App() {
                       <span className="badge mb-2">Branding</span>
                     </div>
 
-                    <h3 className="card-title h5 fw-bold start-0">
+                    <h3 className="card-title h5 fw-bold ">
                       Artificial Intelligence
                     </h3>
                     <p className="card-text">
@@ -482,7 +482,7 @@ function App() {
                     </p>
                     <a
                       href="#"
-                      className="btn start-0 d-block display-6 border-1 border-light text-white"
+                      className="btn  d-block display-6 border-light text-white"
                       aria-label="Lire l'article : Intelligence Artificielle"
                       data-bs-toggle="modal"
                       data-bs-target="#articleModal"
@@ -507,7 +507,7 @@ function App() {
                     height={320}
                   />
                   <div
-                    className="card-body d-flex flex-column position-absolute bottom-0 start-0 end-0 p-4 bg-black bg-opacity-75 text-white"
+                    className="card-body d-flex flex-column position-absolute bottom-0 p-4 bg-black bg-opacity-75 text-white"
                     style={{
                       top: 0,
                       alignItems: "center",
@@ -519,7 +519,7 @@ function App() {
                       <span className="badge mb-2">Branding</span>
                     </div>
 
-                    <h3 className="card-title h5 fw-bold start-0">
+                    <h3 className="card-title h5 fw-bold ">
                       Artificial Intelligence
                     </h3>
                     <p className="card-text">
@@ -528,7 +528,7 @@ function App() {
                     </p>
                     <a
                       href="#"
-                      className="btn start-0 d-block display-6 border-1 border-light text-white"
+                      className="btn  d-block display-6  border-light text-white"
                       aria-label="Lire l'article : Intelligence Artificielle"
                       data-bs-toggle="modal"
                       data-bs-target="#articleModal"
@@ -586,10 +586,10 @@ function App() {
           </Row>
         </Container>
         <Container fluid className="bg-warning text-white py-5 text-center mt-5" style={{ maxWidth: "100%", height: "35rem" }}>
-          <h2 className="fw-blod display-3 mb-3 text-center fw-bold mt-5 mb-5">
+          <h2 className="fw-blod display-3  text-center fw-bold mt-5 mb-5">
             Lets Create Something Great
           </h2>
-          <p className="fw-bold mb-0 text-center fw-bold mt-5 mb-5 text-dark fs-4">
+          <p className="fw-bold text-center fw-bold mt-5 mb-5 text-dark fs-4">
             We shift you from today&apos;s challenges to tomorrow&apos;s opportunities
           </p>
           <Button
