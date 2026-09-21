@@ -1,4 +1,5 @@
 "use client";
+
 import Footer from "./Composent/Footer";
 import TypingText from "./Composent/TypingText";
 import SiteNavbar from "./Composent/SiteNavbar";
@@ -13,13 +14,16 @@ import {
   Carousel,
 } from "react-bootstrap";
 
-function App() {
+export default function App() {
   return (
     <>
       <SiteNavbar />
 
       <main className="content overflow-hidden">
-        <section className="hero-content bg-dark text-white d-flex align-items-center">
+        <section
+          className="hero-content bg-dark text-white d-flex align-items-center"
+          aria-label="Présentation principale"
+        >
           <Container fluid className="p-0 ps-lg-5">
             {/* Hauteur adaptée en mobile, 100vh uniquement sur desktop (lg) */}
             <Row className="align-items-center g-0 min-vh-lg-100 flex-column-reverse flex-lg-row pt-3 pt-lg-0">
@@ -46,7 +50,7 @@ function App() {
                   variant="warning"
                   href="/contact"
                   className="text-dark fw-bold px-4 py-3 shadow"
-                  role="button"
+                  aria-label="Contactez-nous pour toute demande"
                 >
                   Contactez-nous
                 </Button>
@@ -68,7 +72,7 @@ function App() {
                 >
                   <Image
                     src="/images/upload/souflydev.webp"
-                    alt="SouflyDev Hero"
+                    alt="Visuel de présentation Souflydev"
                     width={500}
                     height={500}
                     priority
@@ -89,7 +93,10 @@ function App() {
           </Container>
         </section>
 
-        <section className="contact-info bg-dark mx-auto p-4 text-white m-0 justify-content-center text-center">
+        <section
+          className="contact-info bg-dark mx-auto p-4 text-white m-0 justify-content-center text-center"
+          aria-label="Coordonnées de contact"
+        >
           <Container fluid className="p-0 px-lg-5">
             <div
               className="row g-0 text-center py-5 px-3 text-lg-start"
@@ -100,22 +107,39 @@ function App() {
                 <p className="shimmer-text">75017 Paris</p>
               </div>
               <div className="col-lg-6 col-12">
-                <p className="shimmer-text fw-bold">01 40 00 00 42</p>
-                <p className="shimmer-text fw-bold">[EMAIL_ADDRESS]</p>
+                <p className="shimmer-text fw-bold">
+                  <a
+                    href="tel:0140000042"
+                    className="text-white text-decoration-none"
+                    aria-label="Téléphone : 01 40 00 00 42"
+                  >
+                    01 40 00 00 42
+                  </a>
+                </p>
+                <p className="shimmer-text fw-bold">
+                  <a
+                    href="mailto:contact-me@souflyhub.fr"
+                    className="text-white text-decoration-none"
+                    aria-label="Email : contact-me@souflyhub.fr"
+                  >
+                    contact-me@souflyhub.fr
+                  </a>
+                </p>
               </div>
             </div>
           </Container>
         </section>
-        <div className="bg-primary text-center py-5">
+
+        <div className="bg-primary text-center py-5" aria-hidden="true">
           <TypingText text="Développement Web " style={{ color: "white" }} />
         </div>
 
-        <section className="services bg-light text-dark py-5">
+        <section className="services bg-light text-dark py-5" aria-label="Nos services">
           <Container fluid className="p-2 px-lg-5">
             <div className="row g-0 text-center py-5 px-5 text-lg-start">
               <div className="col-lg-6 col-12 mb-5 mb-lg-0">
                 <i
-                  className="bi bi-gear-fill fs-1 text-success mb-3"
+                  className="bi bi-gear-fill fs-1 text-success mb-3 d-inline-block"
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">Développement Web</h2>
@@ -126,7 +150,7 @@ function App() {
               </div>
               <div className="col-lg-6 col-12 mb-5 mb-lg-0">
                 <i
-                  className="bi bi-lightning-fill fs-1 text-success mb-3"
+                  className="bi bi-lightning-fill fs-1 text-success mb-3 d-inline-block"
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">Marketing Digital</h2>
@@ -137,7 +161,7 @@ function App() {
               </div>
               <div className="col-lg-6 col-12 mb-5 mb-lg-0">
                 <i
-                  className="bi bi-people-fill fs-1 text-success mb-5"
+                  className="bi bi-people-fill fs-1 text-success mb-5 d-inline-block"
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">
@@ -151,7 +175,7 @@ function App() {
               </div>
               <div className="col-lg-6 col-12 mb-5 mb-lg-0">
                 <i
-                  className="bi bi-people-fill fs-1 text-success mb-3"
+                  className="bi bi-people-fill fs-1 text-success mb-3 d-inline-block"
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">Security</h2>
@@ -163,6 +187,7 @@ function App() {
             </div>
           </Container>
         </section>
+
         <Container
           fluid
           className="py-5 mb-5 mx-auto"
@@ -172,12 +197,13 @@ function App() {
             top: "20px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
+          aria-label="À propos de nous"
         >
           <Row className="g-0 text-center py-5 px-3 text-lg-start">
             <Col lg={6} xs={12}>
               <Image
                 src="/images/upload/souflydev.webp"
-                alt="Image reference a la photo de profile a souflydev"
+                alt="Photo de profil de l'équipe Souflydev"
                 width={900}
                 height={900}
                 style={{
@@ -190,7 +216,7 @@ function App() {
               />
             </Col>
             <Col lg={6} xs={12}>
-              <h2 className="fw-bold display-6 mb-3 text-center fw-bold">
+              <h2 className="display-6 mb-3 text-center fw-bold">
                 À propos de nous
               </h2>
               <p
@@ -207,30 +233,47 @@ function App() {
                 communication avec nos clients pour comprendre leurs besoins et
                 créer des solutions sur mesure.
               </p>
-              <div className="d-flex flex-column  gap-2 mt-5">
-                <span className="text-secondary mb-5 gap-1">
+              <div className="d-flex flex-column gap-2 mt-5">
+                <span className="text-secondary mb-5 gap-1 d-block">
                   <strong>Compétences :</strong> Développement Web
-                  <ProgressBar variant="dark" now={80} />
+                  <ProgressBar
+                    variant="dark"
+                    now={80}
+                    aria-label="Compétence en Développement Web : 80%"
+                  />
                 </span>
-                <span className="text-secondary mb-5 gap-1">
+                <span className="text-secondary mb-5 gap-1 d-block">
                   <strong>Compétences :</strong> Seo Optimisation AI
-                  <ProgressBar variant="dark" now={86} />
+                  <ProgressBar
+                    variant="dark"
+                    now={86}
+                    aria-label="Compétence en Seo Optimisation AI : 86%"
+                  />
                 </span>
-                <span className="text-secondary mb-5 gap-1">
+                <span className="text-secondary mb-5 gap-1 d-block">
                   <strong>Compétences :</strong> Marketing Digital
-                  <ProgressBar variant="dark" now={75} />
+                  <ProgressBar
+                    variant="dark"
+                    now={75}
+                    aria-label="Compétence en Marketing Digital : 75%"
+                  />
                 </span>
-                <span className="text-secondary mb-5 gap-1">
+                <span className="text-secondary mb-5 gap-1 d-block">
                   <strong>Compétences :</strong> Security
-                  <ProgressBar variant="dark" now={90} />
+                  <ProgressBar
+                    variant="dark"
+                    now={90}
+                    aria-label="Compétence en Sécurité : 90%"
+                  />
                 </span>
               </div>
             </Col>
           </Row>
         </Container>
-        <Container>
+
+        <Container aria-label="Projets sélectionnés">
           <div className="text-center">
-            <h2 className="fw-bold display-6 text-center fw-bold mt-5 mb-5">
+            <h2 className="display-6 text-center fw-bold mt-5 mb-5">
               Nos Discover our selected projects
             </h2>
           </div>
@@ -246,9 +289,9 @@ function App() {
               <Carousel>
                 <Carousel.Item>
                   <Carousel.Caption>
-                    <h5 className="text-center text-light fw-bold ">
+                    <h3 className="h5 text-center text-light fw-bold">
                       Creation de AI assistant chatbot
-                    </h5>
+                    </h3>
                     <p className="text-center text-light">
                       Pour une meilleure expérience utilisateur.
                     </p>
@@ -256,31 +299,31 @@ function App() {
                   <Image
                     className="d-block w-100"
                     src="/images/projet/menu/projet_1.webp"
-                    alt="Project 1"
+                    alt="Illustration du projet 1 : Création de chatbot IA assistant"
                     width={800}
                     height={450}
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <Carousel.Caption>
-                    <h5 className="text-center">
+                    <h3 className="h5 text-center">
                       Seo de vente de produits alimentaires
-                    </h5>
+                    </h3>
                     <p>Boutique en ligne pour la vente de Bonbon.</p>
                   </Carousel.Caption>
                   <Image
                     className="d-block w-100"
                     src="/images/projet/menu/projet_2.webp"
-                    alt="Project 2"
+                    alt="Illustration du projet 2 : Boutique de produits alimentaires"
                     width={800}
                     height={450}
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <Carousel.Caption>
-                    <h5 className="text-center text-dark">
+                    <h3 className="h5 text-center text-dark">
                       Vente de produits de livre pour artistes
-                    </h5>
+                    </h3>
                     <p className="text-center text-dark">
                       Boutique en ligne pour la vente de livres pour artistes.
                     </p>
@@ -288,7 +331,7 @@ function App() {
                   <Image
                     className="d-block w-100"
                     src="/images/projet/menu/projet_3.webp"
-                    alt="Project 3"
+                    alt="Illustration du projet 3 : Vente de livres pour artistes"
                     width={800}
                     height={450}
                   />
@@ -298,14 +341,14 @@ function App() {
           </div>
         </Container>
 
-        <Container className="text-white py-5">
+        <Container className="text-white py-5" aria-label="Historique et étapes">
           <div className="border-top border-2 border-light py-4 py-md-5">
             <Row className="align-items-center text-center text-md-start gy-3">
               <Col className="col-12 col-md-2">
                 <h3 className="text-dark mb-0">2024</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark ">
+                <h4 className="fw-bold display-6 mb-2 text-dark">
                   The Blue Design twitter
                 </h4>
                 <p className="fw-bold text-dark mb-0">
@@ -323,7 +366,7 @@ function App() {
                 <h3 className="text-dark mb-0">2022</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark ">
+                <h4 className="fw-bold display-6 mb-2 text-dark">
                   The Blue Design Google
                 </h4>
                 <p className="fw-bold text-dark mb-0">
@@ -341,7 +384,7 @@ function App() {
                 <h3 className="text-dark mb-0">2019</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark ">
+                <h4 className="fw-bold display-6 mb-2 text-dark">
                   The Blue Design Jurry
                 </h4>
                 <p className="fw-bold text-dark mb-0">
@@ -359,7 +402,7 @@ function App() {
                 <h3 className="text-dark mb-0">2017</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark ">
+                <h4 className="fw-bold display-6 mb-2 text-dark">
                   The Blue Design Awards
                 </h4>
                 <p className="fw-bold text-dark mb-0">
@@ -372,32 +415,28 @@ function App() {
             </Row>
           </div>
         </Container>
-        <Container>
+
+        <Container aria-label="Vidéo de présentation">
           <div
             className="container mx-auto align-items-center justify-content-center d-flex mb-5"
-            style={{ maxWidth: "800px", height: "450px" }}
+            style={{ maxWidth: "800px", minHeight: "300px" }}
           >
             <iframe
               width="798"
               height="449"
               src="https://www.youtube.com/embed/hm7XoVN2tYU"
               title="Le Vent Est Grand ( Aze Max )"
-              allow="
-          accelerometer;
-          autoplay;
-          clipboard-write;
-          encrypted-media;
-          gyroscope;
-          picture-in-picture;
-          web-share;
-        "
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
+              className="w-100"
+              style={{ maxHeight: "450px", border: 0 }}
             ></iframe>
           </div>
         </Container>
-        <Container className="text-dark py-5 text-center">
-          <h2 className="fw-bold display-6  text-center fw-bold mt-5 mb-5">
+
+        <Container className="text-dark py-5 text-center" aria-label="Articles et actualités">
+          <h2 className="display-6 text-center fw-bold mt-5 mb-5">
             Read Our Articles And news
           </h2>
           <Row className="g-0 text-center py-5 px-3 text-lg-start justify-content-center gap-4">
@@ -415,7 +454,7 @@ function App() {
                     height={320}
                   />
                   <div
-                    className="card-body d-flex flex-column position-absolute bottom-0  p-4 bg-black bg-opacity-75 text-white"
+                    className="card-body d-flex flex-column position-absolute bottom-0 p-4 bg-black bg-opacity-75 text-white"
                     style={{
                       top: 0,
                       alignItems: "center",
@@ -473,7 +512,7 @@ function App() {
                       <span className="badge mb-2">Branding</span>
                     </div>
 
-                    <h3 className="card-title h5 fw-bold ">
+                    <h3 className="card-title h5 fw-bold">
                       Artificial Intelligence
                     </h3>
                     <p className="card-text">
@@ -482,7 +521,7 @@ function App() {
                     </p>
                     <a
                       href="#"
-                      className="btn  d-block display-6 border-light text-white"
+                      className="btn d-block display-6 border-light text-white"
                       aria-label="Lire l'article : Intelligence Artificielle"
                       data-bs-toggle="modal"
                       data-bs-target="#articleModal"
@@ -519,7 +558,7 @@ function App() {
                       <span className="badge mb-2">Branding</span>
                     </div>
 
-                    <h3 className="card-title h5 fw-bold ">
+                    <h3 className="card-title h5 fw-bold">
                       Artificial Intelligence
                     </h3>
                     <p className="card-text">
@@ -528,7 +567,7 @@ function App() {
                     </p>
                     <a
                       href="#"
-                      className="btn  d-block display-6  border-light text-white"
+                      className="btn d-block display-6 border-light text-white"
                       aria-label="Lire l'article : Intelligence Artificielle"
                       data-bs-toggle="modal"
                       data-bs-target="#articleModal"
@@ -541,74 +580,125 @@ function App() {
             </Col>
           </Row>
         </Container>
-        <Container>
+
+        <Container aria-label="Partenaires">
           <Row>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_0.webp" alt="Image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_0.webp"
+                  alt="Image de logo d'entreprise partenaire 1"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_1.webp" alt="Deuxième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_1.webp"
+                  alt="Deuxième image de logo d'entreprise partenaire 2"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_2.webp" alt="Troisième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_2.webp"
+                  alt="Troisième image de logo d'entreprise partenaire 3"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_3.webp" alt="Quatrième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_3.webp"
+                  alt="Quatrième image de logo d'entreprise partenaire 4"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_4.webp" alt="Cinquième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_4.webp"
+                  alt="Cinquième image de logo d'entreprise partenaire 5"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_5.webp" alt="Sixième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_5.webp"
+                  alt="Sixième image de logo d'entreprise partenaire 6"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_6.webp" alt="Septième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_6.webp"
+                  alt="Septième image de logo d'entreprise partenaire 7"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
-            <Col lg={3} xs={12} md={6}  className="text-center py-1">
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
               <div className="bg-light text-center py-1 px-5 rounded-4">
-                    <Image src="/images/logo/logo_7.webp" alt="Huitième image de logo d'entreprise partenaire" width={240} height={100} style={{ width: "100%", maxWidth: "240px", height: "auto" }} />
+                <Image
+                  src="/images/logo/logo_7.webp"
+                  alt="Huitième image de logo d'entreprise partenaire 8"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
               </div>
             </Col>
           </Row>
         </Container>
-        <Container fluid className="bg-warning text-white py-5 text-center mt-5" style={{ maxWidth: "100%", height: "35rem" }}>
-          <h2 className="fw-blod display-3  text-center fw-bold mt-5 mb-5">
+
+        <Container
+          fluid
+          className="bg-warning text-white py-5 text-center mt-5"
+          style={{ maxWidth: "100%", minHeight: "35rem" }}
+          aria-label="Appel à l'action"
+        >
+          <h2 className="display-3 text-center fw-bold mt-5 mb-5 text-dark">
             Lets Create Something Great
           </h2>
-          <p className="fw-bold text-center fw-bold mt-5 mb-5 text-dark fs-4">
+          <p className="text-center fw-bold mt-5 mb-5 text-dark fs-4">
             We shift you from today&apos;s challenges to tomorrow&apos;s opportunities
           </p>
           <Button
-                  variant="dark"
-                  href="/contact"
-                  className="text-white fw-bold px-4 py-3 shadow mt-5"
-                  role="button"
-                >
-                  Contactez-nous
-                </Button>
-          
+            variant="dark"
+            href="/contact"
+            className="text-white fw-bold px-4 py-3 shadow mt-5"
+            aria-label="Contactez-nous dès maintenant"
+          >
+            Contactez-nous
+          </Button>
         </Container>
       </main>
-      
+
       <Footer />
-    
-      
     </>
   );
 }
-                
-export default App;
+
