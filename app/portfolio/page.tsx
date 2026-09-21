@@ -52,7 +52,7 @@ export default function PortfolioPage() {
     <>
       <SiteNavbar />
 
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0" data-bs-theme="light">
         <div
           className="position-relative mt-5 d-flex align-items-center justify-content-center text-center"
           style={{

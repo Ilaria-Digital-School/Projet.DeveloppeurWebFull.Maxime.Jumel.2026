@@ -13,7 +13,7 @@ export default function DevelopmentPage({
   return (
     <>
       <SiteNavbar />
-      <main className="min-vh-100 d-flex align-items-center justify-content-center bg-dark px-4 py-5 text-center text-white">
+      <main className="min-vh-100 d-flex align-items-center justify-content-center bg-dark px-4 py-5 text-center text-white" data-bs-theme="light">
         <section className="development-page">
           <p className="mb-3 text-success fw-bold text-uppercase">Souflydev</p>
           <h1 className="display-4 fw-bold mb-3">{title}</h1>

@@ -8,7 +8,7 @@ export default function PresencePage() {
   return (
     <>
     <SiteNavbar />
-      <main className="min-vh-100 align-items-center justify-content-center bg-light px-4 py-5 text-center text-dark">
+      <main className="min-vh-100 align-items-center justify-content-center bg-light px-4 py-5 text-center text-dark" data-bs-theme="light">
         <Container fluid>
           <Row className="flex-lg-row align-items-center justify-content-center">
             <Col

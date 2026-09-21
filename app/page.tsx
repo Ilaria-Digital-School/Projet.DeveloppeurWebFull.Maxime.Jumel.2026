@@ -19,7 +19,7 @@ export default function App() {
     <>
       <SiteNavbar />
 
-      <main className="content overflow-hidden">
+      <main className="content overflow-hidden" data-bs-theme="light">
         <section
           className="hero-content bg-dark text-white d-flex align-items-center"
           aria-label="Présentation principale"
@@ -341,76 +341,76 @@ export default function App() {
           </div>
         </Container>
 
-        <Container className="text-white py-5" aria-label="Historique et étapes">
-          <div className="border-top border-2 border-light py-4 py-md-5">
+        <Container className="py-5" aria-label="Historique et étapes">
+          <div className="border-top border-2 py-4 py-md-5">
             <Row className="align-items-center text-center text-md-start gy-3">
               <Col className="col-12 col-md-2">
-                <h3 className="text-dark mb-0">2024</h3>
+                <h3 className="mb-0">2024</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark">
+                <h4 className="fw-bold display-6 mb-2">
                   The Blue Design twitter
                 </h4>
-                <p className="fw-bold text-dark mb-0">
+                <p className="fw-bold mb-0">
                   We bring to life the most complex projects, specialize
                 </p>
               </Col>
               <Col className="col-12 col-md-2">
-                <p className="text-dark mb-0">DEVELOPER</p>
+                <p className="mb-0">DEVELOPER</p>
               </Col>
             </Row>
           </div>
-          <div className="border-top border-2 border-light py-4 py-md-5">
+          <div className="border-top border-2 py-4 py-md-5">
             <Row className="align-items-center text-center text-md-start gy-3">
               <Col className="col-12 col-md-2">
-                <h3 className="text-dark mb-0">2022</h3>
+                <h3 className="mb-0">2022</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark">
+                <h4 className="fw-bold display-6 mb-2">
                   The Blue Design Google
                 </h4>
-                <p className="fw-bold text-dark mb-0">
+                <p className="fw-bold mb-0">
                   We bring to life the most complex projects, specialize
                 </p>
               </Col>
               <Col className="col-12 col-md-2">
-                <p className="text-dark mb-0">CREATIVE DIRECTOR</p>
+                <p className="mb-0">CREATIVE DIRECTOR</p>
               </Col>
             </Row>
           </div>
-          <div className="border-top border-2 border-light py-4 py-md-5">
+          <div className="border-top border-2 py-4 py-md-5">
             <Row className="align-items-center text-center text-md-start gy-3">
               <Col className="col-12 col-md-2">
-                <h3 className="text-dark mb-0">2019</h3>
+                <h3 className="mb-0">2019</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark">
+                <h4 className="fw-bold display-6 mb-2">
                   The Blue Design Jurry
                 </h4>
-                <p className="fw-bold text-dark mb-0">
+                <p className="fw-bold mb-0">
                   We bring to life the most complex projects, specialize
                 </p>
               </Col>
               <Col className="col-12 col-md-2">
-                <p className="text-dark mb-0">ANIMATOR</p>
+                <p className="mb-0">ANIMATOR</p>
               </Col>
             </Row>
           </div>
-          <div className="border-top border-2 border-light py-4 py-md-5">
+          <div className="border-top border-2 py-4 py-md-5">
             <Row className="align-items-center text-center text-md-start gy-3">
               <Col className="col-12 col-md-2">
-                <h3 className="text-dark mb-0">2017</h3>
+                <h3 className="mb-0">2017</h3>
               </Col>
               <Col className="col-12 col-md-8">
-                <h4 className="fw-bold display-6 mb-2 text-dark">
+                <h4 className="fw-bold display-6 mb-2">
                   The Blue Design Awards
                 </h4>
-                <p className="fw-bold text-dark mb-0">
+                <p className="fw-bold mb-0">
                   We bring to life the most complex projects, specialize
                 </p>
               </Col>
               <Col className="col-12 col-md-2">
-                <p className="text-dark mb-0">ANIMATOR</p>
+                <p className="mb-0">ANIMATOR</p>
               </Col>
             </Row>
           </div>
@@ -435,7 +435,7 @@ export default function App() {
           </div>
         </Container>
 
-        <Container className="text-dark py-5 text-center" aria-label="Articles et actualités">
+        <Container className="py-5 text-center" aria-label="Articles et actualités">
           <h2 className="display-6 text-center fw-bold mt-5 mb-5">
             Read Our Articles And news
           </h2>

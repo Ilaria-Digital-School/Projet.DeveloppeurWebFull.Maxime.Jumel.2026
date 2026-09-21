@@ -8,7 +8,7 @@ export default function ContactPage() {
   return (
     <>
       <SiteNavbar />
-      <main className="container py-5">
+      <main className="container py-5" data-bs-theme="light">
         <h1>Contactez-nous</h1>
         <p>Nous serons heureux d&apos;échanger avec vous.</p>
       </main>
