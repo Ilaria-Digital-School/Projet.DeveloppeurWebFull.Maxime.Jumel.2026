@@ -36,6 +36,14 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+/* En thème sombre, le vert Bootstrap est trop sourd sur le fond gris foncé :
+   on reprend l'accent vert clair de la navbar.
+   `!important` est nécessaire pour passer devant l'utilitaire Bootstrap
+   `.text-success` qui est lui-même marqué `!important`. */
+[data-bs-theme="dark"] .services .bi {
+  color: #72e3a4 !important;
+}
+
 .site-navbar {
 
   min-height: 4.5rem;

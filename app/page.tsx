@@ -19,7 +19,7 @@ export default function App() {
     <>
       <SiteNavbar />
 
-      <main className="content overflow-hidden" data-bs-theme="light">
+      <main className="content overflow-hidden">
         <section
           className="hero-content bg-dark text-white d-flex align-items-center"
           aria-label="Présentation principale"
@@ -134,7 +134,10 @@ export default function App() {
           <TypingText text="Développement Web " style={{ color: "white" }} />
         </div>
 
-        <section className="services bg-light text-dark py-5" aria-label="Nos services">
+        <section
+          className="services bg-body-tertiary text-body py-5"
+          aria-label="Nos services"
+        >
           <Container fluid className="p-2 px-lg-5">
             <div className="row g-0 text-center py-5 px-5 text-lg-start">
               <div className="col-lg-6 col-12 mb-5 mb-lg-0">
@@ -143,7 +146,7 @@ export default function App() {
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">Développement Web</h2>
-                <p className="text-secondary">
+                <p className="text-body-secondary">
                   Nous créons des sites web modernes et performants, adaptés à
                   vos besoins et à votre image de marque.
                 </p>
@@ -154,7 +157,7 @@ export default function App() {
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">Marketing Digital</h2>
-                <p className="text-secondary">
+                <p className="text-body-secondary">
                   Nous offrons une large gamme de services pour vous aider à
                   atteindre vos objectifs.
                 </p>
@@ -167,7 +170,7 @@ export default function App() {
                 <h2 className="fw-bold display-6 mb-3">
                   Nos Seo optimisées avec analytics
                 </h2>
-                <p className="text-secondary">
+                <p className="text-body-secondary">
                   Nos stratégies de référencement naturel sont conçues pour
                   améliorer votre visibilité en ligne et attirer plus de
                   visiteurs qualifiés.
@@ -179,7 +182,7 @@ export default function App() {
                   aria-hidden="true"
                 ></i>
                 <h2 className="fw-bold display-6 mb-3">Security</h2>
-                <p className="text-secondary">
+                <p className="text-body-secondary">
                   Nous mettons en place des mesures de sécurité robustes pour
                   protéger vos données et votre infrastructure.
                 </p>
@@ -197,6 +200,7 @@ export default function App() {
             top: "20px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
+          data-bs-theme="light"
           aria-label="À propos de nous"
         >
           <Row className="g-0 text-center py-5 px-3 text-lg-start">
@@ -216,7 +220,7 @@ export default function App() {
               />
             </Col>
             <Col lg={6} xs={12}>
-              <h2 className="display-6 mb-3 text-center fw-bold">
+              <h2 className="display-6 mb-3 text-center fw-bold text-body">
                 À propos de nous
               </h2>
               <p
