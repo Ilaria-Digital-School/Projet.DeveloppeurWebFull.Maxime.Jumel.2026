@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -60,13 +61,14 @@ export default function SiteNavbar() {
               })}
             </Nav>
 
-            <Nav className="text-center text-lg-start">
+            <Nav className="d-flex flex-row align-items-center justify-content-center gap-3 mt-3 mt-lg-0">
+              <ThemeToggle />
               <Nav.Link
                 href="#"
                 aria-label="Search"
-                className="fw-bold site-nav-link site-search-link"
+                className="fw-bold site-nav-link site-search-link p-2 d-flex align-items-center"
               >
-                <i className="bi bi-search bg-dark" aria-hidden="true"></i>
+                <i className="bi bi-search" aria-hidden="true"></i>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

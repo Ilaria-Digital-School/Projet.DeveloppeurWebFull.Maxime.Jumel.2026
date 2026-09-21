@@ -1,10 +1,8 @@
 "use client";
 import Footer from "./Composent/Footer";
 import TypingText from "./Composent/TypingText";
-import FormText from "./Composent/FormText";
 import SiteNavbar from "./Composent/SiteNavbar";
 import Image from "next/image";
-import Link from "next/link";
 import {
   Container,
   Row,

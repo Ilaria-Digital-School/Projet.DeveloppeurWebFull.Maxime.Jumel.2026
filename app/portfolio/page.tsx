@@ -1,12 +1,53 @@
 import type { Metadata } from "next";
 import SiteNavbar from "../Composent/SiteNavbar";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import ContainerComposent from "../Composent/ContainerComposent";
+import Footer from "../Composent/Footer";
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Portfolio de projets Souflydev, actuellement en développement.",
 };
 
 export default function PortfolioPage() {
+  const portfolioProjects = [
+    {
+      src: "/images/portfolio/api_rest_ai.webp",
+      alt: "API REST & IA",
+      title: "API REST & IA",
+      text: "Conception et intégration d'API REST avancées connectées à des modèles d'intelligence artificielle.",
+    },
+    {
+      src: "/images/portfolio/ecommerce_pwa.webp",
+      alt: "E-Commerce PWA",
+      title: "E-Commerce PWA",
+      text: "Application web progressive pour une boutique en ligne fluide, réactive et performante.",
+    },
+    {
+      src: "/images/portfolio/database_Management.webp",
+      alt: "Database Management",
+      title: "Database Management",
+      text: "Architecture, modélisation et optimisation de bases de données relationnelles et NoSQL.",
+    },
+    {
+      src: "/images/portfolio/security_sol.webp",
+      alt: "Solutions de Sécurité",
+      title: "Security Solutions",
+      text: "Mise en place de protocoles de sécurité, authentification robuste et protection des données.",
+    },
+    {
+      src: "/images/portfolio/paymentSolu.webp",
+      alt: "Solutions de Paiement",
+      title: "Payment Solutions",
+      text: "Intégration de passerelles de paiement sécurisées et gestion automatisée des transactions.",
+    },
+    {
+      src: "/images/portfolio/bdd_banque.webp",
+      alt: "Système Bancaire",
+      title: "Système Bancaire",
+      text: "Système sécurisé de gestion des flux financiers, transactions bancaires et analyse des comptes.",
+    },
+  ];
+
   return (
     <>
       <SiteNavbar />
@@ -22,7 +63,7 @@ export default function PortfolioPage() {
 
           }}
         >
-          <div className="position-absolute top-0 start-0 h-100 w-100 bg-black opacity-50" />
+          <div className="position-absolute top-0 h-100 w-100 bg-black opacity-50" />
           <section
             className="position-relative mx-auto"
             style={{
@@ -43,16 +84,17 @@ export default function PortfolioPage() {
           </section>
         </div>
       </div>
-      <Container fluid className="mt-5 mb-5">
-              <Row>
-                <Col className="text-start mt-5 mb-5" lg={6} xs={12} xxl={6}>
-                  <img src="/images/portfolio/api_rest_ai.webp" alt="" className="img-fluid img-thumbnail" />
-                  <h2 className="text-dark">Projets</h2>
-                  <p className="text-muted">Liste des projets réalisés.</p>
-                </Col>
-              </Row>
+      <ContainerComposent items={portfolioProjects} />
 
+      <Container fluid className="mt-5 mb-5">
+        <Row>
+          <Col xl={12} className="text-center mb-4">
+              <Button variant="primary" >Voir les projets</Button>
+          </Col>
+        </Row>
       </Container>
+
+    <Footer/>
     </>
   );
 }
