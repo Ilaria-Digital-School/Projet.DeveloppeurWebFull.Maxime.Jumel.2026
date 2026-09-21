@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://portfolio.souflyhub.fr"),
+  metadataBase: new URL("https://production.souflyhub.fr"),
   title: {
     default: "Souflydev | Développeur Web et Mobile",
     template: "%s | Souflydev",

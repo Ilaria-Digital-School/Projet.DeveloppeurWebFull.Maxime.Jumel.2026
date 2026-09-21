@@ -38,6 +38,11 @@ export default function Footer() {
                       Contact
                     </a>
                   </li>
+                  <li className="mb-2">
+                    <Link href="/up" className="text-body-secondary text-decoration-none hover-link">
+                      Upgrade Git
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </Col>
