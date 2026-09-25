@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
     // la clé peut aussi être directement dans l'objet racine :
   },
   allowedDevOrigins: ["192.168.1.150:3000", "192.168.1.150"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "assets.souflyhub.dev",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
