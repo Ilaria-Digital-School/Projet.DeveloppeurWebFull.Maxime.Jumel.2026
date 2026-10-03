@@ -35,6 +35,34 @@ Le projet utilise Express, MongoDB/Mongoose et des vues EJS. Les pages existante
 - MongoDB accessible depuis l'environnement d'execution
 - Un compte SMTP pour l'activation des comptes en production
 
+## Demarrage avec Docker
+
+Docker Desktop doit etre installe et demarre.
+
+Construire et lancer l'application avec MongoDB :
+
+```bash
+docker compose up -d --build
+```
+
+L'application est disponible sur `http://localhost:3000`. MongoDB est accessible uniquement
+sur le reseau Docker et ses donnees sont conservees dans le volume `mongodb_data`.
+
+Voir les journaux :
+
+```bash
+docker compose logs -f app
+```
+
+Arreter les conteneurs sans supprimer les donnees :
+
+```bash
+docker compose down
+```
+
+Le fichier `.env` est charge par Compose pour les secrets SMTP et les autres variables.
+Compose remplace automatiquement `MONGO_URL` par l'URL du service MongoDB interne.
+
 ## Installation
 
 ```bash
