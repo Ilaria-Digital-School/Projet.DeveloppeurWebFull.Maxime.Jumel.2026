@@ -94,6 +94,7 @@ APP_URL=http://localhost:3000
 MONGO_URL=mongodb://localhost:27017/souflydev
 JWT_SECRET=une-valeur-secrete-longue
 SESSION_SECRET=une-valeur-secrete-longue
+SECURITY_CONTACT_EMAIL=security@example.com
 
 SMTP_HOST=smtp.example.com
 SMTP_PORT=587
@@ -150,7 +151,27 @@ Le rate limiting est desactive lorsque `NODE_ENV=development` et actif dans les 
 - Les tokens de verification email sont hashes avant stockage.
 - Les messages API sont inseres dans le DOM sans interpretation HTML cote client.
 - Les erreurs JSON malforme renvoient HTTP 400.
-- CSP, HSTS en production, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` et `X-Content-Type-Options` sont configures.
+- CSP, HSTS en production, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` et `X-Content-Type-Options` sont configures par `middleware/securityHeaders.js`.
+- La CSP utilise un nonce par requete : tout script inline doit porter `nonce="<%= cspNonce %>"`. Les scripts tiers servis par CDN declarent `integrity` et `crossorigin="anonymous"`.
+- Le canal de signalement est publie sur `/.well-known/security.txt` (et `/security.txt`). Le contact provient de `SECURITY_CONTACT_EMAIL`.
+- `X-Powered-By` est desactive et l'en-tete `Server` est retire.
+
+### Reverse proxy nginx
+
+Si l'application est derriere nginx, ajouter dans le `server{}` pour masquer la version serveur :
+
+```nginx
+server_tokens off;
+
+location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
+
+`server_tokens off;` transforme `Server: nginx/1.22.1` en `Server: nginx`. Les en-tetes de securite sont emis par Express ; nginx peut aussi les renvoyer en defense en profondeur.
 
 ## Licence
 

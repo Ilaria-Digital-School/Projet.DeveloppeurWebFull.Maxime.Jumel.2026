@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const rateLimit = require("express-rate-limit");
 const User = require("../models/User");
+const NewLetter = require("../models/NewLetter");
 const bcrypt = require("bcryptjs");
 
 const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
 const { isClient, isDev, isAdmin } = require("../middleware/authMiddleware");
-const { sendVerificationEmail } = require("../services/mailer");
+const { sendVerificationEmail, sendWelcomeEmail } = require("../services/mailer");
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const pseudoPattern = /^[A-Za-z0-9_.-]{3,30}$/;
@@ -98,6 +100,40 @@ router.get("/project", (req, res) => {
 
 router.get("/page", (req, res) => {
     res.render("page", { user: req.session?.user || null });
+});
+
+// newletter routes
+router.post("/subscribe", rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }), async (req, res) => {
+    console.log("📩 [subscribe] req.body:", req.body);
+    const email = req.body?.email?.trim();
+
+    if (!email || !emailPattern.test(email)) {
+        return res.json({ success: false, message: "Adresse email invalide." });
+    }
+
+    try {
+        const existing = await NewLetter.findOne({ email });
+
+        if (existing) {
+            return res.json({ success: false, message: "Vous êtes déjà inscrit." });
+        }
+
+        const newLetter = new NewLetter({ email });
+        await newLetter.save();
+
+        // Tu peux envoyer un mail de bienvenue ici si tu veux
+        try {
+            await sendWelcomeEmail({ email });
+        } catch (emailError) {
+            console.error("Erreur envoi mail bienvenue:", emailError);
+        }
+
+        res.json({ success: true, message: "Merci pour votre inscription !" });
+
+    } catch (error) {
+        console.error("Erreur inscription newsletter:", error);
+        res.json({ success: false, message: "Erreur serveur." });
+    }
 });
 
 

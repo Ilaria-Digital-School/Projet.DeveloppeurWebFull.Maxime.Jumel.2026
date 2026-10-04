@@ -7,6 +7,7 @@ const port = config.port;
 const path = require("path");
 const chalk = require("chalk");
 const { exposeCookieConsent, router: cookieRouter } = require("../middleware/cookieManager");
+const { securityHeaders } = require("../middleware/securityHeaders");
 
 const sessionSecret = config.session?.secret || process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -20,6 +21,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 
 
+app.disable("x-powered-by");
+app.use(securityHeaders);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
@@ -40,6 +43,20 @@ app.use(session({
 }));
 app.use(exposeCookieConsent);
 app.use("/api/cookies", cookieRouter);
+
+// ──────────────────────────────────────────────
+// security.txt (RFC 9116) — canal de signalement
+// ──────────────────────────────────────────────
+const SECURITY_TXT = [
+    `Contact: mailto:${process.env.SECURITY_CONTACT_EMAIL || "security@souflyhub.fr"}`,
+    "Preferred-Languages: fr, en",
+    "Canonical: /.well-known/security.txt",
+    "Expires: 2027-12-31T23:59:59.000Z"
+].join("\n");
+
+const sendSecurityTxt = (req, res) => res.type("text/plain").send(SECURITY_TXT);
+app.get("/.well-known/security.txt", sendSecurityTxt);
+app.get("/security.txt", sendSecurityTxt);
 
 const scriptRun = (portToUse = port) => {
     const server = app.listen(portToUse, () => {

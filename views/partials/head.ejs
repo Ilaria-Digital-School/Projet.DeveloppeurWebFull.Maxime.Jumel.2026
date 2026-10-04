@@ -1,0 +1,120 @@
+<%
+  // En-tête partagé. Locaux attendus (tous optionnels sauf `title`) :
+  //   title       : titre de la page
+  //   description : meta description (SEO)
+  //   canonical   : URL canonique, sert aussi d'og:url par défaut
+  //   keywords    : meta keywords
+  //   social      : booléen, émet le bloc Open Graph / Twitter (défaut true)
+  //   image       : image de partage (défaut : logo Souflydev)
+  //   imageType   : type MIME de l'image (défaut image/webp)
+  //   locale      : og:locale (défaut en_US)
+  //   language    : meta language (défaut English)
+  //   styles      : tableau de feuilles de style locales, ex. ["/css/style.css"]
+  //   stylesLast  : charge les styles locaux apres le CDN (defaut false)
+  //   icons       : version de bootstrap-icons (défaut 1.13.1)
+  //   fontAwesome : charge Font Awesome en plus (défaut false)
+//   cdn         : charge Bootstrap + icônes depuis le CDN (défaut true)
+  //   extra       : HTML additionnel injecté avant la fermeture du head
+  const title = locals.title;
+  const description = locals.description || "";
+  const canonical = locals.canonical || "";
+  const keywords = locals.keywords || "";
+  const social = locals.social !== false;
+  const image = locals.image || "/images/upload/soulfydev.webp";
+  const imageType = locals.imageType || "image/webp";
+  const locale = locals.locale || "en_US";
+  const language = locals.language || "English";
+  const styles = locals.styles || ["/css/style.css"];
+  const stylesLast = locals.stylesLast === true;
+  const icons = locals.icons || "1.13.1";
+  const fontAwesome = locals.fontAwesome === true;
+  const cdn = locals.cdn !== false;
+  const extra = locals.extra || "";
+
+  const ogUrl = canonical;
+  const siteName = "Souflydev";
+  const author = "Maxime Jumel";
+%>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+
+  <% if (!stylesLast) { styles.forEach((href) => { %>
+  <link rel="stylesheet" href="<%= href %>">
+  <% }); } %>
+
+  <!-- SEO -->
+  <% if (description) { %>
+  <meta name="description" content="<%= description %>">
+  <% } %>
+  <% if (canonical) { %>
+  <link rel="canonical" href="<%= canonical %>">
+  <% } %>
+  <% if (keywords) { %>
+  <meta name="keywords" content="<%= keywords %>">
+  <% } %>
+  <meta name="author" content="<%= author %>">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="<%= language %>">
+  <meta name="rating" content="general">
+  <meta name="distribution" content="global">
+  <meta name="category" content="Portfolio">
+  <meta name="geo.region" content="FR-IDF">
+  <meta name="geo.placename" content="Coulommiers">
+  <meta name="geo.position" content="48.8096;3.0822">
+  <meta name="ICBM" content="48.8096, 3.0822">
+
+  <% if (social) { %>
+  <!-- Open Graph -->
+  <meta property="og:title" content="<%= title %>">
+  <% if (description) { %>
+  <meta property="og:description" content="<%= description %>">
+  <% } %>
+  <% if (ogUrl) { %>
+  <meta property="og:url" content="<%= ogUrl %>">
+  <% } %>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="<%= locale %>">
+  <meta property="og:site_name" content="<%= siteName %>">
+  <meta property="og:image" content="<%= image %>">
+  <meta property="og:image:secure_url" content="<%= image %>">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="<%= siteName %>">
+  <meta property="og:image:type" content="<%= imageType %>">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <% if (description) { %>
+  <meta name="twitter:description" content="<%= description %>">
+  <% } %>
+  <meta name="twitter:image" content="<%= image %>">
+  <meta name="twitter:image:width" content="1920">
+  <meta name="twitter:image:height" content="1080">
+  <meta name="twitter:image:alt" content="<%= siteName %>">
+  <meta name="twitter:image:type" content="<%= imageType %>">
+  <meta name="twitter:site" content="@soulfydev">
+  <meta name="twitter:creator" content="@soulfydev">
+  <% } %>
+
+  <% if (cdn) { %>
+  <!-- CDN (SRI) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@<%= icons %>/font/bootstrap-icons.min.css"
+    integrity="sha384-<%= icons === '1.13.3' ? '9ZZUDwYVZcDksk5Hl/CzqMjhWFvwjiYY2wn9JcrREFCyGpKV1bdKhLVsK5nLcRTw' : 'CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk' %>"
+    crossorigin="anonymous">
+  <% } %>
+  <% if (fontAwesome) { %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <% } %>
+
+  <% if (stylesLast) { styles.forEach((href) => { %>
+  <link rel="stylesheet" href="<%= href %>">
+  <% }); } %>
+
+  <%- extra %>
+</head>

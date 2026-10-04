@@ -1,25 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Souflydev | <%= user.pseudo %></title>
-    <!-- SEO Optimization -->
-    <meta name="description" content="Access your Souflydev project dashboard to manage web development projects, client requests, and metrics.">
-    <link rel="canonical" href="https://backend.soulfyhub.fr/dashboard">
-    <meta name="geo.region" content="FR-IDF">
-    <meta name="geo.placename" content="Coulommiers">
-    <meta name="geo.position" content="48.8096;3.0822">
-    <meta name="ICBM" content="48.8096, 3.0822">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- IMPORT ICON BOOTSTRAP -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.3/font/bootstrap-icons.min.css">
-    <!-- IMPORT FONT AWESOME -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!-- import css dashboard -->
-    <link rel="stylesheet" href="/css/_dashboard.css">
-    
-</head>
+<%- include("partials/head", { title: `Souflydev | ${user.pseudo}`, description: "Access your Souflydev project dashboard to manage web development projects, client requests, and metrics.", canonical: "https://backend.souflyhub.fr/dashboard", social: false, styles: ["/css/_dashboard.css"], stylesLast: true, icons: "1.13.3", fontAwesome: true }) %>
 <body class="d-flex flex-column flex-md-row" style="height: 100vh; overflow: hidden; background-color: #f8f9fa;">
     
     <!-- slid bar section  -->
@@ -350,7 +331,7 @@
                                                         <button class="btn btn-outline-primary btn-sm px-2 py-1" title="Voir et Répondre" data-bs-toggle="modal" data-bs-target="#modalAdminTicket-<%= ticket._id %>">
                                                             <i class="fa-solid fa-message" style="font-size: 0.75rem;"></i>
                                                         </button>
-                                                        <a href="/api/admin/tickets/<%= ticket.userId %>/<%= ticket._id %>/delete" onclick="return confirm('Supprimer ce ticket ?');" class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
+                                                        <a href="/api/admin/tickets/<%= ticket.userId %>/<%= ticket._id %>/delete" data-confirm="Supprimer ce ticket ?" class="btn btn-outline-danger btn-sm px-2 py-1" title="Supprimer">
                                                             <i class="fa-solid fa-trash" style="font-size: 0.75rem;"></i>
                                                         </a>
                                                     </div>
@@ -1091,6 +1072,14 @@
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script nonce="<%= cspNonce %>">
+      document.addEventListener("click", (event) => {
+        const trigger = event.target.closest("[data-confirm]");
+        if (trigger && !window.confirm(trigger.dataset.confirm)) {
+          event.preventDefault();
+        }
+      });
+    </script>
     <%- include("partials/cookie-consent") %>
 </body>
 </html>

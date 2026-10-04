@@ -20,6 +20,30 @@ const getTransporter = () => {
     });
 };
 
+const sendWelcomeEmail = async ({ email }) => {
+  if (process.env.EMAIL_MODE === "console") {
+    console.log(`[WELCOME EMAIL - CONSOLE] To: ${email}`);
+    return { mode: "console" };
+  }
+
+  const transporter = getTransporter();
+
+  await transporter.sendMail({
+    from: process.env.MAIL_FROM,
+    to: email,
+    subject: "Merci de vous être inscrit à la newsletter !",
+    text: "Bonjour,\n\nMerci pour votre inscription à notre newsletter. Nous sommes ravis de vous compter parmi nos abonnés.\n\nÀ bientôt,\nL'équipe Souflydev",
+    html: `
+      <p>Bonjour,</p>
+      <p>Merci pour votre inscription à notre newsletter.</p>
+      <p>Nous sommes ravis de vous compter parmi nos abonnés.</p>
+      <p>À bientôt,<br>L'équipe Souflydev</p>
+    `
+  });
+
+  return { mode: "smtp" };
+};
+
 const sendVerificationEmail = async ({ email, token }) => {
     const verificationUrl = `${process.env.APP_URL.replace(/\/$/, "")}/verify-email?token=${encodeURIComponent(token)}`;
 
@@ -49,4 +73,4 @@ const sendVerificationEmail = async ({ email, token }) => {
 
 
 
-module.exports = { sendVerificationEmail };
+module.exports = { sendVerificationEmail, sendWelcomeEmail };

@@ -1,0 +1,68 @@
+<%
+  // Nav partagée. Locals attendus :
+  //   active  : 'home' | 'page' | 'portfolio' | 'blog' | 'contact'
+  //   variant : 'light' (défaut) | 'dark'
+  const active = locals.active || "";
+  const variant = locals.variant || "light";
+  const isDark = variant === "dark";
+
+  const navItems = [
+    { key: "home", label: "Home", href: "/" },
+    { key: "page", label: "Pages", href: "/page" },
+    { key: "portfolio", label: "Portfolio", href: "/portfolio" },
+    { key: "blog", label: "Blog", href: "/blog" },
+    { key: "contact", label: "Contact", href: "/contact" }
+  ];
+
+  const brandClass = isDark ? "navbar-brand fw-bold text-white" : "navbar-brand fw-bold text-dark";
+  const brandHref = isDark ? "/" : "/";
+  const inactiveClass = isDark ? "nav-link fw-bold text-white-50" : "nav-link fw-bold";
+  const activeClass = "nav-link active fw-bold";
+%>
+<nav class="navbar navbar-expand-lg <%= isDark ? 'navbar-dark bg-dark' : 'bg-body-tertiary' %>"
+  <%= isDark ? 'data-bs-theme="dark"' : '' %>>
+  <div class="container-fluid<%= isDark ? '' : ' px-4 px-lg-5' %>">
+    <a class="<%= brandClass %>" href="<%= brandHref %>" aria-label="Retour à l'accueil - SOULFYDEV">
+      <span class="text-success fw-bold">SOUFLY</span>DEV
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Ouvrir ou fermer le menu de navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto gap-4">
+        <% navItems.forEach((item) => { %>
+          <li class="nav-item">
+            <% if (item.key === active) { %>
+              <a class="<%= activeClass %>" aria-current="page" href="<%= item.href %>"><%= item.label %></a>
+            <% } else { %>
+              <a class="<%= inactiveClass %>" href="<%= item.href %>"><%= item.label %></a>
+            <% } %>
+          </li>
+        <% }); %>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <% if (isDark) { %>
+            <a class="nav-link fw-bold text-white-50" href="#">
+              <i class="bi bi-search bg-dark" aria-label="Search"></i>
+            </a>
+          <% } else { %>
+            <a class="nav-link fw-bold text-white bg-dark rounded px-4 py-2" href="/contact?section=work">
+              WORKS WITH US
+            </a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,55 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Souflydev | Account Registration</title>
-  <link rel="stylesheet" href="/css/_login.css">
-  <!-- seo optimization  -->
-    <meta name="description" content="Create your Souflydev account to access your web and mobile project dashboard.">
-    <link rel="canonical" href="https://soulfyhub.fr/register">
-  <meta name="keywords" content="Portfolio, Web and mobile application developer">
-  <meta property="og:title" content="Web and mobile application developer">
-  <meta property="og:description" content="Web and mobile application developer">
-    <meta property="og:image" content="/images/upload/soulfydev.webp">
-  <meta property="og:url" content="https://soulfyhub.fr">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="Web and mobile application developer">
-  <meta property="og:image:width" content="1920">
-  <meta property="og:image:height" content="1080">
-  <meta property="og:image:alt" content="Web and mobile application developer">
-  <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:secure_url" content="/images/upload/soulfydev.webp">
-  <meta property="og:image:secure_url:width" content="1920">
-  <meta property="og:image:secure_url:height" content="1080">
-  <meta property="og:image:secure_url:alt" content="Web and mobile application developer">
-  <meta property="og:image:secure_url:type" content="image/jpeg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Web and mobile application developer">
-  <meta name="twitter:description" content="Web and mobile application developer">
-    <meta name="twitter:image" content="/images/upload/soulfydev.webp">
-  <meta name="twitter:image:width" content="1920">
-  <meta name="twitter:image:height" content="1080">
-  <meta name="twitter:image:alt" content="Web and mobile application developer">
-  <meta name="twitter:image:type" content="image/jpeg">
-  <meta name="twitter:site" content="@soulfydev">
-  <meta name="twitter:creator" content="@soulfydev">
-  <meta name="author" content="Maxime Jumel">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  <meta name="rating" content="general">
-  <meta name="distribution" content="global">
-  <meta name="category" content="Portfolio">
-    <meta name="geo.region" content="FR-IDF">
-    <meta name="geo.placename" content="Coulommiers">
-    <meta name="geo.position" content="48.8096;3.0822">
-    <meta name="ICBM" content="48.8096, 3.0822">
-  <!-- finish seo optimization  -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-</head>
+<%- include("partials/head", { title: "Souflydev | Account Registration", description: "Create your Souflydev account to access your web and mobile project dashboard.", canonical: "https://soulfyhub.fr/register", keywords: "Portfolio, Web and mobile application developer", styles: ["/css/_login.css"] }) %>
 
 <body class=" bg-black d-flex align-items-center justify-content-center">
 <main class="login-container">
@@ -113,9 +64,9 @@
 </footer>
 
 <!-- Bootstrap Bundle JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
-<script>
+<script nonce="<%= cspNonce %>">
     const form = document.getElementById("registerForm");
     const msgContainer = document.getElementById("message-container");
     const btnSubmit = document.getElementById("btnSubmit");
