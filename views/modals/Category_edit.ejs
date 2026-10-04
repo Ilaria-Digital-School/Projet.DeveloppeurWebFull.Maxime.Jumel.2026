@@ -1,0 +1,54 @@
+<!-- Modal : Création / édition d'une catégorie -->
+<div class="modal fade" id="modalCategoryEdit" tabindex="-1" aria-labelledby="modalCategoryEditLabel" aria-hidden="true" style="z-index: 1070;">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #1e1e24 0%, #111215 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                         style="width: 2.75rem; height: 2.75rem; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4);">
+                        <i class="bi bi-folder-plus fs-5" style="color: #818cf8;" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold mb-0 text-white" id="modalCategoryEditLabel">
+                        <span data-modal-title>Nouvelle catégorie</span>
+                    </h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <form id="formCategory" novalidate>
+                <div class="modal-body">
+                    <div id="categoryAlert"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-semibold small" for="catName">Nom</label>
+                            <input type="text" class="form-control" id="catName" maxlength="80" required>
+                            <div class="form-text">Le nom doit être unique.</div>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-semibold small" for="catIcon">Icône</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white">
+                                    <i id="catIconPreview" class="bi bi-code-slash"></i>
+                                </span>
+                                <input type="text" class="form-control" id="catIcon"
+                                       placeholder="bi-code-slash" maxlength="60" required>
+                            </div>
+                            <div class="form-text">Nom d'icône bootstrap-icons, ex. <code>bi-palette</code>.</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small" for="catDescription">Description</label>
+                            <textarea class="form-control" id="catDescription" rows="3" maxlength="3000" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="btnSaveCategory">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

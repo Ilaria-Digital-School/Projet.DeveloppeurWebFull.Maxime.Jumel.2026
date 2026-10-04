@@ -8,6 +8,7 @@ const path = require("path");
 const chalk = require("chalk");
 const { exposeCookieConsent, router: cookieRouter } = require("../middleware/cookieManager");
 const { securityHeaders } = require("../middleware/securityHeaders");
+const { enforceAccountStatus } = require("../middleware/authMiddleware");
 
 const sessionSecret = config.session?.secret || process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -20,6 +21,10 @@ if (process.env.NODE_ENV === "production") {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 
+const SESSION_COOKIE_NAME = process.env.SESSION_COOKIE_NAME || "soufly.sid";
+// Les middlewares qui doivent supprimer le cookie de session le retrouvent ici.
+app.set("sessionCookieName", SESSION_COOKIE_NAME);
+
 
 app.disable("x-powered-by");
 app.use(securityHeaders);
@@ -29,7 +34,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 app.use(cookieParser(sessionSecret));
 app.use(session({
-    name: process.env.SESSION_COOKIE_NAME || "soufly.sid",
+    name: SESSION_COOKIE_NAME,
     secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
@@ -41,6 +46,13 @@ app.use(session({
         path: "/"
     }
 }));
+
+// Couture immediate : un compte banni perd l'acces sur la requete suivante,
+// partout (pages ET API), et sa session est detruite cote serveur.
+// Doit rester avant le routeur et apres express.static pour ne pas
+// imposer un acces Mongo sur les fichiers statiques.
+app.use(enforceAccountStatus);
+
 app.use(exposeCookieConsent);
 app.use("/api/cookies", cookieRouter);
 

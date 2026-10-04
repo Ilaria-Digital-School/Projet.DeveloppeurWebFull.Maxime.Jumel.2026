@@ -1,0 +1,315 @@
+<!-- Modal : Gestion des commandes -->
+<div class="modal fade" id="modalOrderList" tabindex="-1" aria-labelledby="modalOrderListLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+
+            <!-- Header -->
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #181a1b 0%, #111215 100%);">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center shadow-sm"
+                         style="width: 2.75rem; height: 2.75rem; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.35);">
+                        <i class="fa-solid fa-cart-shopping fs-5" style="color: #818cf8;"></i>
+                    </div>
+                    <div>
+                        <div class="d-flex align-items-center gap-2">
+                            <h5 class="modal-title fw-bold text-white mb-0" id="modalOrderListLabel">
+                                Gestion des commandes
+                            </h5>
+                            <span class="badge rounded-pill bg-primary bg-opacity-25 text-primary-emphasis border border-primary border-opacity-25" style="font-size: 0.75rem;">
+                                Admin
+                            </span>
+                        </div>
+                        <small class="text-white-50">
+                            <%= (typeof orders !== 'undefined' && orders) ? orders.length : 0 %> commande<%= (typeof orders !== 'undefined' && orders && orders.length > 1) ? 's' : '' %> au total
+                        </small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <!-- Barre de recherche + filtres -->
+            <div class="modal-body p-0">
+                <div class="p-3 border-bottom bg-light d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                    <div class="d-flex flex-wrap gap-2 align-items-center flex-grow-1">
+                        <!-- Recherche -->
+                        <div class="input-group" style="max-width: 320px;">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="fa-solid fa-search text-muted" style="font-size: 0.85rem;"></i>
+                            </span>
+                            <input type="text" id="orderSearch" class="form-control border-start-0 ps-0"
+                                   placeholder="Rechercher par ID, produit, client…">
+                        </div>
+
+                        <!-- Filtre Statut -->
+                        <select id="orderStatusFilter" class="form-select" style="max-width: 170px;">
+                            <option value="">Tous les statuts</option>
+                            <option value="En cours">En cours</option>
+                            <option value="Complété">Complété</option>
+                            <option value="En attente">En attente</option>
+                            <option value="Annulé">Annulé</option>
+                        </select>
+
+                        <span class="text-muted small ms-2" id="orderCount"></span>
+                    </div>
+
+                    <!-- Bouton Ajouter commande -->
+                    <button class="btn btn-primary btn-sm d-flex align-items-center gap-2"
+                            style="background-color: #4f46e5; border-color: #4f46e5;"
+                            data-bs-toggle="modal" data-bs-target="#modalAddOrder">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Nouvelle commande</span>
+                    </button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle" id="orderTable">
+                        <thead class="table-dark" style="font-size: 0.82rem; letter-spacing: 0.04em;">
+                            <tr>
+                                <th class="ps-3">#</th>
+                                <th>ID Commande</th>
+                                <th>Produit / Prestation</th>
+                                <th>Client</th>
+                                <th>Quantité</th>
+                                <th>Prix unitaire</th>
+                                <th>Total</th>
+                                <th>Statut</th>
+                                <th>Date</th>
+                                <th class="text-center pe-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderTableBody">
+                            <% if (typeof orders !== 'undefined' && orders && orders.length > 0) { %>
+                                <% orders.forEach((ord, index) => { %>
+                                <tr class="order-row"
+                                    data-order-id="<%= (ord.id || ord._id || '').toLowerCase() %>"
+                                    data-product="<%= (ord.name || '').toLowerCase() %>"
+                                    data-client="<%= (ord.client_name || '').toLowerCase() %>"
+                                    data-status="<%= ord.status || 'En cours' %>"
+                                    id="order-row-<%= ord.id %>">
+                                    <td class="ps-3 text-muted" style="font-size: 0.8rem;"><%= index + 1 %></td>
+                                    <td>
+                                        <span class="badge font-monospace bg-secondary bg-opacity-10 text-dark border border-secondary border-opacity-25" style="font-size: 0.78rem;">
+                                            #ORD-<%= ord.id %>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold text-dark" style="font-size: 0.88rem;"><%= ord.name %></div>
+                                        <% if (ord.description) { %>
+                                            <small class="text-muted text-truncate d-inline-block" style="max-width: 240px; font-size: 0.75rem;" title="<%= ord.description %>">
+                                                <%= ord.description %>
+                                            </small>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="rounded-circle bg-secondary bg-opacity-25 text-secondary d-flex align-items-center justify-content-center fw-bold"
+                                                 style="width: 24px; height: 24px; font-size: 0.75rem;">
+                                                <%= (ord.client_name || 'U').charAt(0).toUpperCase() %>
+                                            </div>
+                                            <span class="fw-medium" style="font-size: 0.85rem;"><%= ord.client_name %></span>
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 0.85rem;" class="text-muted"><%= ord.quantity || 1 %></td>
+                                    <td style="font-size: 0.85rem;" class="text-muted">
+                                        <%= Number(ord.price || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 }) %> €
+                                    </td>
+                                    <td>
+                                        <span class="fw-bold text-dark" style="font-size: 0.9rem;">
+                                            <%= Number(ord.total_price || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2 }) %> €
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <% if (ord.status === 'Complété') { %>
+                                                <button class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25 dropdown-toggle px-2.5 py-1 text-decoration-none"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                                                    <i class="fa-solid fa-circle-check me-1"></i>Complété
+                                                </button>
+                                            <% } else if (ord.status === 'En cours') { %>
+                                                <button class="badge rounded-pill bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 dropdown-toggle px-2.5 py-1 text-decoration-none"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                                                    <i class="fa-solid fa-spinner me-1"></i>En cours
+                                                </button>
+                                            <% } else if (ord.status === 'Annulé') { %>
+                                                <button class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 dropdown-toggle px-2.5 py-1 text-decoration-none"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                                                    <i class="fa-solid fa-ban me-1"></i>Annulé
+                                                </button>
+                                            <% } else { %>
+                                                <button class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25 dropdown-toggle px-2.5 py-1 text-decoration-none"
+                                                        type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                                                    <i class="fa-solid fa-clock me-1"></i><%= ord.status || 'En attente' %>
+                                                </button>
+                                            <% } %>
+                                            <ul class="dropdown-menu shadow-sm" style="font-size: 0.85rem;">
+                                                <li><h6 class="dropdown-header">Changer le statut</h6></li>
+                                                <li><button type="button" class="dropdown-item" data-action="order-status" data-order-id="<%= ord.id %>" data-status="En cours"><i class="fa-solid fa-spinner text-warning me-2"></i>En cours</button></li>
+                                                <li><button type="button" class="dropdown-item" data-action="order-status" data-order-id="<%= ord.id %>" data-status="Complété"><i class="fa-solid fa-circle-check text-success me-2"></i>Complété</button></li>
+                                                <li><button type="button" class="dropdown-item" data-action="order-status" data-order-id="<%= ord.id %>" data-status="En attente"><i class="fa-solid fa-clock text-info me-2"></i>En attente</button></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><button type="button" class="dropdown-item text-danger" data-action="order-status" data-order-id="<%= ord.id %>" data-status="Annulé"><i class="fa-solid fa-ban text-danger me-2"></i>Annulé</button></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 0.8rem;" class="text-muted">
+                                        <%= new Date(ord.created_at || Date.now()).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }) %>
+                                    </td>
+                                    <td class="text-center pe-3">
+                                        <button class="btn btn-sm btn-outline-danger px-2 py-1"
+                                                title="Supprimer la commande"
+                                                style="font-size: 0.75rem;"
+                                                data-action="order-delete"
+                                                data-order-id="<%= ord.id %>"
+                                                data-order-name="<%= ord.name %>">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr id="noOrdersInitialRow">
+                                    <td colspan="10" class="text-center py-5 text-muted">
+                                        <i class="fa-solid fa-cart-shopping fa-2x mb-3 d-block opacity-25"></i>
+                                        Aucune commande enregistrée pour le moment
+                                    </td>
+                                </tr>
+                            <% } %>
+                            <!-- Ligne affichée si recherche sans résultat -->
+                            <tr id="noOrderResultRow" style="display: none;">
+                                <td colspan="10" class="text-center py-4 text-muted">
+                                    <i class="fa-solid fa-magnifying-glass me-2"></i>Aucune commande ne correspond à votre recherche
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer bg-light border-top justify-content-between">
+                <small class="text-muted">
+                    <i class="fa-solid fa-circle-info me-1"></i>
+                    Cliquez sur le statut d'une commande pour le mettre à jour instantanément
+                </small>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script nonce="<%= cspNonce %>">
+// Filtres et actions sont câblés ici : la CSP interdit les attributs on* inline.
+document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('orderSearch');
+    const statusFilter = document.getElementById('orderStatusFilter');
+
+    if (search) search.addEventListener('input', filterOrders);
+    if (statusFilter) statusFilter.addEventListener('change', filterOrders);
+
+    document.addEventListener('click', function (event) {
+        const statusTrigger = event.target.closest('[data-action="order-status"]');
+        if (statusTrigger) {
+            quickUpdateOrderStatus(statusTrigger.getAttribute('data-order-id'), statusTrigger.getAttribute('data-status'));
+            return;
+        }
+
+        const deleteTrigger = event.target.closest('[data-action="order-delete"]');
+        if (deleteTrigger) {
+            deleteOrderAdmin(deleteTrigger.getAttribute('data-order-id'), deleteTrigger.getAttribute('data-order-name'));
+        }
+    });
+});
+
+// Filtrage dynamique des commandes en temps réel
+function filterOrders() {
+    const search = document.getElementById('orderSearch').value.toLowerCase().trim();
+    const status = document.getElementById('orderStatusFilter').value;
+    const rows   = document.querySelectorAll('.order-row');
+    let visible  = 0;
+
+    rows.forEach(row => {
+        const orderId = row.dataset.orderId || '';
+        const product = row.dataset.product || '';
+        const client  = row.dataset.client  || '';
+        const rowStat = row.dataset.status  || '';
+
+        const matchSearch = !search ||
+            orderId.includes(search) ||
+            product.includes(search) ||
+            client.includes(search);
+
+        const matchStatus = !status || rowStat === status;
+        const show = matchSearch && matchStatus;
+
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    const noResult = document.getElementById('noOrderResultRow');
+    if (noResult) {
+        noResult.style.display = (visible === 0 && rows.length > 0) ? '' : 'none';
+    }
+
+    const counter = document.getElementById('orderCount');
+    if (counter) {
+        counter.textContent = visible + ' commande' + (visible !== 1 ? 's' : '');
+    }
+}
+
+// Mise à jour rapide du statut d'une commande
+async function quickUpdateOrderStatus(orderId, newStatus) {
+    try {
+        const response = await fetch(`/api/orders/${orderId}/status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ status: newStatus })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+            window.location.reload();
+        } else {
+            alert(data.message || 'Impossible de mettre à jour le statut.');
+        }
+    } catch (err) {
+        alert('Erreur réseau lors de la mise à jour du statut.');
+    }
+}
+
+// Suppression d'une commande par l'administrateur
+async function deleteOrderAdmin(orderId, orderName) {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer la commande "${orderName}" (#ORD-${orderId}) ?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/orders/${orderId}/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+            const row = document.getElementById(`order-row-${orderId}`);
+            if (row) {
+                row.remove();
+                filterOrders();
+            } else {
+                window.location.reload();
+            }
+        } else {
+            alert(data.message || 'Impossible de supprimer la commande.');
+        }
+    } catch (err) {
+        alert('Erreur réseau lors de la suppression de la commande.');
+    }
+}
+</script>

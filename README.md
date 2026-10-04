@@ -152,9 +152,31 @@ Le rate limiting est desactive lorsque `NODE_ENV=development` et actif dans les 
 - Les messages API sont inseres dans le DOM sans interpretation HTML cote client.
 - Les erreurs JSON malforme renvoient HTTP 400.
 - CSP, HSTS en production, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` et `X-Content-Type-Options` sont configures par `middleware/securityHeaders.js`.
-- La CSP utilise un nonce par requete : tout script inline doit porter `nonce="<%= cspNonce %>"`. Les scripts tiers servis par CDN declarent `integrity` et `crossorigin="anonymous"`.
+- La CSP utilise un nonce par requete : tout script inline doit porter `nonce="<%= cspNonce %>"`. Seul `https://cdn.jsdelivr.net` est autorise (Bootstrap, avec SRI) ; le reste est servi depuis `public/` (voir ci-dessous).
+- Les attributs `onclick`/`onchange`/`oninput` et les URL `javascript:` sont bloques par la CSP : utiliser des attributs `data-*` avec un ecouteur delegue.
 - Le canal de signalement est publie sur `/.well-known/security.txt` (et `/security.txt`). Le contact provient de `SECURITY_CONTACT_EMAIL`.
 - `X-Powered-By` est desactive et l'en-tete `Server` est retire.
+
+### Mot de passe oublie
+
+Parcours complet : `/forgot-password` (demande) puis `/reset-password/:token` (nouveau mot de passe), avec `/reset-password/termine` en confirmation. Le lien est aussi accessible depuis `/login`.
+
+- Le jeton est tire au hasard (32 octets), stocke **hache en SHA-256** et valable 1 heure.
+- Usage unique : il est efface des la premiere reussite, un rejeu est refuse.
+- La reponse de `POST /forgot-password` est identique que le compte existe ou non : la page ne revele jamais quelles adresses sont enregistrees. Un compte banni ne peut pas utiliser cette voie.
+- `POST /forgot-password` est limite a 5 appels par heure et par IP.
+- Un changement de mot de passe incremente `sessionVersion` : toutes les sessions ouvertes avec l'ancien mot de passe sont invalidees au chargement suivant.
+
+### Bannissement et acces
+
+`middleware/authMiddleware.js` exporte `enforceAccountStatus`, monte dans `script/serverRun.js` juste apres la session et avant le routeur. Il relit le compte en base a chaque requete et :
+
+- laisse passer les visiteurs non connectes sans toucher a la base ;
+- coupe l'acces immediatement si `isBan`, `status !== "active"` ou email non verifie ;
+- detruit la session serveur et supprime le cookie : le bannissement est immediat, sans attendre l'expiration ;
+- affiche `views/banned.ejs` (avec le motif saisi par l'admin) pour les pages, renvoie `403` JSON pour les appels `/api`.
+
+Les routes protegees (`isAdmin`, `isClient`, `isDevelopper`) reutilisent le meme chargement de compte, memorise sur la requete : une seule lecture Mongo par requete. Toute route qui exige une session doit passer par l'un de ces middlewares.
 
 ### Reverse proxy nginx
 
@@ -172,6 +194,23 @@ location / {
 ```
 
 `server_tokens off;` transforme `Server: nginx/1.22.1` en `Server: nginx`. Les en-tetes de securite sont emis par Express ; nginx peut aussi les renvoyer en defense en profondeur.
+
+### Dependances front-end
+
+Bootstrap est charge depuis le CDN jsdelivr, avec une empreinte SRI : le navigateur refuse le fichier s'il ne correspond pas a la somme de controle, ce qui neutralise le risque d'injection par un tiers compromis. La CSP autorise explicitement `https://cdn.jsdelivr.net` pour les scripts et les styles.
+
+| Ressource | Origine | Version |
+| --- | --- | --- |
+| `bootstrap.min.css` | CDN jsdelivr + `integrity` | Bootstrap 5.3.8 |
+| `bootstrap.bundle.min.js` | CDN jsdelivr + `integrity` | Bootstrap 5.3.8 (bundle) |
+| `public/css/vendor/bootstrap-icons/1.13.1/` | local | bootstrap-icons 1.13.1 (CSS + woff2/woff) |
+| `public/css/vendor/font-awesome/all.min.css` | local | Font Awesome 6.6.0 |
+| `public/css/vendor/webfonts/` | local | Font Awesome 6.6.0 (fa-solid, fa-regular, fa-brands, v4compat) |
+| `public/css/vendor/fonts.css` + `public/fonts/` | local | Inter + Outfit (latin / latin-ext, normale + italique) |
+
+Les ressources locales sont generees par `node script/fetch-vendor.js` et `node script/fetch-fonts.js` : a relancer uniquement pour mettre a jour une version. Les chemins relatifs de polices declares dans les CSS sont preserves, ne pas deplacer ces fichiers a la main.
+
+Si la CSP doit etre resserree a nouveau, il faut d'abord repasser Bootstrap en local : retablir `script-src 'self'`, `style-src 'self' 'unsafe-inline'` et retirer les attributs `integrity` / `crossorigin` des vues.
 
 ## Licence
 

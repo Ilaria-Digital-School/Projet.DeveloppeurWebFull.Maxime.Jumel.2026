@@ -11,9 +11,16 @@ const UserSchema = new mongoose.Schema({
     emailVerified: { type: Boolean, default: false },
     emailVerificationToken: { type: String, select: false },
     emailVerificationExpiresAt: { type: Date, select: false },
+    passwordResetToken: { type: String, select: false },
+    passwordResetExpiresAt: { type: Date, select: false },
+    // Incrémenté à chaque changement de mot de passe : les sessions ouvertes
+    // portent la valeur précédente et sont donc invalidées.
+    sessionVersion: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     isBan: { type: Boolean, default: false },
+    banReason: { type: String, default: "", maxlength: 300 },
+    bannedAt: { type: Date },
     last_ip: { type: String },
     last_login: { type: Date, default: Date.now },
     last_logout: { type: Date },

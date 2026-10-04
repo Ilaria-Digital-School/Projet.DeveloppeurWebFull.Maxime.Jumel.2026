@@ -6,10 +6,12 @@ const CSP_DIRECTIVES = {
     "default-src": ["'self'"],
     "base-uri": ["'self'"],
     "object-src": ["'none'"],
+    // Bootstrap est charge depuis le CDN jsdelivr (avec SRI). bootstrap-icons et
+    // Font Awesome restent servis depuis public/.
     "script-src": ["'self'", "https://cdn.jsdelivr.net"],
     // Inline styles et attributs style= sont utilisés dans toutes les vues.
-    "style-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
-    "font-src": ["'self'", "data:", "https://cdn.jsdelivr.net", "https://cdnjs.cloudflare.com"],
+    "style-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+    "font-src": ["'self'", "data:"],
     "img-src": ["'self'", "data:", "blob:", "https:"],
     "connect-src": ["'self'"],
     "frame-src": ["'self'", "https://www.google.com", "https://www.youtube.com"],

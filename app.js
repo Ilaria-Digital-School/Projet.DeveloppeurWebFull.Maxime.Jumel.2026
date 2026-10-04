@@ -49,6 +49,20 @@ const authLimiter = rateLimit({
     }
 });
 
+// Réinitialisation de mot de passe : 5 envois / heure pour éviter
+// d'utiliser la route comme relais d'envoi de spam.
+const passwordResetLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    max: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        errcode: 429,
+        message: "Trop de demandes de réinitialisation. Réessayez dans une heure."
+    }
+});
+
 // ──────────────────────────────────────────────
 // Middlewares
 // ──────────────────────────────────────────────
@@ -58,6 +72,7 @@ if (isRateLimitEnabled) {
     // Rate limit strict sur les routes d'auth
     app.use("/login", authLimiter);
     app.use("/register", authLimiter);
+    app.use("/forgot-password", passwordResetLimiter);
 } else {
     console.log("🟡 Rate limiting désactivé en mode développement");
 }

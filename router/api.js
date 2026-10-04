@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const rateLimit = require("express-rate-limit");
+const mongoose = require("mongoose");
 const User = require("../models/User");
 const NewLetter = require("../models/NewLetter");
 const bcrypt = require("bcryptjs");
@@ -9,7 +10,7 @@ const crypto = require("crypto");
 const path = require("path");
 const multer = require("multer");
 const { isClient, isDev, isAdmin } = require("../middleware/authMiddleware");
-const { sendVerificationEmail, sendWelcomeEmail } = require("../services/mailer");
+const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require("../services/mailer");
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const pseudoPattern = /^[A-Za-z0-9_.-]{3,30}$/;
@@ -20,6 +21,17 @@ const passwordRequirements = [
     { pattern: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/, message: "Le mot de passe doit contenir au moins un caractère spécial" }
 ];
 
+const validatePassword = (password) => {
+    if (typeof password !== "string") {
+        return "Les champs fournis sont invalides";
+    }
+    if (password.length < 6 || password.length > 128) {
+        return "Le mot de passe doit contenir entre 6 et 128 caractères";
+    }
+    const requirement = passwordRequirements.find(({ pattern }) => !pattern.test(password));
+    return requirement?.message || null;
+};
+
 const validateCredentials = ({ email, password, pseudo }, includePseudo = false) => {
     if (typeof email !== "string" || typeof password !== "string" || (includePseudo && typeof pseudo !== "string")) {
         return "Les champs fournis sont invalides";
@@ -27,14 +39,10 @@ const validateCredentials = ({ email, password, pseudo }, includePseudo = false)
     if (email.length > 254 || !emailPattern.test(email)) {
         return "Adresse email invalide";
     }
-    if (password.length < 6 || password.length > 128) {
-        return "Le mot de passe doit contenir entre 6 et 128 caractères";
-    }
     if (includePseudo && !pseudoPattern.test(pseudo)) {
         return "Le pseudo doit contenir entre 3 et 30 caractères alphanumériques";
     }
-    const requirement = passwordRequirements.find(({ pattern }) => !pattern.test(password));
-    return requirement?.message || null;
+    return validatePassword(password);
 };
 
 // Configuration stockage Multer pour les uploads dans public/uploads
@@ -192,6 +200,22 @@ router.post("/register", async (req, res) => {
             $or: [{ email: normalizedEmail }, { pseudo: normalizedPseudo }]
         });
         if (existingUser) {
+            if (!existingUser.emailVerified && existingUser.email === normalizedEmail) {
+                const verificationToken = crypto.randomBytes(32).toString("hex");
+                existingUser.emailVerificationToken = crypto.createHash("sha256").update(verificationToken).digest("hex");
+                existingUser.emailVerificationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+                if (password) {
+                    existingUser.password = await bcrypt.hash(password, 12);
+                }
+                await existingUser.save();
+                await sendVerificationEmail({ email: normalizedEmail, token: verificationToken });
+                return res.status(200).json({
+                    message: "Compte en attente de validation. Un nouvel email de vérification vous a été envoyé.",
+                    errcode: 200,
+                    success: true,
+                    redirect: "/login"
+                });
+            }
             const message = existingUser.email === normalizedEmail
                 ? "Cette adresse email est déjà utilisée"
                 : "Ce pseudo est déjà utilisé";
@@ -200,7 +224,7 @@ router.post("/register", async (req, res) => {
 
         const verificationToken = crypto.randomBytes(32).toString("hex");
         const passwordHash = await bcrypt.hash(password, 12);
-        await User.create({
+        const newUser = await User.create({
             email: normalizedEmail,
             pseudo: normalizedPseudo,
             password: passwordHash,
@@ -210,7 +234,13 @@ router.post("/register", async (req, res) => {
             emailVerificationExpiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
         });
 
-        await sendVerificationEmail({ email: normalizedEmail, token: verificationToken });
+        try {
+            await sendVerificationEmail({ email: normalizedEmail, token: verificationToken });
+        } catch (mailError) {
+            // Si l'envoi de mail échoue, on supprime l'utilisateur non vérifié pour permettre de réessayer
+            await User.findByIdAndDelete(newUser._id).catch(() => {});
+            throw mailError;
+        }
 
         return res.status(201).json({
             message: "Inscription réussie. Vérifiez votre adresse email pour activer votre compte.",
@@ -230,6 +260,413 @@ router.post("/register", async (req, res) => {
 router.get("/login", (req, res) => {
     res.render("login");
 
+});
+
+// ──────────────────────────────────────────────
+// Réinitialisation du mot de passe
+// ──────────────────────────────────────────────
+
+const PASSWORD_RESET_TTL = 60 * 60 * 1000; // 1 heure
+
+// Message volontairement identique que l'email existe ou non : la page ne
+// doit jamais révéler quelles adresses sont enregistrées.
+const RESET_NEUTRAL_MESSAGE = "Si un compte est associé à cette adresse email, un lien de réinitialisation vient d'être envoyé.";
+
+const hashResetToken = (rawToken) => crypto.createHash("sha256").update(rawToken).digest("hex");
+
+const findUserByValidResetToken = (rawToken) => User.findOne({
+    passwordResetToken: hashResetToken(rawToken),
+    passwordResetExpiresAt: { $gt: new Date() }
+}).select("+passwordResetToken +passwordResetExpiresAt");
+
+router.get("/forgot-password", (req, res) => {
+    const sent = req.query.envoye === "1";
+    res.render("forgot-password", {
+        sent,
+        message: sent ? RESET_NEUTRAL_MESSAGE : "",
+        email: ""
+    });
+});
+
+router.post("/forgot-password", async (req, res) => {
+    const email = typeof req.body?.email === "string" ? req.body.email.trim().toLowerCase() : "";
+
+    const respond = () => res.status(200).json({
+        success: true,
+        message: RESET_NEUTRAL_MESSAGE
+    });
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+        return respond();
+    }
+
+    try {
+        const user = await User.findOne({ email });
+
+        // Compte inexistant : on renvoie la même réponse, sans révéler l'information.
+        // Le hachage factice évite aussi que le temps de réponse trahisse le cas.
+        if (!user) {
+            crypto.createHash("sha256").update(email).digest("hex");
+            return respond();
+        }
+
+        // Un compte banni ne réinitialise pas son mot de passe par email.
+        if (user.isBan) {
+            return respond();
+        }
+
+        const rawToken = crypto.randomBytes(32).toString("hex");
+        user.passwordResetToken = hashResetToken(rawToken);
+        user.passwordResetExpiresAt = new Date(Date.now() + PASSWORD_RESET_TTL);
+        await user.save();
+
+        await sendPasswordResetEmail({ email: user.email, pseudo: user.pseudo, token: rawToken });
+
+        return respond();
+    } catch (error) {
+        console.error("Erreur demande de réinitialisation:", error);
+        return respond();
+    }
+});
+// ──────────────────────────────────────────────
+// Catégories et services (réservé aux administrateurs)
+// ──────────────────────────────────────────────
+
+const Category = require("../models/Category");
+const Service = require("../models/Service");
+
+const isNonEmptyString = (value) => typeof value === "string" && value.trim().length > 0;
+
+const badRequest = (res, message) =>
+    res.status(400).json({ success: false, errcode: 400, message });
+
+const notFound = (res, entity) =>
+    res.status(404).json({ success: false, errcode: 404, message: `${entity} non trouvé${entity === "Catégorie" ? "e" : ""}.` });
+
+const conflict = (res, message) =>
+    res.status(409).json({ success: false, errcode: 409, message });
+
+const isValidId = (id) => typeof id === "string" && mongoose.isValidObjectId(id);
+
+// Même collation que l'index unique du modèle : « Développement Web » et
+// « developpement web » sont considers comme le meme nom.
+const NAME_COLLATION = { locale: "fr", strength: 2 };
+const findCategoryByName = (name, excludeId) =>
+    Category.findOne({ name, ...(excludeId ? { _id: { $ne: excludeId } } : {}) }).collation(NAME_COLLATION);
+
+/**
+ * Vérifie qu'une création fournit bien tous les champs requis. Sans cela,
+ * une validation de schéma mongoose remonterait en 500 au lieu d'un 400.
+ */
+const requireFields = (body, fields) => {
+    for (const key of fields) {
+        if (!isNonEmptyString(body[key])) {
+            return `Champ "${key}" requis.`;
+        }
+    }
+    return null;
+};
+
+/**
+ * Construit le patch à partir des champs présents dans le corps de la requête.
+ * Rejette les valeurs vides : `PUT` sert à modifier, pas à effacer.
+ */
+const buildPatch = (body, fields) => {
+    const patch = {};
+    for (const key of fields) {
+        const value = body[key];
+        if (value === undefined) continue;
+        if (!isNonEmptyString(value)) return { error: `Champ "${key}" invalide.` };
+        patch[key] = value.trim();
+    }
+    if (Object.keys(patch).length === 0) {
+        return { error: "Aucune donnée à mettre à jour." };
+    }
+    return { patch };
+};
+
+// Vitrine publique du catalogue. L'interface d'administration vit dans les
+// modals, rendus uniquement pour un administrateur ou un developpeur.
+router.get("/services", async (req, res) => {
+    const role = req.session?.user?.role;
+    const isManager = role === "admin" || role === "developper";
+
+    try {
+        const categories = await Category.find().sort({ name: 1 }).lean();
+        const services = await Service.find().populate("category", "name icon").sort({ name: 1 }).lean();
+
+        // Regroupement côté vue : { category, services: [...] }
+        const grouped = categories.map((category) => ({
+            ...category,
+            services: services.filter((service) => String(service.category?._id || service.category) === String(category._id))
+        }));
+
+        return res.render("services", { user: req.session?.user || null, isManager, categories: grouped });
+    } catch (error) {
+        console.error("Erreur chargement des services:", error);
+        return res.status(500).render("services", {
+            user: req.session?.user || null,
+            isManager,
+            categories: [],
+            loadError: true
+        });
+    }
+});
+
+router.post("/create-category", isAdmin, async (req, res) => {
+    const { name, description, icon } = req.body || {};
+
+    const missing = requireFields({ name, description, icon }, ["name", "description", "icon"]);
+    if (missing) return badRequest(res, missing);
+
+    const { error, patch } = buildPatch({ name, description, icon }, ["name", "description", "icon"]);
+    if (error) return badRequest(res, error);
+
+    try {
+        const existing = await findCategoryByName(patch.name);
+        if (existing) {
+            return conflict(res, "Cette catégorie existe déjà.");
+        }
+
+        const newCategory = new Category(patch);
+        await newCategory.save();
+
+        return res.status(201).json({ success: true, message: "Catégorie créée avec succès.", redirect: "/services" });
+    } catch (error) {
+        // Doublonattrapé par l'index unique (-course entre deux requêtes).
+        if (error?.code === 11000) {
+            return conflict(res, "Cette catégorie existe déjà.");
+        }
+        console.error("Erreur création catégorie:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Impossible de créer la catégorie." });
+    }
+});
+
+router.put("/update-category/:id", isAdmin, async (req, res) => {
+    const { id } = req.params;
+    if (!isValidId(id)) return badRequest(res, "Identifiant invalide.");
+
+    const { error, patch } = buildPatch(req.body || {}, ["name", "description", "icon"]);
+    if (error) return badRequest(res, error);
+
+    try {
+        if (patch.name) {
+            const duplicate = await findCategoryByName(patch.name, id);
+            if (duplicate) {
+                return conflict(res, "Cette catégorie existe déjà.");
+            }
+        }
+
+        const updated = await Category.findByIdAndUpdate(id, patch, {
+            new: true,
+            runValidators: true
+        });
+        if (!updated) return notFound(res, "Catégorie");
+
+        return res.status(200).json({ success: true, message: "Catégorie mise à jour avec succès." });
+    } catch (error) {
+        if (error?.code === 11000) {
+            return conflict(res, "Cette catégorie existe déjà.");
+        }
+        console.error("Erreur mise à jour catégorie:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Impossible de mettre à jour la catégorie." });
+    }
+});
+
+router.delete("/delete-category/:id", isAdmin, async (req, res) => {
+    const { id } = req.params;
+    if (!isValidId(id)) return badRequest(res, "Identifiant invalide.");
+
+    try {
+        // On refuse de supprimer une catégorie encore utilisée : cela laisserait
+        // des services orphelins.
+        if (await Service.exists({ category: id })) {
+            return conflict(res, "Cette catégorie contient encore des services.");
+        }
+
+        const deleted = await Category.findByIdAndDelete(id);
+        if (!deleted) return notFound(res, "Catégorie");
+
+        return res.status(200).json({ success: true, message: "Catégorie supprimée avec succès." });
+    } catch (error) {
+        console.error("Erreur suppression catégorie:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Impossible de supprimer la catégorie." });
+    }
+});
+
+router.post("/create-service", isAdmin, async (req, res) => {
+    const { name, description, categoryId } = req.body || {};
+
+    const missing = requireFields({ name, description, categoryId }, ["name", "description", "categoryId"]);
+    if (missing) return badRequest(res, missing);
+
+    const { error, patch } = buildPatch({ name, description }, ["name", "description"]);
+    if (error) return badRequest(res, error);
+
+    if (!isNonEmptyString(categoryId) || !isValidId(categoryId.trim())) {
+        return badRequest(res, "Catégorie invalide.");
+    }
+
+    try {
+        const category = await Category.findById(categoryId.trim());
+        if (!category) return notFound(res, "Catégorie");
+
+        const newService = new Service({ ...patch, category: category._id });
+        await newService.save();
+
+        return res.status(201).json({ success: true, message: "Service créé avec succès.", redirect: "/services" });
+    } catch (error) {
+        console.error("Erreur création service:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Impossible de créer le service." });
+    }
+});
+
+router.put("/update-service/:id", isAdmin, async (req, res) => {
+    const { id } = req.params;
+    if (!isValidId(id)) return badRequest(res, "Identifiant invalide.");
+
+    const { name, description, categoryId } = req.body || {};
+    const { error, patch } = buildPatch({ name, description }, ["name", "description"]);
+    if (error) return badRequest(res, error);
+
+    if (categoryId !== undefined) {
+        if (!isNonEmptyString(categoryId) || !isValidId(categoryId.trim())) {
+            return badRequest(res, "Catégorie invalide.");
+        }
+        patch.category = categoryId.trim();
+    }
+
+    try {
+        if (patch.category) {
+            const category = await Category.findById(patch.category);
+            if (!category) return notFound(res, "Catégorie");
+        }
+
+        const updated = await Service.findByIdAndUpdate(id, patch, {
+            new: true,
+            runValidators: true
+        });
+        if (!updated) return notFound(res, "Service");
+
+        return res.status(200).json({ success: true, message: "Service mis à jour avec succès." });
+    } catch (error) {
+        console.error("Erreur mise à jour service:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Impossible de mettre à jour le service." });
+    }
+});
+
+router.delete("/delete-service/:id", isAdmin, async (req, res) => {
+    const { id } = req.params;
+    if (!isValidId(id)) return badRequest(res, "Identifiant invalide.");
+
+    try {
+        const deleted = await Service.findByIdAndDelete(id);
+        if (!deleted) return notFound(res, "Service");
+
+        return res.status(200).json({ success: true, message: "Service supprimé avec succès." });
+    } catch (error) {
+        console.error("Erreur suppression service:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Impossible de supprimer le service." });
+    }
+});
+
+// Page de confirmation apres un reinitialisation reussie. Declaree avant
+// `/reset-password/:token` pour ne pas etre capturee par le parametre.
+router.get("/reset-password/termine", (req, res) => {
+    res.render("reset-password", {
+        valid: false,
+        error: "",
+        token: "",
+        message: "Mot de passe mis à jour. Vous pouvez vous connecter avec votre nouveau mot de passe."
+    });
+});
+
+router.get("/reset-password/:token", async (req, res) => {
+    const rawToken = typeof req.params.token === "string" ? req.params.token : "";
+
+    if (!/^[a-f0-9]{64}$/i.test(rawToken)) {
+        return res.status(400).render("reset-password", {
+            valid: false,
+            error: "Ce lien est invalide.",
+            token: "",
+            message: ""
+        });
+    }
+
+    try {
+        const user = await findUserByValidResetToken(rawToken);
+        if (!user) {
+            return res.status(400).render("reset-password", {
+                valid: false,
+                error: "Ce lien est invalide ou a expiré.",
+                token: "",
+                message: ""
+            });
+        }
+        return res.render("reset-password", { valid: true, error: "", token: rawToken, message: "" });
+    } catch (error) {
+        console.error("Erreur lecture du jeton de réinitialisation:", error);
+        return res.status(500).render("reset-password", {
+            valid: false,
+            error: "Une erreur est survenue. Réessayez plus tard.",
+            token: "",
+            message: ""
+        });
+    }
+});
+
+router.post("/reset-password/:token", async (req, res) => {
+    const rawToken = typeof req.params.token === "string" ? req.params.token : "";
+    const password = typeof req.body?.password === "string" ? req.body.password : "";
+    const confirmation = typeof req.body?.confirmation === "string" ? req.body.confirmation : "";
+
+    const fail = (error, status = 400) => res.status(status).json({
+        success: false,
+        errcode: status,
+        message: error
+    });
+
+    if (!/^[a-f0-9]{64}$/i.test(rawToken)) {
+        return fail("Ce lien est invalide.");
+    }
+
+    if (password !== confirmation) {
+        return fail("Les deux mots de passe ne correspondent pas.");
+    }
+
+    const validationError = validatePassword(password);
+    if (validationError) {
+        return fail(validationError);
+    }
+
+    try {
+        const user = await findUserByValidResetToken(rawToken);
+        if (!user) {
+            return fail("Ce lien est invalide ou a expiré.");
+        }
+
+        user.password = await bcrypt.hash(password, 12);
+        // Jeton à usage unique.
+        user.passwordResetToken = undefined;
+        user.passwordResetExpiresAt = undefined;
+        // Invalide toutes les sessions déjà ouvertes avec l'ancien mot de passe.
+        user.sessionVersion = (user.sessionVersion || 0) + 1;
+        user.updatedAt = new Date();
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Mot de passe mis à jour.",
+            redirect: "/reset-password/termine"
+        });
+    } catch (error) {
+        console.error("Erreur réinitialisation du mot de passe:", error);
+        return res.status(500).json({
+            success: false,
+            errcode: 500,
+            message: "Une erreur est survenue pendant la réinitialisation."
+        });
+    }
 });
 router.post("/login", async (req, res) => {
     const { email, password } = req.body || {};
@@ -267,6 +704,7 @@ router.post("/login", async (req, res) => {
             role: user.role,
             avatar: user.avatar || ""
         };
+        req.session.sessionVersion = user.sessionVersion || 0;
 
         return res.status(200).json({ 
             message: "Connexion réussie ! Redirection...", 
@@ -283,7 +721,7 @@ router.post("/login", async (req, res) => {
 // Toutes les ressources API sont privées par défaut; les contrôles de rôle restent spécifiques aux routes sensibles.
 router.use("/api", isClient);
 
-router.post("/api/quotes", async (req, res) => {
+router.post("/api/quotes", isClient, async (req, res) => {
     const { title, description, service, budget, desiredDate } = req.body || {};
     const normalizedTitle = typeof title === "string" ? title.trim() : "";
     const normalizedDescription = typeof description === "string" ? description.trim() : "";
@@ -431,6 +869,63 @@ router.post("/api/orders/create", isAdmin, async (req, res) => {
     }
 });
 
+// Admin : Mettre à jour le statut d'une commande
+router.post("/api/orders/:orderId/status", isAdmin, async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { status } = req.body || {};
+        const allowedStatuses = new Set(["En cours", "Complété", "En attente", "Annulé"]);
+
+        if (!status || !allowedStatuses.has(status)) {
+            return res.status(400).json({ success: false, errcode: 400, message: "Statut invalide." });
+        }
+
+        const client = await User.findOne({ "orders.id": orderId });
+        if (!client) {
+            return res.status(404).json({ success: false, errcode: 404, message: "Commande introuvable." });
+        }
+
+        const order = client.orders.find(o => o.id === orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, errcode: 404, message: "Commande introuvable." });
+        }
+
+        order.status = status;
+        order.updated_at = new Date();
+        await client.save();
+
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(200).json({ success: true, message: "Statut mis à jour avec succès.", status });
+        }
+        return res.redirect("/dashboard?success=order_updated");
+    } catch (error) {
+        console.error("Erreur mise à jour statut commande:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Erreur serveur lors de la mise à jour." });
+    }
+});
+
+// Admin : Supprimer une commande
+router.post("/api/orders/:orderId/delete", isAdmin, async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const client = await User.findOne({ "orders.id": orderId });
+        if (!client) {
+            return res.status(404).json({ success: false, errcode: 404, message: "Commande introuvable." });
+        }
+
+        client.orders = client.orders.filter(o => o.id !== orderId);
+        await client.save();
+
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(200).json({ success: true, message: "Commande supprimée avec succès." });
+        }
+        return res.redirect("/dashboard?success=order_deleted");
+    } catch (error) {
+        console.error("Erreur suppression commande:", error);
+        return res.status(500).json({ success: false, errcode: 500, message: "Erreur serveur lors de la suppression." });
+    }
+});
+
 router.post("/profile/update/:id", isClient, upload.single("avatar"), async (req, res) => {
     try {
         const sessionUser = req.session.user;
@@ -500,17 +995,16 @@ router.post("/profile/update/:id", isClient, upload.single("avatar"), async (req
         return res.status(500).json({ message: `Erreur: ${error.message || "Erreur serveur"}`, errcode: 500, success: false });
     }
 });
-router.get("/dashboard", async (req, res) => {
-    if (!req.session?.isAuth || !req.session?.user) {
-        return res.redirect("/login");
-    }
-
+router.get("/dashboard", isClient, async (req, res) => {
     try {
+        // La session a ete resynchronisee avec la base par isClient.
         const user = req.session.user;
         let tickets = [];
         let quotes = [];
         let orders = [];
         let clients = [];
+        // Déclarée hors du bloc admin : la vue dashboard lit `allUsers` pour tous les rôles.
+        let allUsers = [];
         let stats = {
             totalRevenue: 0,
             totalMembers: 0,
@@ -519,7 +1013,7 @@ router.get("/dashboard", async (req, res) => {
         };
 
         if (user.role === "admin" || user.role === "developper") {
-            const allUsers = await User.find({});
+            allUsers = await User.find({});
             clients = allUsers.filter(u => u.role === "user" || u.role === "client");
 
             allUsers.forEach(u => {
@@ -596,9 +1090,10 @@ router.get("/dashboard", async (req, res) => {
             user,
             orders,
             clients,
+            allUsers: allUsers || [],
             stats,
-            tickets
-            , quotes
+            tickets,
+            quotes
         });
     } catch (error) {
         console.error("Erreur chargement dashboard:", error);
@@ -606,6 +1101,7 @@ router.get("/dashboard", async (req, res) => {
             user: req.session.user,
             orders: [],
             clients: [],
+            allUsers: [],
             stats: {
                 totalRevenue: 0,
                 totalMembers: 0,
@@ -692,6 +1188,168 @@ router.post("/api/admin/tickets/:userId/:ticketId/delete", isAdmin, async (req, 
         return res.redirect("/dashboard?error=server_error");
     }
 });
+
+// Admin : Mettre à jour un utilisateur (rôle, statut, avatar, finances, mot de passe, ban, emailVerified)
+router.post("/api/admin/users/update", isAdmin, async (req, res) => {
+    try {
+        const {
+            userId,
+            pseudo,
+            email,
+            role,
+            status,
+            solde,
+            credits,
+            avatar,
+            emailVerified,
+            isBan,
+            banReason,
+            password
+        } = req.body || {};
+
+        if (!userId) {
+            return res.status(400).json({ success: false, errcode: 400, message: "ID utilisateur requis." });
+        }
+
+        const targetUser = await User.findById(userId);
+        if (!targetUser) {
+            return res.status(404).json({ success: false, errcode: 404, message: "Utilisateur introuvable." });
+        }
+
+        // Vérification unicité pseudo
+        if (pseudo && pseudo.trim() !== targetUser.pseudo) {
+            const existingPseudo = await User.findOne({ pseudo: pseudo.trim(), _id: { $ne: targetUser._id } });
+            if (existingPseudo) {
+                return res.status(400).json({ success: false, errcode: 400, message: "Ce pseudo est déjà utilisé." });
+            }
+            targetUser.pseudo = pseudo.trim();
+        }
+
+        // Vérification unicité email
+        if (email && email.trim().toLowerCase() !== targetUser.email) {
+            const existingEmail = await User.findOne({ email: email.trim().toLowerCase(), _id: { $ne: targetUser._id } });
+            if (existingEmail) {
+                return res.status(400).json({ success: false, errcode: 400, message: "Cette adresse email est déjà utilisée." });
+            }
+            targetUser.email = email.trim().toLowerCase();
+        }
+
+        // Rôle
+        const allowedRoles = ["user", "admin", "developper"];
+        if (role && allowedRoles.includes(role)) {
+            targetUser.role = role;
+        }
+
+        // Statut
+        const allowedStatuses = ["active", "inactive"];
+        if (status && allowedStatuses.includes(status)) {
+            targetUser.status = status;
+        }
+
+        // Solde et crédits
+        if (solde !== undefined && !isNaN(Number(solde))) {
+            targetUser.solde = Math.max(0, Number(solde));
+        }
+
+        if (credits !== undefined && !isNaN(Number(credits))) {
+            targetUser.credits = Math.max(0, parseInt(credits, 10));
+        }
+
+        // Avatar
+        if (typeof avatar === "string") {
+            targetUser.avatar = avatar.trim();
+        }
+
+        // Email vérifié & Ban
+        targetUser.emailVerified = emailVerified === true || emailVerified === "true" || emailVerified === "on";
+        const shouldBan = isBan === true || isBan === "true" || isBan === "on";
+        const reason = typeof banReason === "string" ? banReason.trim().slice(0, 300) : "";
+
+        if (shouldBan && !targetUser.isBan) {
+            targetUser.bannedAt = new Date();
+        }
+        if (!shouldBan && targetUser.isBan) {
+            targetUser.bannedAt = undefined;
+        }
+        targetUser.isBan = shouldBan;
+        // Le motif n'a de sens que si le compte est banni.
+        targetUser.banReason = shouldBan ? reason : "";
+
+        // Nouveau mot de passe
+        if (password && typeof password === "string" && password.trim().length >= 6) {
+            targetUser.password = await bcrypt.hash(password.trim(), 12);
+        }
+
+        targetUser.updatedAt = new Date();
+        await targetUser.save();
+
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(200).json({
+                success: true,
+                message: `Utilisateur "${targetUser.pseudo}" mis à jour avec succès !`,
+                user: {
+                    id: targetUser._id,
+                    pseudo: targetUser.pseudo,
+                    email: targetUser.email,
+                    role: targetUser.role,
+                    status: targetUser.status,
+                    isBan: targetUser.isBan,
+                    banReason: targetUser.banReason
+                }
+            });
+        }
+        return res.redirect("/dashboard?success=user_updated");
+    } catch (error) {
+        console.error("Erreur mise à jour utilisateur admin:", error);
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(500).json({ success: false, errcode: 500, message: "Erreur serveur lors de la mise à jour." });
+        }
+        return res.redirect("/dashboard?error=server_error");
+    }
+});
+
+// Admin : Bannir ou débannir rapidement un utilisateur
+router.post("/api/admin/users/:userId/toggle-ban", isAdmin, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const targetUser = await User.findById(userId);
+
+        if (!targetUser) {
+            return res.status(404).json({ success: false, errcode: 404, message: "Utilisateur introuvable." });
+        }
+
+        targetUser.isBan = !targetUser.isBan;
+        // Un debannissement remet le compteur du motif a zero.
+        if (targetUser.isBan) {
+            targetUser.bannedAt = new Date();
+        } else {
+            targetUser.bannedAt = undefined;
+            targetUser.banReason = "";
+        }
+        targetUser.updatedAt = new Date();
+        await targetUser.save();
+
+        const msg = targetUser.isBan
+            ? `L'utilisateur "${targetUser.pseudo}" a été banni.`
+            : `L'utilisateur "${targetUser.pseudo}" a été débanni.`;
+
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(200).json({
+                success: true,
+                isBan: targetUser.isBan,
+                message: msg
+            });
+        }
+        return res.redirect("/dashboard?success=ban_updated");
+    } catch (error) {
+        console.error("Erreur toggle ban:", error);
+        if (req.xhr || req.headers.accept?.includes("json")) {
+            return res.status(500).json({ success: false, errcode: 500, message: "Erreur serveur lors du bannissement." });
+        }
+        return res.redirect("/dashboard?error=server_error");
+    }
+});
+
 // ticket system router client
 router.get("/client/ticket", isClient, async (req, res) => {
     try {

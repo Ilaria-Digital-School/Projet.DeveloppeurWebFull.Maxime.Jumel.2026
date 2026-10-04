@@ -16,6 +16,9 @@ const getTransporter = () => {
         auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: process.env.SMTP_TLS_REJECT_UNAUTHORIZED === "true"
         }
     });
 };
@@ -73,4 +76,32 @@ const sendVerificationEmail = async ({ email, token }) => {
 
 
 
-module.exports = { sendVerificationEmail, sendWelcomeEmail };
+const sendPasswordResetEmail = async ({ email, pseudo, token }) => {
+    const resetUrl = `${process.env.APP_URL.replace(/\/$/, "")}/reset-password/${token}`;
+
+    if (process.env.EMAIL_MODE === "console") {
+        console.log(`🔑 Réinitialisation du mot de passe pour ${email}: ${resetUrl}`);
+        return { mode: "console", resetUrl };
+    }
+
+    const transporter = getTransporter();
+
+    await transporter.sendMail({
+        from: process.env.MAIL_FROM,
+        to: email,
+        subject: "Réinitialisation de votre mot de passe",
+        text: `Bonjour ${pseudo},\n\nPour choisir un nouveau mot de passe, ouvrez ce lien : ${resetUrl}\n\nCe lien est valable 1 heure et ne fonctionne qu'une seule fois. Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.`,
+        html: `
+            <p>Bonjour ${pseudo},</p>
+            <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
+            <p><a href="${resetUrl}">Choisir un nouveau mot de passe</a></p>
+            <p><small>Ce lien est valable 1 heure et ne fonctionne qu'une seule fois.<br>
+            Si vous n'êtes pas à l'origine de cette demande, ignorez simplement ce message.</small></p>
+        `
+    });
+
+    return { mode: "smtp", resetUrl };
+};
+
+
+module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail };

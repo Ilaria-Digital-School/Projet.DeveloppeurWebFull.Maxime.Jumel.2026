@@ -1,0 +1,50 @@
+<!-- Modal : Création / édition d'un service -->
+<div class="modal fade" id="modalServiceEdit" tabindex="-1" aria-labelledby="modalServiceEditLabel" aria-hidden="true" style="z-index: 1070;">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #1e1e24 0%, #111215 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                         style="width: 2.75rem; height: 2.75rem; background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.4);">
+                        <i class="bi bi-box-seam fs-5" style="color: #34d399;" aria-hidden="true"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold mb-0 text-white" id="modalServiceEditLabel">
+                        <span data-modal-title>Nouveau service</span>
+                    </h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <form id="formService" novalidate>
+                <div class="modal-body">
+                    <div id="serviceAlert"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-semibold small" for="svcName">Nom</label>
+                            <input type="text" class="form-control" id="svcName" maxlength="160" required>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label fw-semibold small" for="svcCategory">Catégorie</label>
+                            <select class="form-select" id="svcCategory" required>
+                                <% locals.categories.forEach((category) => { %>
+                                    <option value="<%= category._id %>"><%= category.name %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small" for="svcDescription">Description</label>
+                            <textarea class="form-control" id="svcDescription" rows="3" maxlength="3000" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="btnSaveService">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

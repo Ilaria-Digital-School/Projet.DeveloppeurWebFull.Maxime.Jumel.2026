@@ -1,0 +1,118 @@
+<!-- Modal : Gestion des catégories et services -->
+<div class="modal fade" id="modalServiceAdmin" tabindex="-1" aria-labelledby="modalServiceAdminLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header text-white" style="background: linear-gradient(135deg, #1e1e24 0%, #111215 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                         style="width: 2.75rem; height: 2.75rem; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4);">
+                        <i class="bi bi-sliders fs-5" style="color: #818cf8;" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0 text-white" id="modalServiceAdminLabel">
+                            Gérer les prestations
+                        </h5>
+                        <small class="text-muted">
+                            <%= locals.categories.length %> catégorie<%= locals.categories.length !== 1 ? 's' : '' %>
+                        </small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <div class="px-3 pt-3">
+                    <div id="serviceAdminAlert"></div>
+                </div>
+
+                <div class="p-3 border-bottom bg-light d-flex flex-wrap gap-2">
+                    <button type="button" class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal" data-bs-target="#modalCategoryEdit"
+                            data-action="new-category">
+                        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Nouvelle catégorie
+                    </button>
+                    <button type="button" class="btn btn-outline-primary btn-sm"
+                            data-bs-toggle="modal" data-bs-target="#modalServiceEdit"
+                            data-action="new-service"
+                            <%= locals.categories.length === 0 ? 'disabled' : '' %>>
+                        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Nouveau service
+                    </button>
+                </div>
+
+                <div class="p-3">
+                    <% if (locals.categories.length === 0) { %>
+                        <p class="text-secondary mb-0">
+                            Aucune catégorie. Commencez par en créer une pour y rattacher vos services.
+                        </p>
+                    <% } %>
+
+                    <% locals.categories.forEach((category) => { %>
+                        <section class="card mb-3 border">
+                            <div class="card-header bg-white d-flex align-items-center justify-content-between gap-2">
+                                <span class="fw-semibold">
+                                    <i class="bi <%= category.icon %> me-2" aria-hidden="true"></i><%= category.name %>
+                                </span>
+                                <span class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-warning btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#modalCategoryEdit"
+                                            data-action="edit-category"
+                                            data-id="<%= category._id %>"
+                                            data-name="<%= category.name %>"
+                                            data-icon="<%= category.icon %>"
+                                            data-description="<%= category.description %>">
+                                        Modifier
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                            data-action="delete-category"
+                                            data-id="<%= category._id %>"
+                                            data-name="<%= category.name %>">
+                                        Supprimer
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div class="card-body p-0">
+                                <% if (category.services.length === 0) { %>
+                                    <p class="text-secondary small mb-0 p-3">Aucun service dans cette catégorie.</p>
+                                <% } else { %>
+                                    <ul class="list-group list-group-flush">
+                                        <% category.services.forEach((service) => { %>
+                                            <li class="list-group-item d-flex align-items-start justify-content-between gap-3">
+                                                <div>
+                                                    <span class="fw-semibold"><%= service.name %></span>
+                                                    <p class="small text-secondary mb-0"><%= service.description %></p>
+                                                </div>
+                                                <span class="d-flex gap-2 flex-shrink-0">
+                                                    <button type="button" class="btn btn-outline-warning btn-sm"
+                                                            data-bs-toggle="modal" data-bs-target="#modalServiceEdit"
+                                                            data-action="edit-service"
+                                                            data-id="<%= service._id %>"
+                                                            data-name="<%= service.name %>"
+                                                            data-description="<%= service.description %>"
+                                                            data-category="<%= category._id %>">
+                                                        Modifier
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                                            data-action="delete-service"
+                                                            data-id="<%= service._id %>"
+                                                            data-name="<%= service.name %>">
+                                                        Supprimer
+                                                    </button>
+                                                </span>
+                                            </li>
+                                        <% }) %>
+                                    </ul>
+                                <% } %>
+                            </div>
+                        </section>
+                    <% }) %>
+                </div>
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
