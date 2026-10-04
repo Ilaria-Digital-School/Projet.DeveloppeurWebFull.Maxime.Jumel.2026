@@ -351,6 +351,22 @@ const isValidId = (id) => typeof id === "string" && mongoose.isValidObjectId(id)
 // Même collation que l'index unique du modèle : « Développement Web » et
 // « developpement web » sont considers comme le meme nom.
 const NAME_COLLATION = { locale: "fr", strength: 2 };
+
+/**
+ * Charge le catalogue groupe : [{ ...categorie, services: [...] }].
+ * Partage entre la vitrine publique et les modals d'administration du dashboard.
+ */
+const loadServiceCatalogue = async () => {
+    const categories = await Category.find().sort({ name: 1 }).lean();
+    const services = await Service.find().populate("category", "name icon").sort({ name: 1 }).lean();
+
+    return categories.map((category) => ({
+        ...category,
+        services: services.filter(
+            (service) => String(service.category?._id || service.category) === String(category._id)
+        )
+    }));
+};
 const findCategoryByName = (name, excludeId) =>
     Category.findOne({ name, ...(excludeId ? { _id: { $ne: excludeId } } : {}) }).collation(NAME_COLLATION);
 
@@ -392,16 +408,9 @@ router.get("/services", async (req, res) => {
     const isManager = role === "admin" || role === "developper";
 
     try {
-        const categories = await Category.find().sort({ name: 1 }).lean();
-        const services = await Service.find().populate("category", "name icon").sort({ name: 1 }).lean();
+        const categories = await loadServiceCatalogue();
 
-        // Regroupement côté vue : { category, services: [...] }
-        const grouped = categories.map((category) => ({
-            ...category,
-            services: services.filter((service) => String(service.category?._id || service.category) === String(category._id))
-        }));
-
-        return res.render("services", { user: req.session?.user || null, isManager, categories: grouped });
+        return res.render("services", { user: req.session?.user || null, isManager, categories });
     } catch (error) {
         console.error("Erreur chargement des services:", error);
         return res.status(500).render("services", {
@@ -1093,7 +1102,8 @@ router.get("/dashboard", isClient, async (req, res) => {
             allUsers: allUsers || [],
             stats,
             tickets,
-            quotes
+            quotes,
+            categories: await loadServiceCatalogue()
         });
     } catch (error) {
         console.error("Erreur chargement dashboard:", error);
@@ -1109,7 +1119,8 @@ router.get("/dashboard", isClient, async (req, res) => {
                 activeOrders: 0
             },
             tickets: [],
-            quotes: []
+            quotes: [],
+            categories: []
         });
     }
 });

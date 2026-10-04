@@ -119,7 +119,7 @@ document.addEventListener("show.bs.modal", (event) => {
   // sinon deux backdrops se superposent.
   const targetId = event.target.id;
   if (targetId === "modalCategoryEdit" || targetId === "modalServiceEdit") {
-    const adminModal = document.getElementById("modalServiceAdmin");
+    const adminModal = document.getElementById("modalServiceList");
     const instance = adminModal && window.bootstrap?.Modal.getInstance(adminModal);
     if (instance) instance.hide();
   }

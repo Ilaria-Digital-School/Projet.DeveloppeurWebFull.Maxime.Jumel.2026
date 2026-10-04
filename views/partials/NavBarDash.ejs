@@ -1,131 +1,161 @@
 <!-- slid bar section  -->
-    <header class="border-end border-secondary border-opacity-25" style="background-color: #181a1bff;">
-        <!-- Top navbar for mobile only -->
-        <div class="navbar navbar-dark bg-dark d-md-none px-3 py-2 w-100 d-flex justify-content-between align-items-center">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
-                <i class="fa-solid fa-bars text-white"></i>
-            </button>
-            <span class="navbar-brand mb-0 h1 fs-5 fw-bold text-white">The BPT</span>
-            <div style="width: 1.875rem;"></div> <!-- Spacer to align logo -->
-        </div>
+<header class="border-end border-secondary border-opacity-25" style="background-color: #181a1bff;">
+    <!-- Top navbar for mobile only -->
+    <div class="navbar navbar-dark bg-dark d-md-none px-3 py-2 w-100 d-flex justify-content-between align-items-center">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas"
+            aria-controls="sidebarOffcanvas">
+            <i class="fa-solid fa-bars text-white"></i>
+        </button>
+        <span class="navbar-brand mb-0 h1 fs-5 fw-bold text-white">The BPT</span>
+        <div style="width: 1.875rem;"></div> <!-- Spacer to align logo -->
+    </div>
 
-        <!-- Sidebar offcanvas/desktop container -->
-        <div class="offcanvas-md offcanvas-start sidebar text-white border-0" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel" role="region">
-            <div class="d-flex flex-column h-100" style="background-color: #181a1bff;">
-                <!-- Offcanvas header (visible on mobile only) -->
-                <div class="offcanvas-header d-md-none p-4 pb-2 text-white">
-                    <h2 class="offcanvas-title h5 fw-bold" id="sidebarOffcanvasLabel">The BPT</h2>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas" aria-label="Close"></button>
-                </div>
-                
-                <div class="items-center w-100 flex-grow-1 position-relative d-flex flex-column justify-content-between">
-                    <div class="w-100">
-                        <!-- Desktop Logo -->
-                        <div class="logo p-4 d-none d-md-flex align-items-center">
-                            <i class="fa-solid fa-bars text-white fs-5"></i>
-                            <span class="text-white mx-2 fw-bold">The Souflyhub.fr</span>
-                        </div>
-                        
-                        <!-- User Card -->
-                        <div class="w-100 d-flex align-items-center justify-content-center py-3">
-                            <div class="user-info text-center">
-                                <img src="<%= user.avatar || 'https://i.pravatar.cc/150' %>" alt="Avatar de <%= user.pseudo %>" class="rounded-circle border border-2 border-secondary shadow-sm" style="width: 5rem; height: 5rem; object-fit: cover;">
-                                <p class="text-white mt-2 mb-0 fw-semibold"><%= user.pseudo %></p>
-                                <span class="text-muted text-small d-block" style="font-size: 0.75rem;"><%= user.role %></span>
-                            </div>
-                        </div>
+    <!-- Sidebar offcanvas/desktop container -->
+    <div class="offcanvas-md offcanvas-start sidebar text-white border-0" tabindex="-1" id="sidebarOffcanvas"
+        aria-labelledby="sidebarOffcanvasLabel" role="region">
+        <div class="d-flex flex-column h-100" style="background-color: #181a1bff;">
+            <!-- Offcanvas header (visible on mobile only) -->
+            <div class="offcanvas-header d-md-none p-4 pb-2 text-white">
+                <h2 class="offcanvas-title h5 fw-bold" id="sidebarOffcanvasLabel">The BPT</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    data-bs-target="#sidebarOffcanvas" aria-label="Close"></button>
+            </div>
 
-                        <!-- Sidebar Nav -->
-                        <div class="nav-links p-2">
-                            <nav class="row mx-0">
-                                <div class="col-12 px-2">
-                                    <ul class="nav flex-column nav-items">
-                                        <li class="nav-item mb-2 mx-auto">
-                                            <a href="/" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-house"></i>Home</a>
-                                        </li>
-                                        <% if (user && (user.role === 'admin' || user.role === 'developper')) { %>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalOrderList"><i class="fa-solid fa-cart-shopping fa-fw"></i>Gestion des commandes</a>
-                                        </li>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-repeat fa-fw"></i>Gestion des abonnements</a>
-                                        </li>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalUserList"><i class="fa-solid fa-users fa-fw"></i>Gestion des utilisateurs</a>
-                                        </li>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-cubes fa-fw"></i>Gestion des services</a>
-                                        </li>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-layer-group fa-fw"></i>Gestion des catégories</a>
-                                        </li>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-diagram-project fa-fw"></i>Gestion des projets</a>
-                                        </li>
-                                        <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i class="fa-solid fa-newspaper fa-fw"></i>Gestion des Articles</a>
-                                        </li>
-                                        <% } else { %>
-                                        <li class="nav-item mb-2">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Mes services
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-cart-shopping fa-fw"></i>Mes commandes</a></li>
-                                                <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-repeat fa-fw"></i>Mes abonnements</a></li>
-                                                <li><a class="dropdown-item d-flex align-items-center gap-2" href="/client/ticket"><i class="fa-solid fa-headset fa-fw"></i>Support</a></li>
-                                                <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-user fa-fw"></i>Mon Profil</a></li>
-                                                <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i class="fa-solid fa-lock fa-fw"></i>Changer de mot de passe</a></li>
-                                            </ul>
-                                        </li>
-                                        <% } %>
-                                    </ul>
-                                </div>
-                            </nav>
+            <div class="items-center w-100 flex-grow-1 position-relative d-flex flex-column justify-content-between">
+                <div class="w-100">
+                    <!-- Desktop Logo -->
+                    <div class="logo p-4 d-none d-md-flex align-items-center">
+                        <i class="fa-solid fa-bars text-white fs-5"></i>
+                        <span class="text-white mx-2 fw-bold">The Souflyhub.fr</span>
+                    </div>
+
+                    <!-- User Card -->
+                    <div class="w-100 d-flex align-items-center justify-content-center py-3">
+                        <div class="user-info text-center">
+                            <img src="<%= user.avatar || 'https://i.pravatar.cc/150' %>"
+                                alt="Avatar de <%= user.pseudo %>"
+                                class="rounded-circle border border-2 border-secondary shadow-sm"
+                                style="width: 5rem; height: 5rem; object-fit: cover;">
+                            <p class="text-white mt-2 mb-0 fw-semibold">
+                                <%= user.pseudo %>
+                            </p>
+                            <span class="text-muted text-small d-block" style="font-size: 0.75rem;">
+                                <%= user.role %>
+                            </span>
                         </div>
                     </div>
-                    
-                    <!-- Bottom dropup profile menu -->
-                    <div class="w-100 p-3 border-top border-secondary border-opacity-25 mt-auto">
-                        <div class="dropup">
-                            <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="<%= user.avatar || 'https://i.pravatar.cc/150' %>" alt="Avatar de <%= user.pseudo %>" width="32" height="32" class="rounded-circle me-2 border border-secondary" style="object-fit: cover;">
-                                <div class="flex-grow-1 min-w-0 me-2">
-                                    <span class="d-block text-truncate fw-semibold text-light" style="font-size: 0.85rem;"><%= user.pseudo %></span>
-                                    <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;"><%= user.role %></small>
-                                </div>
-                                <i class="fa-solid fa-ellipsis-vertical text-muted fs-6"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary border-opacity-50 w-100" aria-labelledby="profileDropdown">
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAccountProfile">
-                                        <i class="fa-solid fa-user me-2 text-muted" style="width: 1rem;"></i>
-                                        <span style="font-size: 0.85rem;">Profile</span>
-                                    </a>
+
+                    <!-- Sidebar Nav -->
+                    <div class="nav-links p-2">
+                        <nav class="row mx-0">
+                            <div class="col-12 px-2">
+                                <ul class="nav flex-column nav-items">
+                                    <li class="nav-item mb-2 mx-auto">
+                                        <a href="/" class="nav-link text-white d-flex align-items-center gap-2"><i
+                                                class="fa-solid fa-house"></i>Home</a>
+                                    </li>
+                                    <% if (user && (user.role==='admin' || user.role==='developper' )) { %>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                                data-bs-toggle="modal" data-bs-target="#modalOrderList"><i
+                                                    class="fa-solid fa-cart-shopping fa-fw"></i>Gestion des
+                                                commandes</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                                data-bs-toggle="modal" data-bs-target="#modalUserList"><i
+                                                    class="fa-solid fa-users fa-fw"></i>Gestion des utilisateurs</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                                data-bs-toggle="modal" data-bs-target="#modalServiceList"><i
+                                                    class="fa-solid fa-cubes fa-fw"></i>Gestion des services</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i
+                                                    class="fa-solid fa-layer-group fa-fw"></i>Gestion des catégories</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i
+                                                    class="fa-solid fa-diagram-project fa-fw"></i>Gestion des
+                                                projets</a>
+                                        </li>
+                                        <li class="nav-item mb-2">
+                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"><i
+                                                    class="fa-solid fa-newspaper fa-fw"></i>Gestion des Articles</a>
+                                        </li>
+                                        <% } else { %>
+                                            <li class="nav-item mb-2">
+
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                                        class="fa-solid fa-cart-shopping fa-fw"></i>Mes commandes</a>
+                                            </li>
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                                        class="fa-solid fa-repeat fa-fw"></i>Mes abonnements</a></li>
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2"
+                                                    href="/client/ticket"><i
+                                                        class="fa-solid fa-headset fa-fw"></i>Support</a></li>
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                                        class="fa-solid fa-user fa-fw"></i>Mon Profil</a></li>
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                                        class="fa-solid fa-lock fa-fw"></i>Changer de mot de passe</a>
+                                            </li>
+                                </ul>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal" data-bs-target="#modalAccountProfile">
-                                        <i class="fa-solid fa-gear me-2 text-muted" style="width: 1rem;"></i>
-                                        <span style="font-size: 0.85rem;">Profile Settings</span>
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider border-secondary border-opacity-50"></li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center py-2 text-danger" href="/logout">
-                                        <i class="fa-solid fa-right-from-bracket me-2" style="width: 1rem;"></i>
-                                        <span style="font-size: 0.85rem;">Déconnexion</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                                <% } %>
+                                    </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Bottom dropup profile menu -->
+                <div class="w-100 p-3 border-top border-secondary border-opacity-25 mt-auto">
+                    <div class="dropup">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none"
+                            id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="<%= user.avatar || 'https://i.pravatar.cc/150' %>"
+                                alt="Avatar de <%= user.pseudo %>" width="32" height="32"
+                                class="rounded-circle me-2 border border-secondary" style="object-fit: cover;">
+                            <div class="flex-grow-1 min-w-0 me-2">
+                                <span class="d-block text-truncate fw-semibold text-light" style="font-size: 0.85rem;">
+                                    <%= user.pseudo %>
+                                </span>
+                                <small class="text-muted d-block text-truncate" style="font-size: 0.7rem;">
+                                    <%= user.role %>
+                                </small>
+                            </div>
+                            <i class="fa-solid fa-ellipsis-vertical text-muted fs-6"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark shadow border-secondary border-opacity-50 w-100"
+                            aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#modalAccountProfile">
+                                    <i class="fa-solid fa-user me-2 text-muted" style="width: 1rem;"></i>
+                                    <span style="font-size: 0.85rem;">Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#modalAccountProfile">
+                                    <i class="fa-solid fa-gear me-2 text-muted" style="width: 1rem;"></i>
+                                    <span style="font-size: 0.85rem;">Profile Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider border-secondary border-opacity-50">
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center py-2 text-danger" href="/logout">
+                                    <i class="fa-solid fa-right-from-bracket me-2" style="width: 1rem;"></i>
+                                    <span style="font-size: 0.85rem;">Déconnexion</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
-
-
-
-
-
- 
+    </div>
+</header>
