@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<%- include("partials/head", { title: "Souflydev | Portfolio Web & Mobile Projects", description: "Explore Souflydev portfolio projects in web development, mobile applications, and digital product experiences.", canonical: "https://soulfyhub.fr/portfolio", keywords: "Portfolio, Developpeur web, application mobile", locale: "fr_FR", language: "French" }) %>
+
+<body>
+
+    
+    <!-- Navigation Bar -->
+<%- include("partials/header", { active: "portfolio", variant: "light" }) %>
+    <main id="main-content">
+    <!-- hero section -->
+    <div class="container-fluid p-0">
+    <!-- Hero -->
+    <div class="position-relative text-center mt-5"
+        style="background-image: url('/images/img-random/pexels-william-fortunato-6140477.webp'); height: 31.25rem; background-size: cover; background-position: center; ">
+        <!-- Dark overlay to ensure contrast -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
+        <section class="bg-transparent mx-auto"
+                style="max-width: 37.5rem; display: flex; flex-direction: column; justify-content: center; height: 100%; text-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.5); color: #fff;">
+                <h1 class="display-4 fw-bold text-black box" style="font-size: 3.5rem; box-shadow: #f2ff02 0.1875rem 0.1875rem 0rem 0rem;">Web and Mobile Project Portfolio</h1>
+            </section>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row gy-5">
+        <% if (locals.loadError) { %><div class="alert alert-warning">Les projets sont momentanément indisponibles.</div><% } %>
+        <% (projects || []).forEach((project) => { %>
+        <div class="col-12 col-md-6 mb-4 mb-lg-4">
+            <a href="/project?id=<%= project._id %>" class="text-decoration-none text-dark d-block">
+                <% if (project.imageUrl) { %><img src="<%= project.imageUrl %>"
+                    class="img-fluid w-100 rounded" style="height: 18.75rem; object-fit: cover;" alt="<%= project.title %>"><% } %>
+                <p class="fw-bold mt-3"><%= project.title %></p>
+                <span class="text-secondary-emphasis"><%= project.projectType || project.description %></span>
+            </a>
+        </div>
+        <% }) %>
+    </div>
+
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <a class="btn btn-dark" href="./contact.html">Contact Us</a>
+    </div>
+</div>
+
+
+
+
+
+
+    <div class="container-fluid p-4 mx-auto text-center" style=" background-color: rgb(10, 20, 150);">
+        <div class="p-5 mx-auto text-center">
+            <h2 id="typing-text" class="h1" style="color: rgb(255, 255, 255); margin: 0;">What we can do for our clients</h2>
+        </div>
+    </div>
+  
+
+</main>
+<%- include("partials/footer") %>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+    <script src="/js/script.js"></script>
+    <%- include("partials/cookie-consent") %>
+</body>
+
+</html>

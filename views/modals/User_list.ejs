@@ -1,0 +1,268 @@
+<!-- Modal : Gestion des utilisateurs -->
+<div class="modal fade" id="modalUserList" tabindex="-1" aria-labelledby="modalUserListLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+
+            <!-- Header -->
+            <div class="modal-header" style="background:#181a1b;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                         style="width:2.5rem;height:2.5rem;background:rgba(99,102,241,.2);">
+                        <i class="fa-solid fa-users" style="color:#818cf8;"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold text-white mb-0" id="modalUserListLabel">
+                            Gestion des utilisateurs
+                        </h5>
+                        <small class="text-muted"><%= allUsers.length %> utilisateur<%= allUsers.length !== 1 ? 's' : '' %> au total</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <!-- Barre de recherche + filtres -->
+            <div class="modal-body p-0">
+                <div class="p-3 border-bottom bg-light d-flex flex-wrap gap-2 align-items-center">
+                    <div class="input-group" style="max-width:320px;">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="fa-solid fa-search text-muted" style="font-size:.85rem;"></i>
+                        </span>
+                        <input type="text" id="userSearch" class="form-control border-start-0 ps-0"
+                               placeholder="Rechercher par pseudo, email…">
+                    </div>
+                    <select id="userRoleFilter" class="form-select" style="max-width:160px;">
+                        <option value="">Tous les rôles</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="developper">Développeur</option>
+                    </select>
+                    <select id="userStatusFilter" class="form-select" style="max-width:160px;">
+                        <option value="">Tous les statuts</option>
+                        <option value="active">Actif</option>
+                        <option value="inactive">Inactif</option>
+                    </select>
+                    <span class="ms-auto text-muted small" id="userCount"></span>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle" id="userTable">
+                        <thead class="table-dark" style="font-size:.82rem;letter-spacing:.04em;">
+                            <tr>
+                                <th class="ps-3">#</th>
+                                <th>Pseudo</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                                <th>Statut</th>
+                                <th>Email vérifié</th>
+                                <th>Banni</th>
+                                <th>Inscription</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <% if (allUsers && allUsers.length > 0) { %>
+                                <% allUsers.forEach((u, index) => { %>
+                                <tr class="user-row"
+                                    data-pseudo="<%= u.pseudo.toLowerCase() %>"
+                                    data-email="<%= u.email.toLowerCase() %>"
+                                    data-role="<%= u.role %>"
+                                    data-status="<%= u.status %>">
+                                    <td class="ps-3 text-muted" style="font-size:.8rem;"><%= index + 1 %></td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img src="<%= u.avatar || 'https://i.pravatar.cc/32?u=' + u._id %>"
+                                                 alt="Avatar de <%= u.pseudo %>"
+                                                 width="32" height="32"
+                                                 class="rounded-circle border border-secondary"
+                                                 style="object-fit:cover;">
+                                            <span class="fw-semibold" style="font-size:.88rem;"><%= u.pseudo %></span>
+                                        </div>
+                                    </td>
+                                    <td style="font-size:.85rem;" class="text-muted"><%= u.email %></td>
+                                    <td>
+                                        <% if (u.role === 'admin') { %>
+                                            <span class="badge" style="background:rgba(239,68,68,.15);color:#ef4444;font-size:.75rem;">
+                                                <i class="fa-solid fa-shield-halved me-1"></i>Admin
+                                            </span>
+                                        <% } else if (u.role === 'developper') { %>
+                                            <span class="badge" style="background:rgba(99,102,241,.15);color:#818cf8;font-size:.75rem;">
+                                                <i class="fa-solid fa-code me-1"></i>Dev
+                                            </span>
+                                        <% } else { %>
+                                            <span class="badge" style="background:rgba(100,116,139,.15);color:#64748b;font-size:.75rem;">
+                                                <i class="fa-solid fa-user me-1"></i>User
+                                            </span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <% if (u.status === 'active') { %>
+                                            <span class="badge" style="background:rgba(34,197,94,.15);color:#16a34a;font-size:.75rem;">
+                                                <i class="fa-solid fa-circle me-1" style="font-size:.5rem;"></i>Actif
+                                            </span>
+                                        <% } else { %>
+                                            <span class="badge" style="background:rgba(107,114,128,.15);color:#6b7280;font-size:.75rem;">
+                                                <i class="fa-solid fa-circle me-1" style="font-size:.5rem;"></i>Inactif
+                                            </span>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center">
+                                        <% if (u.emailVerified) { %>
+                                            <i class="fa-solid fa-circle-check text-success"></i>
+                                        <% } else { %>
+                                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center">
+                                        <% if (u.isBan) { %>
+                                            <span class="badge bg-danger" style="font-size:.72rem;">Banni</span>
+                                        <% } else { %>
+                                            <span class="text-muted" style="font-size:.8rem;">—</span>
+                                        <% } %>
+                                    </td>
+                                    <td style="font-size:.8rem;" class="text-muted">
+                                        <%= new Date(u.createdAt).toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' }) %>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center gap-1">
+                                            <button class="btn btn-sm btn-outline-primary px-2 py-1"
+                                                    title="Voir"
+                                                    style="font-size:.75rem;">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning px-2 py-1"
+                                                    title="Modifier l'utilisateur"
+                                                    style="font-size:.75rem;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalUserEdit"
+                                                    data-user-id="<%= u._id %>"
+                                                    data-user-pseudo="<%= u.pseudo %>"
+                                                    data-user-email="<%= u.email %>"
+                                                    data-user-role="<%= u.role %>"
+                                                    data-user-status="<%= u.status %>"
+                                                    data-user-verified="<%= u.emailVerified %>"
+                                                    data-user-ban="<%= u.isBan %>"
+                                                    data-user-solde="<%= u.solde || 0 %>"
+                                                    data-user-credits="<%= u.credits || 0 %>"
+                                                    data-user-avatar="<%= u.avatar || '' %>">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger px-2 py-1"
+                                                    title="<%= u.isBan ? 'Débannir' : 'Bannir' %>"
+                                                    style="font-size:.75rem;"
+                                                    data-action="toggle-ban"
+                                                data-user-id="<%= u._id %>"
+                                                data-user-pseudo="<%= u.pseudo %>"
+                                                data-user-ban="<%= u.isBan %>"
+                                                    data-user-ban-reason="<%= u.banReason || '' %>">
+                                                <i class="fa-solid fa-<%= u.isBan ? 'unlock' : 'ban' %>"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr id="noUsersRow">
+                                    <td colspan="9" class="text-center py-5 text-muted">
+                                        <i class="fa-solid fa-user-slash fa-2x mb-3 d-block opacity-30"></i>
+                                        Aucun utilisateur trouvé
+                                    </td>
+                                </tr>
+                            <% } %>
+                            <!-- Ligne affichée si recherche vide -->
+                            <tr id="noResultRow" style="display:none;">
+                                <td colspan="9" class="text-center py-4 text-muted">
+                                    <i class="fa-solid fa-magnifying-glass me-2"></i>Aucun résultat pour cette recherche
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer bg-light border-top justify-content-between">
+                <small class="text-muted">
+                    <i class="fa-solid fa-circle-info me-1"></i>
+                    Seuls les admins peuvent modifier les rôles et statuts
+                </small>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="<%= cspNonce %>">
+// Filtres et actions sont câblés ici : la CSP interdit les attributs on* inline.
+document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('userSearch');
+    const roleFilter = document.getElementById('userRoleFilter');
+    const statusFilter = document.getElementById('userStatusFilter');
+
+    if (search) search.addEventListener('input', filterUsers);
+    if (roleFilter) roleFilter.addEventListener('change', filterUsers);
+    if (statusFilter) statusFilter.addEventListener('change', filterUsers);
+
+    document.addEventListener('click', function (event) {
+        const trigger = event.target.closest('[data-action="toggle-ban"]');
+        if (!trigger) return;
+        toggleUserBan(
+            trigger.getAttribute('data-user-id'),
+            trigger.getAttribute('data-user-pseudo'),
+            trigger.getAttribute('data-user-ban') === 'true'
+        );
+    });
+});
+
+function filterUsers() {
+    const search = document.getElementById('userSearch').value.toLowerCase();
+    const role   = document.getElementById('userRoleFilter').value;
+    const status = document.getElementById('userStatusFilter').value;
+    const rows   = document.querySelectorAll('.user-row');
+    let visible  = 0;
+
+    rows.forEach(row => {
+        const matchSearch = !search ||
+            row.dataset.pseudo.includes(search) ||
+            row.dataset.email.includes(search);
+        const matchRole   = !role   || row.dataset.role   === role;
+        const matchStatus = !status || row.dataset.status === status;
+        const show = matchSearch && matchRole && matchStatus;
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    const noResult = document.getElementById('noResultRow');
+    if (noResult) noResult.style.display = visible === 0 ? '' : 'none';
+
+    const counter = document.getElementById('userCount');
+    if (counter) counter.textContent = visible + ' résultat' + (visible !== 1 ? 's' : '');
+}
+
+async function toggleUserBan(userId, pseudo, currentBanStatus) {
+    const actionText = currentBanStatus ? 'débannir' : 'bannir';
+    if (!confirm(`Êtes-vous sûr de vouloir ${actionText} l'utilisateur "${pseudo}" ?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/admin/users/${userId}/toggle-ban`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+            alert(data.message || `Utilisateur ${pseudo} mis à jour avec succès.`);
+            window.location.reload();
+        } else {
+            alert(data.message || `Impossible de ${actionText} l'utilisateur.`);
+        }
+    } catch (err) {
+        alert('Erreur réseau lors de la mise à jour du statut.');
+    }
+}
+</script>

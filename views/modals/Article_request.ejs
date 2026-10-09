@@ -1,0 +1,74 @@
+<!-- Module : pré-demande de rédaction d'article -->
+<div class="modal fade" id="modalArticleRequest" tabindex="-1"
+     aria-labelledby="modalArticleRequestLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="modalArticleRequestLabel">Pré-demande d'article</h5>
+                    <p class="text-muted small mb-0">
+                        Décrivez l'article que vous souhaitez faire rédiger.
+                    </p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <form action="/api/article-requests" method="POST" id="articleRequestForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="article-request-title" class="form-label">Titre ou sujet de l'article</label>
+                        <input type="text" class="form-control" id="article-request-title"
+                               name="title" maxlength="120" required>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="article-request-category" class="form-label">Catégorie</label>
+                            <input type="text" class="form-control" id="article-request-category"
+                                   name="category" maxlength="80" placeholder="Ex. Technologie" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="article-request-format" class="form-label">Format souhaité</label>
+                            <select class="form-select" id="article-request-format" name="format" required>
+                                <option value="">Choisir un format</option>
+                                <option>Article de blog</option>
+                                <option>Guide pratique</option>
+                                <option>Actualité</option>
+                                <option>Étude de cas</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="article-request-description" class="form-label">
+                            Brief et informations à intégrer
+                        </label>
+                        <textarea class="form-control" id="article-request-description"
+                                  name="description" rows="5" maxlength="3000"
+                                  placeholder="Objectif, public cible, mots-clés, sources ou consignes..."
+                                  required></textarea>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="article-request-budget" class="form-label">Budget estimé (€)</label>
+                            <input type="number" class="form-control" id="article-request-budget"
+                                   name="budget" min="0" max="1000000" step="1">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="article-request-date" class="form-label">Date souhaitée</label>
+                            <input type="date" class="form-control" id="article-request-date"
+                                   name="desiredDate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Envoyer la pré-demande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

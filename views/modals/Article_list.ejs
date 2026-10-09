@@ -1,0 +1,61 @@
+<div class="modal fade" id="modalArticleList" tabindex="-1" aria-labelledby="modalArticleListLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header text-white" style="background:#181a1b;">
+                <div>
+                    <h2 class="h5 modal-title mb-1" id="modalArticleListLabel">Gestion des articles</h2>
+                    <small class="text-white-50"><%= (articles || []).length %> article<%= (articles || []).length !== 1 ? 's' : '' %></small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div id="articleAdminAlert" class="alert d-none" role="alert"></div>
+                <button type="button" class="btn btn-primary btn-sm mb-3"
+                        data-bs-toggle="modal" data-bs-target="#modalArticleCreate"
+                        data-article-action="create">
+                    <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>Nouvel article
+                </button>
+                <% if (!(articles || []).length) { %>
+                    <p class="text-muted mb-0">Aucun article enregistré.</p>
+                <% } else { %>
+                    <div class="row g-3">
+                        <% articles.forEach((article) => { %>
+                            <div class="col-12 col-md-6">
+                                <article class="card h-100 border shadow-sm">
+                                    <img src="<%= article.image %>" class="card-img-top"
+                                         style="height: 10rem; object-fit: cover;"
+                                         alt="Illustration de « <%= article.title %> »">
+                                    <div class="card-body">
+                                        <span class="badge text-bg-primary mb-2"><%= article.category %></span>
+                                        <h3 class="h5"><%= article.title %></h3>
+                                        <p class="small text-muted"><%= article.description.slice(0, 160) %><%= article.description.length > 160 ? '…' : '' %></p>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-warning btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#modalArticleCreate"
+                                                    data-article-action="edit"
+                                                    data-article-id="<%= article._id %>"
+                                                    data-article-title="<%= article.title %>"
+                                                    data-article-category="<%= article.category %>"
+                                                    data-article-image="<%= article.image %>"
+                                                    data-article-description="<%= article.description %>">
+                                                Modifier
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                                    data-delete-article="<%= article._id %>"
+                                                    data-article-name="<%= article.title %>">
+                                                Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

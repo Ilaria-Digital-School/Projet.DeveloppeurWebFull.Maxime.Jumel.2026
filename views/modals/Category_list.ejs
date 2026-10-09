@@ -1,0 +1,80 @@
+<!-- Modal : Gestion des catégories -->
+<div class="modal fade" id="modalCategoryList" tabindex="-1" aria-labelledby="modalCategoryListLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header text-white"
+                 style="background: linear-gradient(135deg, #1e1e24 0%, #111215 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 d-flex align-items-center justify-content-center"
+                         style="width: 2.75rem; height: 2.75rem; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4);">
+                        <i class="bi bi-folder2-open fs-5" style="color: #818cf8;" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0 text-white" id="modalCategoryListLabel">
+                            Gérer les catégories
+                        </h5>
+                        <small class="text-muted">
+                            <%= locals.categories.length %> catégorie<%= locals.categories.length !== 1 ? 's' : '' %>
+                        </small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="categoryAdminAlert"></div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="text-secondary small mb-0">Organisez les catégories utilisées par vos services.</p>
+                    <button type="button" class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal" data-bs-target="#modalCategoryEdit"
+                            data-action="new-category">
+                        <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Nouvelle catégorie
+                    </button>
+                </div>
+
+                <% if (locals.categories.length === 0) { %>
+                    <p class="text-secondary mb-0">Aucune catégorie. Commencez par en créer une.</p>
+                <% } else { %>
+                    <div class="list-group">
+                        <% locals.categories.forEach((category) => { %>
+                            <div class="list-group-item d-flex align-items-center justify-content-between gap-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi <%= category.icon %> fs-4 text-primary" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="fw-semibold"><%= category.name %></div>
+                                        <div class="small text-secondary"><%= category.description %></div>
+                                        <div class="small text-muted">
+                                            <%= category.services.length %> service<%= category.services.length !== 1 ? 's' : '' %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2 flex-shrink-0">
+                                    <button type="button" class="btn btn-outline-warning btn-sm"
+                                            data-bs-toggle="modal" data-bs-target="#modalCategoryEdit"
+                                            data-action="edit-category"
+                                            data-id="<%= category._id %>"
+                                            data-name="<%= category.name %>"
+                                            data-icon="<%= category.icon %>"
+                                            data-description="<%= category.description %>">
+                                        Modifier
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm"
+                                            data-action="delete-category"
+                                            data-id="<%= category._id %>"
+                                            data-name="<%= category.name %>">
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

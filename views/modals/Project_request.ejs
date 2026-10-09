@@ -1,0 +1,91 @@
+<!-- Module : pré-demande de projet / demande de devis -->
+<div class="modal fade" id="modalProjects" tabindex="-1" aria-labelledby="modalProjectsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="modalProjectsLabel">Pré-demande de projet</h5>
+                    <p class="text-muted small mb-0">Présentez votre besoin avant l'établissement du devis.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <form action="/api/quotes" method="POST" id="quoteForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="quote-title" class="form-label">Titre du projet</label>
+                        <input type="text" class="form-control" id="quote-title" name="title"
+                               maxlength="120" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quote-service" class="form-label">Type de prestation</label>
+                        <select class="form-select" id="quote-service" name="service" required>
+                            <option value="">Choisir une prestation</option>
+                            <option>Site vitrine</option>
+                            <option>Application web</option>
+                            <option>Boutique en ligne</option>
+                            <option>Maintenance et évolution</option>
+                            <option>Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quote-description" class="form-label">Description du besoin</label>
+                        <textarea class="form-control" id="quote-description" name="description"
+                                  rows="5" maxlength="3000" required></textarea>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="quote-budget" class="form-label">Budget estimé (€)</label>
+                            <input type="number" class="form-control" id="quote-budget" name="budget"
+                                   min="0" max="1000000" step="1">
+                        </div>
+                        <div class="card border-primary-subtle bg-light mt-4" aria-live="polite">
+                            <div class="card-body">
+                                <h3 class="h6">Aperçu de votre pré-demande</h3>
+                                <h4 id="projectPreviewTitle" class="h5">Titre du projet</h4>
+                                <p id="projectPreviewService" class="badge text-bg-primary">Prestation</p>
+                                <p id="projectPreviewDescription" class="text-muted">La description apparaîtra ici.</p>
+                                <p id="projectPreviewDetails" class="small text-muted mb-0"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="quote-date" class="form-label">Date souhaitée</label>
+                            <input type="date" class="form-control" id="quote-date" name="desiredDate">
+                        </div>
+                        <script nonce="<%= locals.cspNonce || '' %>">
+                        document.addEventListener("DOMContentLoaded", () => {
+                            const fields = {
+                                title: document.getElementById("quote-title"),
+                                service: document.getElementById("quote-service"),
+                                description: document.getElementById("quote-description"),
+                                budget: document.getElementById("quote-budget"),
+                                date: document.getElementById("quote-date")
+                            };
+                            const updateProjectPreview = () => {
+                                document.getElementById("projectPreviewTitle").textContent = fields.title.value || "Titre du projet";
+                                document.getElementById("projectPreviewService").textContent = fields.service.value || "Prestation";
+                                document.getElementById("projectPreviewDescription").textContent =
+                                    fields.description.value || "La description apparaîtra ici.";
+                                const details = [];
+                                if (fields.budget.value) details.push(`Budget : ${fields.budget.value} €`);
+                                if (fields.date.value) details.push(`Date souhaitée : ${fields.date.value}`);
+                                document.getElementById("projectPreviewDetails").textContent = details.join(" · ");
+                            };
+                            Object.values(fields).forEach((field) => field.addEventListener("input", updateProjectPreview));
+                            Object.values(fields).forEach((field) => field.addEventListener("change", updateProjectPreview));
+                        });
+                        </script>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Envoyer la pré-demande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

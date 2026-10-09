@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<%- include("partials/head", { title: "Souflydev | Account Registration", description: "Create your Souflydev account to access your web and mobile project dashboard.", canonical: "https://soulfyhub.fr/register", keywords: "Portfolio, Web and mobile application developer", styles: ["/css/_login.css"] }) %>
+
+<body class="bg-black d-flex flex-column align-items-center justify-content-center min-vh-100 py-4">
+<main class="login-container">
+        <!-- Back Link -->
+        <div class="mb-4">
+            <a href="/" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to home
+            </a>
+        </div>
+
+        <!-- Card wrapper -->
+        <section class="login-card text-center">
+            <div class="mb-4">
+                <img src="/images/upload/soulfydev.webp" class="brand-logo mb-3" alt="Soulfydev Logo">
+                <h1 class="h3 font-weight-bold text-light mb-1">Create Your Souflydev Account</h1>
+                <p class="text-light small pt-4">Access your Soulfydev dashboard</p>
+                <div><a href="/login" class="back-link">
+                    <i class="bi bi-arrow-right"></i> Login
+                </a></div>
+            </div>
+            
+            <!-- Message d'erreur / succès -->
+            <div id="message-container" class="mb-3" style="min-height: 24px;">
+                <% if (typeof message !== 'undefined' && message) { %>
+                    <div class="alert alert-<%= message.type %> py-2 px-3 small mb-0" role="alert">
+                        <i class="bi <%= message.icon || '' %> me-1">
+                            <% if(message.type === "success") { %>
+                                <i class="bi bi-check-circle-fill"></i>
+                            <% } else { %>
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                            <% } %>
+                        </i>
+                        <%= message.text %>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Register Form -->
+            <form id="registerForm">
+                <div class="mb-3 text-start">
+                    <label for="inputPseudo" class="form-label text-light small font-weight-bold">Pseudo</label>
+                    <input type="text" class="form-control form-control-custom" id="inputPseudo" placeholder="Votre pseudo" autocomplete="username" required>
+                </div>
+                
+                <div class="mb-3 text-start">
+                    <label for="inputEmail" class="form-label text-light small font-weight-bold">Adresse Email</label>
+                    <input type="email" class="form-control form-control-custom" id="inputEmail" placeholder="nom@exemple.com" aria-label="Adresse Email" autocomplete="email" required>
+                </div>
+                <div class="mb-4 text-start">
+                    <label for="inputPassword" class="form-label text-light small font-weight-bold">Mot de passe</label>
+                    <input type="password" class="form-control form-control-custom" id="inputPassword" placeholder="•••••••• (min 6 caractères)" aria-label="Mot de passe" autocomplete="new-password" required>
+                </div>
+                <button type="submit" id="btnSubmit" class="btn btn-login btn-primary w-100 text-light uppercase">S'inscrire</button>
+            </form>
+        </section>
+
+        <footer class="text-center mt-4">
+            <p class="text-secondary small mb-0">Powered by Souflydev</p>
+        </footer>
+</main>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+
+<script nonce="<%= cspNonce %>">
+    const form = document.getElementById("registerForm");
+    const msgContainer = document.getElementById("message-container");
+    const btnSubmit = document.getElementById("btnSubmit");
+
+    const showMessage = (type, iconClass, message) => {
+        const alert = document.createElement("div");
+        alert.className = `alert alert-${type} py-2 px-3 small mb-0`;
+        alert.setAttribute("role", "alert");
+        const icon = document.createElement("i");
+        icon.className = `bi ${iconClass} me-1`;
+        alert.append(icon, document.createTextNode(String(message)));
+        msgContainer.replaceChildren(alert);
+    };
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msgContainer.replaceChildren();
+        
+        const pseudo = document.getElementById("inputPseudo").value.trim();
+        const email = document.getElementById("inputEmail").value.trim();
+        const password = document.getElementById("inputPassword").value;
+
+        if (password.length < 6) {
+            showMessage("danger", "bi-exclamation-triangle-fill", "Le mot de passe doit faire au moins 6 caractères.");
+            return;
+        }
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Inscription...`;
+
+        try {
+            const recaptchaToken = window.getRecaptchaToken
+                ? await window.getRecaptchaToken()
+                : "";
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ pseudo, email, password, recaptchaToken })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                showMessage("success", "bi-check-circle-fill", data.message || "Inscription réussie.");
+                setTimeout(() => {
+                    window.location.href = data.redirect || "/login";
+                }, 1500);
+            } else {
+                showMessage("danger", "bi-exclamation-circle-fill", data.message || "Une erreur est survenue.");
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = "S'inscrire";
+            }
+        } catch (error) {
+            console.error("Erreur:", error);
+            showMessage("danger", "bi-x-circle-fill", "Impossible de contacter le serveur.");
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = "S'inscrire";
+        }
+    });
+</script>
+<% if (recaptchaSiteKey) { %>
+<script src="https://www.google.com/recaptcha/api.js?render=<%= recaptchaSiteKey %>"></script>
+<script nonce="<%= cspNonce %>">
+    window.getRecaptchaToken = () => new Promise((resolve, reject) => {
+        if (!window.grecaptcha) return reject(new Error("CAPTCHA indisponible"));
+        window.grecaptcha.ready(() => window.grecaptcha.execute("<%= recaptchaSiteKey %>", { action: "register" }).then(resolve).catch(reject));
+    });
+</script>
+<% } %>
+    <%- include("partials/cookie-consent") %>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<%- include("partials/head", { title: "Compte suspendu | Souflydev", canonical: "https://soulfyhub.fr/banned", social: false, styles: ["/css/_login.css"], language: "French" }) %>
+<body class="bg-black d-flex align-items-center justify-content-center">
+    <main class="login-container">
+        <section class="login-card text-center">
+            <img src="/images/upload/soulfydev.webp" class="brand-logo mb-3" alt="Soulfydev Logo">
+
+            <div class="d-inline-flex align-items-center justify-content-center mb-3"
+                 style="width: 4rem; height: 4rem; border-radius: 50%; background: rgba(220, 53, 69, 0.15);">
+                <i class="bi bi-shield-slash" style="font-size: 1.9rem; color: #dc3545;" aria-hidden="true"></i>
+            </div>
+
+            <h1 class="h3 text-light mb-3">Compte suspendu</h1>
+
+            <p class="text-light mb-4">
+                Votre compte a été suspendu par un administrateur. L'accès au tableau de bord
+                et à l'ensemble des espaces réservés a été coupé.
+            </p>
+
+            <% if (locals.banReason) { %>
+            <div class="text-start mb-4 p-3 rounded"
+                 style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);">
+                <p class="small text-uppercase text-secondary mb-2" style="letter-spacing: 0.08em;">Motif indiqué</p>
+                <p class="text-light mb-0"><%= locals.banReason %></p>
+            </div>
+            <% } %>
+
+            <% if (locals.bannedAt) { %>
+            <p class="small text-secondary mb-4">
+                Suspendu le <%= new Date(locals.bannedAt).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" }) %>
+            </p>
+            <% } %>
+
+            <p class="small text-secondary mb-4">
+                Si vous estimez ce bannissement injustifié, écrivez à
+                <a href="mailto:<%= locals.contactEmail %>" class="text-decoration-none"><%= locals.contactEmail %></a>.
+            </p>
+
+            <a href="/logout" class="back-link">Se déconnecter</a>
+        </section>
+    </main>
+    <%- include("partials/cookie-consent") %>
+</body>
+</html>

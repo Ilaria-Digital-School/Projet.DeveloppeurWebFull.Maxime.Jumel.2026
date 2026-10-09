@@ -1,0 +1,27 @@
+<div id="cookie-consent-banner" class="cookie-consent" hidden role="dialog" aria-modal="false" aria-labelledby="cookie-consent-title">
+    <div>
+        <h2 id="cookie-consent-title">Gestion des cookies</h2>
+        <p>Nous utilisons uniquement les cookies nécessaires au fonctionnement du site. Vous pouvez choisir les autres catégories.</p>
+        <details>
+            <summary>Voir les catégories</summary>
+            <label><input type="checkbox" checked disabled> Nécessaires</label>
+            <label><input type="checkbox" id="cookie-preferences"> Préférences</label>
+            <label><input type="checkbox" id="cookie-analytics"> Analyse</label>
+            <label><input type="checkbox" id="cookie-marketing"> Marketing</label>
+        </details>
+    </div>
+    <div class="cookie-consent-actions">
+        <button type="button" id="cookie-reject" class="btn btn-outline-secondary btn-sm">Refuser les cookies optionnels</button>
+        <button type="button" id="cookie-accept" class="btn btn-primary btn-sm">Enregistrer mes choix</button>
+    </div>
+</div>
+<style>
+    .cookie-consent { position: fixed; z-index: 2000; left: 1rem; right: 1rem; bottom: 1rem; display: flex; gap: 1rem; justify-content: space-between; align-items: center; padding: 1rem; background: #fff; color: #212529; border: 1px solid #dee2e6; border-radius: .75rem; box-shadow: 0 .5rem 2rem #0003; }
+    .cookie-consent h2 { margin: 0 0 .35rem; font-size: 1rem; }
+    .cookie-consent p { margin: 0; font-size: .875rem; }
+    .cookie-consent details { margin-top: .5rem; font-size: .875rem; }
+    .cookie-consent details label { margin-right: .75rem; }
+    .cookie-consent-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+    @media (max-width: 700px) { .cookie-consent { flex-direction: column; align-items: stretch; } }
+</style>
+<script src="/js/cookie-consent.js" defer></script>
