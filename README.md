@@ -92,7 +92,7 @@ Le serveur est disponible par defaut sur `http://localhost:3000`.
 ```env
 PORT=3000
 NODE_ENV=development
-APP_URL=http://localhost:3000
+APP_URL=https://souflyhub.dev
 MONGO_URL=mongodb://localhost:27017/souflydev
 JWT_SECRET=une-valeur-secrete-longue
 SESSION_SECRET=une-valeur-secrete-longue
