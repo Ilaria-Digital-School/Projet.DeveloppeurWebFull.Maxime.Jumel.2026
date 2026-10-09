@@ -1,5 +1,34 @@
 # Souflydev Backend
 
+<p align="center">
+  <img src="./public/images/upload/soulfydev.webp" alt="Logo Souflydev" width="180">
+</p>
+
+<p align="center">
+  <strong>API et dashboard de gestion Souflydev</strong><br>
+  Backend Node.js/Express pour <a href="https://souflyhub.dev">souflyhub.dev</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Ilaria-Digital-School/Projet.DeveloppeurWebFull.Maxime.Jumel.2026">
+    <img src="https://img.shields.io/badge/version-v0.0.1-4f46e5?style=for-the-badge&logo=semver&logoColor=white" alt="Version 0.0.1">
+  </a>
+  <img src="https://img.shields.io/badge/Node.js-%3E%3D18-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js 18 ou plus">
+  <img src="https://img.shields.io/badge/Express-5-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express 5">
+  <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB avec Mongoose">
+  <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="Licence MIT">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/security-reCAPTCHA%20v3-4285F4?style=flat-square&logo=google&logoColor=white" alt="reCAPTCHA v3">
+  <img src="https://img.shields.io/badge/templates-EJS-B4CA65?style=flat-square" alt="Templates EJS">
+  <img src="https://img.shields.io/badge/API-REST-orange?style=flat-square" alt="API REST">
+  <img src="https://img.shields.io/badge/status-active-success?style=flat-square" alt="Statut actif">
+</p>
+
+> **Version actuelle : `v0.0.1`**  
+> Pour consulter l'historique des versions, utiliser les releases du depot.
+
 Backend Node.js/Express de Souflydev. L'application sert les pages EJS du site
 `https://souflyhub.dev`, gere les comptes utilisateurs, les demandes de devis,
 les articles, le catalogue de services, les commandes et les tickets support.
@@ -23,18 +52,43 @@ Les donnees sont stockees dans MongoDB avec Mongoose.
 
 ## Fonctionnalites
 
-- Inscription, verification email, connexion et deconnexion.
-- Sessions securisees avec les roles `user`, `admin` et `developper`.
-- Protection reCAPTCHA v3 invisible sur connexion, inscription et mot de passe
+- 👤 Inscription, verification email, connexion et deconnexion.
+- 🔐 Sessions securisees avec les roles `user`, `admin` et `developper`.
+- 🛡️ Protection reCAPTCHA v3 invisible sur connexion, inscription et mot de passe
   oublie.
-- Recuperation de mot de passe avec token a usage unique expire.
-- Demandes de devis et pre-demandes d'articles par les clients.
-- Administration des utilisateurs, bannissements, commandes, articles,
+- 🔑 Recuperation de mot de passe avec token a usage unique expire.
+- 📝 Demandes de devis et pre-demandes d'articles par les clients.
+- ⚙️ Administration des utilisateurs, bannissements, commandes, articles,
   categories et services.
-- Tickets support avec reponses client/admin.
-- Journal d'activite MongoDB affiche dans le dashboard administrateur.
-- Uploads d'images en memoire, limites a 5 Mo, stockes en data URI MongoDB.
-- Rate limiting, CSP avec nonce, HSTS en production et en-tetes HTTP de securite.
+- 🎫 Tickets support avec reponses client/admin.
+- 📊 Journal d'activite MongoDB affiche dans le dashboard administrateur.
+- 🖼️ Uploads d'images en memoire, limites a 5 Mo, stockes en data URI MongoDB.
+- 🚦 Rate limiting, CSP avec nonce, HSTS en production et en-tetes HTTP de securite.
+
+## Versions et stack
+
+| Composant | Version / choix |
+| --- | --- |
+| 📦 Application | `v0.0.1` |
+| 🟢 Node.js | `>=18` |
+| 🚂 Express | `5.x` |
+| 🍃 MongoDB / Mongoose | `MongoDB 6+` / `Mongoose 9.x` |
+| 🎨 Templates | `EJS 6.x` |
+| 🔒 Sessions | `express-session 1.x` |
+| 📧 Emails | `Nodemailer 10.x` |
+| 🧪 Tests sécurité | Script de test du rate limiting |
+
+### Convention de version
+
+Le projet suit le versionnage semantique :
+
+- `MAJEUR` : changement incompatible dans l'API ou le comportement public ;
+- `MINEUR` : nouvelle fonctionnalite compatible ;
+- `CORRECTIF` : correction ou mise a jour sans changement d'API.
+
+La version de reference est definie dans le champ `version` de
+[`package.json`](./package.json). Toute release doit mettre a jour ce champ,
+le badge ci-dessus et cette ligne de version.
 
 ## Prerequis
 
