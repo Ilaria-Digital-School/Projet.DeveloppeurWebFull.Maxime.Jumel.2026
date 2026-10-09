@@ -13,7 +13,7 @@
 //   stylesLast  : charge les styles locaux apres Bootstrap (defaut false)
 //   icons       : charge bootstrap-icons en plus (défaut true)
 //   fontAwesome : charge Font Awesome en plus (défaut false)
-//   vendor      : charge Bootstrap (CDN) + icônes/FA locales (défaut true)
+//   vendor      : charge Bootstrap + icônes/FA locales (défaut true)
   //   extra       : HTML additionnel injecté avant la fermeture du head
   const title = locals.title;
   const description = locals.description || "";
@@ -121,9 +121,8 @@
   <% } %>
 
   <% if (vendor) { %>
-  <!-- Bootstrap 5.3.8 via CDN jsdelivr (intégrité vérifiée par le navigateur) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!-- Bootstrap 5.3.8 servi localement depuis public/ -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Ressources servies en local (public/) : polices + bootstrap-icons 1.13.1 -->
   <link href="/css/vendor/fonts.css" rel="stylesheet">

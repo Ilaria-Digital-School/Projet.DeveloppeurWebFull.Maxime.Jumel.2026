@@ -34,14 +34,14 @@
           <div class="carousel-inner">
             <div class="carousel-item active" data-aos="zoom-in" data-aos-delay="200">
               <img
-                src="<%= project && project.imageUrl ? project.imageUrl : '/images/projet/projet_menu/geralt-data-4404730.webp' %>"
+                src="<%= assetUrl(project && project.imageUrl ? project.imageUrl : 'https://assets.souflyhub.dev/images/projet/projet_menu/geralt-data-4404730.webp') %>"
                 class="d-block w-75 mx-auto mt-5 image-project"
                 style="max-height: 50rem; object-fit: contain"
                 alt="magazin de bonbon ">
             </div>
             <div class="carousel-item" data-aos="zoom-in" data-aos-delay="200">
               <img
-                src="<%= project && project.imageUrl ? project.imageUrl : '/images/projet/projet_menu/jutube-candy-8962561_1920.webp' %>"
+                src="<%= assetUrl(project && project.imageUrl ? project.imageUrl : 'https://assets.souflyhub.dev/images/projet/projet_menu/jutube-candy-8962561_1920.webp') %>"
                 class="d-block w-75 mx-auto mt-5 image-project"
                 style="max-height: 50rem; object-fit: contain"
                 alt="magazin de bonbon livre de boutique ">
@@ -174,7 +174,7 @@
   </main>
 
 <%- include("partials/footer") %>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    <script src="/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"></script>
    

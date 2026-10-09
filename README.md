@@ -184,7 +184,8 @@ public/                       CSS, JavaScript et images
 - Les requetes JSON doivent envoyer `Content-Type: application/json`.
 - Les cookies de session sont geres automatiquement par le navigateur.
 - Une route `/api` necessite une session sauf indication contraire.
-- Les routes marquees **Admin** acceptent `admin` et `developper`.
+- Les routes marquees **Admin** sont reservees au role `admin`.
+- Les routes de support marquees **Support** acceptent `admin` et `developper`.
 - Les routes marquees **Client** necessitent un compte connecte.
 - Les endpoints avec upload utilisent `multipart/form-data`.
 
@@ -347,7 +348,7 @@ Mettre a jour le statut d'une commande avec `{ "status": "Complété" }`.
 
 Supprimer une commande.
 
-#### `POST /api/admin/tickets/:userId/:ticketId/reply` — Admin
+#### `POST /api/admin/tickets/:userId/:ticketId/reply` — Support
 
 Repondre a un ticket et modifier son statut :
 
@@ -358,11 +359,11 @@ Repondre a un ticket et modifier son statut :
 }
 ```
 
-#### `POST /api/admin/tickets/:userId/:ticketId/delete` — Admin
+#### `POST /api/admin/tickets/:userId/:ticketId/delete` — Support
 
 Supprimer un ticket.
 
-#### `POST /api/tickets/:id/update` — Admin
+#### `POST /api/tickets/:id/update` — Support
 
 Mettre a jour `title`, `message` et/ou `status` d'un ticket. Cette route
 retourne une redirection pour une requete HTML et une reponse JSON pour une
@@ -496,10 +497,12 @@ L'application utilise une session Express stockee dans un cookie HTTP-only,
 
 - `user` : acces a son dashboard, profil, devis et tickets.
 - `admin` : acces aux operations d'administration.
-- `developper` : acces aux operations admin selon les middlewares existants.
+- `developper` : acces uniquement a l'espace support/tickets et aux actions de
+  traitement des tickets ; aucun acces au dashboard client, aux devis,
+  commandes, utilisateurs, articles, projets ou catalogue.
 
-Les routes API sont protegees par `router.use("/api", isClient)`, puis les
-routes sensibles ajoutent `isAdmin`. Le statut de compte est verifie sur chaque
+Les routes API sont protegees par `router.use("/api", isAuthenticated)`, puis
+les routes sensibles ajoutent `isAdmin`, `isClient` ou `isTicketAgent`. Le statut de compte est verifie sur chaque
 requete authentifiee : bannissement, inactivite, email non verifie et session
 obsolete provoquent un refus.
 

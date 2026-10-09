@@ -20,6 +20,11 @@ if (process.env.NODE_ENV === "production") {
 }
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
+app.locals.assetUrl = (value) => {
+    if (typeof value !== "string" || !value.trim()) return value;
+    if (/^(?:data:|https?:|\/\/)/i.test(value)) return value;
+    return `https://assets.souflyhub.dev/${value.replace(/^\/+/, "")}`;
+};
 
 const SESSION_COOKIE_NAME = process.env.SESSION_COOKIE_NAME || "soufly.sid";
 // Les middlewares qui doivent supprimer le cookie de session le retrouvent ici.
@@ -30,7 +35,11 @@ app.disable("x-powered-by");
 app.use(securityHeaders);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../public"), {
+    maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
+    etag: true,
+    lastModified: true
+}));
 
 app.use(cookieParser(sessionSecret));
 app.use(session({

@@ -10,7 +10,13 @@ const Article = require('../models/Article');
 const ActivityLog = require("../models/ActivityLog");
 const crypto = require("crypto");
 const multer = require("multer");
-const { isClient, isDev, isAdmin } = require("../middleware/authMiddleware");
+const {
+    isClient,
+    isDev,
+    isAdmin,
+    isAuthenticated,
+    isTicketAgent
+} = require("../middleware/authMiddleware");
 const { getRecaptchaConfig, verifyRecaptcha } = require("../middleware/recaptcha");
 const { recordActivity } = require("../services/activityLogger");
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require("../services/mailer");
@@ -69,8 +75,10 @@ const imageDataUri = (file) => (
 // Routes GET — Pages publiques
 router.get("/", async (req, res) => {
     try {
-        const projects = await Project.find();
-        const articles = await Article.find();  // ← Récupère les articles
+        const [projects, articles] = await Promise.all([
+            Project.find().sort({ createdAt: -1 }).lean(),
+            Article.find().sort({ createdAt: -1 }).lean()
+        ]);
         
         res.render("index", { 
             user: req.session?.user || null, 
@@ -593,7 +601,7 @@ const buildPatch = (body, fields) => {
 // modals, rendus uniquement pour un administrateur ou un developpeur.
 router.get("/services", async (req, res) => {
     const role = req.session?.user?.role;
-    const isManager = role === "admin" || role === "developper";
+    const isManager = role === "admin";
 
     try {
         const categories = await loadServiceCatalogue();
@@ -923,7 +931,7 @@ router.post("/login", verifyRecaptcha("login"), async (req, res) => {
 });
 
 // Toutes les ressources API sont privées par défaut; les contrôles de rôle restent spécifiques aux routes sensibles.
-router.use("/api", isClient);
+router.use("/api", isAuthenticated);
 
 router.post("/api/quotes", isClient, async (req, res) => {
     const { title, description, service, budget, desiredDate } = req.body || {};
@@ -1299,19 +1307,18 @@ router.get("/dashboard", isClient, async (req, res) => {
         let activityLogs = [];
 
         if (user.role === "admin" || user.role === "developper") {
-            activityLogs = await ActivityLog.find()
-                .sort({ createdAt: -1 })
-                .limit(12)
-                .lean();
-            articles = await Article.find().sort({ createdAt: -1 }).lean();
-            projects = await Project.find().sort({ createdAt: -1 }).lean();
-            allUsers = await User.find({});
+            [activityLogs, articles, projects, allUsers] = await Promise.all([
+                ActivityLog.find().sort({ createdAt: -1 }).limit(12).lean(),
+                Article.find().sort({ createdAt: -1 }).lean(),
+                Project.find().sort({ createdAt: -1 }).lean(),
+                User.find({}).lean()
+            ]);
             clients = allUsers.filter(u => u.role === "user" || u.role === "client");
 
             allUsers.forEach(u => {
                 if (u.orders && u.orders.length > 0) {
                     u.orders.forEach(order => orders.push({
-                        ...order.toObject(),
+                        ...order,
                         userId: u._id,
                         client_name: u.pseudo
                     }));
@@ -1336,7 +1343,7 @@ router.get("/dashboard", isClient, async (req, res) => {
                 }
                 if (u.quoteRequests && u.quoteRequests.length > 0) {
                     u.quoteRequests.forEach(quote => quotes.push({
-                        ...quote.toObject(),
+                        ...quote,
                         _id: quote._id,
                         userId: u._id,
                         client_name: u.pseudo,
@@ -1415,7 +1422,7 @@ router.get("/dashboard", isClient, async (req, res) => {
 });
 
 // Admin : Répondre à un ticket client
-router.post("/api/admin/tickets/:userId/:ticketId/reply", isAdmin, async (req, res) => {
+router.post("/api/admin/tickets/:userId/:ticketId/reply", isTicketAgent, async (req, res) => {
     try {
         const { userId, ticketId } = req.params;
         const { replyMessage, status } = req.body;
@@ -1453,7 +1460,7 @@ router.post("/api/admin/tickets/:userId/:ticketId/reply", isAdmin, async (req, r
 });
 
 // Admin : Supprimer un ticket client (POST — convention REST)
-router.post("/api/admin/tickets/:userId/:ticketId/delete", isAdmin, async (req, res) => {
+router.post("/api/admin/tickets/:userId/:ticketId/delete", isTicketAgent, async (req, res) => {
     try {
         const { userId, ticketId } = req.params;
         const clientUser = await User.findById(userId);
@@ -1651,7 +1658,7 @@ router.post("/api/admin/users/:userId/toggle-ban", isAdmin, async (req, res) => 
 });
 
 // ticket system router client
-router.get("/client/ticket", isClient, async (req, res) => {
+router.get("/client/ticket", isAuthenticated, async (req, res) => {
     try {
         const user = await User.findById(req.session.user.id);
         if (!user) return res.redirect("/login");
@@ -1667,9 +1674,25 @@ router.get("/client/ticket", isClient, async (req, res) => {
         else if (req.query.success === 'updated') successMsg = "Le statut du ticket a été mis à jour.";
         else if (req.query.success === 'ticket_created') successMsg = "Ticket créé avec succès !";
 
+        let tickets = user.ticketClient || [];
+        const isTicketStaff = user.role === "admin" || user.role === "developper";
+        if (isTicketStaff) {
+            const users = await User.find({ "ticketClient.0": { $exists: true } })
+                .select("pseudo email ticketClient")
+                .lean();
+            tickets = users.flatMap(ticketUser => (ticketUser.ticketClient || []).map(ticket => ({
+                ...ticket,
+                userId: ticketUser._id,
+                client_name: ticketUser.pseudo,
+                client_email: ticketUser.email
+            }))).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        }
+
         res.render("ticketclient", {
             user,
-            tickets: user.ticketClient || [],
+            tickets,
+            canCreateTicket: !isTicketStaff,
+            isTicketStaff,
             messages: {
                 error: errorMsg,
                 success: successMsg
@@ -1677,28 +1700,43 @@ router.get("/client/ticket", isClient, async (req, res) => {
         });
     } catch (error) {
         console.error("Erreur affichage tickets:", error);
-        res.redirect("/dashboard");
+        res.redirect(req.session.user?.role === "developper" ? "/client/ticket" : "/dashboard");
     }
 });
-router.get("/api/tickets/views/:id", isClient, async (req, res) => {
+router.get("/api/tickets/views/:id", isAuthenticated, async (req, res) => {
     try {
-        const user = await User.findById(req.session.user.id);
-        if (!user) {
+        const currentUser = await User.findById(req.session.user.id);
+        if (!currentUser) {
             return res.status(401).json({ success: false, message: "Non autorisé" });
         }
 
-        const ticket = user.ticketClient.id(req.params.id) || user.ticketClient.find(t => t._id.toString() === req.params.id);
+        let owner = currentUser;
+        let ticket = currentUser.ticketClient.id(req.params.id) ||
+            currentUser.ticketClient.find(t => t._id.toString() === req.params.id);
+
+        if (!ticket && (currentUser.role === "admin" || currentUser.role === "developper")) {
+            owner = await User.findOne({ "ticketClient._id": req.params.id });
+            ticket = owner?.ticketClient?.id(req.params.id);
+        }
         if (!ticket) {
             return res.status(404).json({ success: false, message: "Ticket non trouvé" });
         }
 
-        return res.status(200).json({ success: true, ticket });
+        return res.status(200).json({
+            success: true,
+            ticket,
+            owner: {
+                id: owner._id,
+                pseudo: owner.pseudo,
+                email: owner.email
+            }
+        });
     } catch (error) {
         console.error("Erreur récupération ticket:", error);
         return res.status(500).json({ success: false, message: "Erreur serveur" });
     }
 });
-router.post("/api/tickets/:id/update", isAdmin, async (req, res) => {
+router.post("/api/tickets/:id/update", isTicketAgent, async (req, res) => {
     try {
         const id = req.params.id || req.body.id;
         const { title, message, status } = req.body;
@@ -1706,12 +1744,18 @@ router.post("/api/tickets/:id/update", isAdmin, async (req, res) => {
             return res.redirect("/client/ticket?error=missing_id");
         }
 
-        const user = await User.findById(req.session.user.id);
-        if (!user) {
+        const currentUser = await User.findById(req.session.user.id);
+        if (!currentUser) {
             return res.redirect("/login");
         }
 
-        const ticket = user.ticketClient.id(id) || user.ticketClient.find(t => t._id.toString() === id);
+        let user = currentUser;
+        let ticket = currentUser.ticketClient.id(id) ||
+            currentUser.ticketClient.find(t => t._id.toString() === id);
+        if (!ticket && (currentUser.role === "admin" || currentUser.role === "developper")) {
+            user = await User.findOne({ "ticketClient._id": id });
+            ticket = user?.ticketClient?.id(id);
+        }
         if (!ticket) {
             return res.redirect("/client/ticket?error=ticket_not_found");
         }
@@ -1737,7 +1781,7 @@ router.post("/api/tickets/:id/update", isAdmin, async (req, res) => {
 });
 
 // Répondre à un ticket (avec statut automatique)
-router.post("/api/tickets/:id/reply", isClient, async (req, res) => {
+router.post("/api/tickets/:id/reply", isAuthenticated, async (req, res) => {
     try {
         const id = req.params.id;
         const { replyMessage } = req.body;
@@ -1745,22 +1789,29 @@ router.post("/api/tickets/:id/reply", isClient, async (req, res) => {
             return res.redirect("/client/ticket?error=empty_reply");
         }
 
-        const user = await User.findById(req.session.user.id);
-        if (!user) {
+        const currentUser = await User.findById(req.session.user.id);
+        if (!currentUser) {
             return res.redirect("/login");
         }
 
-        const ticket = user.ticketClient.id(id) || user.ticketClient.find(t => t._id.toString() === id);
+        let user = currentUser;
+        let ticket = currentUser.ticketClient.id(id) ||
+            currentUser.ticketClient.find(t => t._id.toString() === id);
+
+        if (!ticket && (currentUser.role === "admin" || currentUser.role === "developper")) {
+            user = await User.findOne({ "ticketClient._id": id });
+            ticket = user?.ticketClient?.id(id);
+        }
         if (!ticket) {
             return res.redirect("/client/ticket?error=ticket_not_found");
         }
 
-        const isStaff = user.role === 'admin' || user.role === 'developper';
+        const isStaff = currentUser.role === 'admin' || currentUser.role === 'developper';
 
         if (!ticket.replies) ticket.replies = [];
         ticket.replies.push({
-            sender: user.pseudo || "Client",
-            role: user.role || "user",
+            sender: currentUser.pseudo || "Client",
+            role: currentUser.role || "user",
             message: replyMessage,
             createdAt: new Date()
         });

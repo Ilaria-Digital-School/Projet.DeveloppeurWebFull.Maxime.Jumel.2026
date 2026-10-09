@@ -12,6 +12,13 @@ if (!process.env.MONGO_URL) {
     console.error("❌ Erreur : MONGO_URL non défini dans .env");
     process.exit(1);
 }
+if (
+    process.env.NODE_ENV === "production" &&
+    (!process.env.RECAPTCHA_SITE_KEY || !process.env.RECAPTCHA_SECRET_KEY)
+) {
+    console.error("❌ Erreur : RECAPTCHA_SITE_KEY et RECAPTCHA_SECRET_KEY doivent être définies en production.");
+    process.exit(1);
+}
 
 const { app, port, scriptRun } = require("./script/serverRun");
 const apiRouter = require("./router/api");

@@ -194,7 +194,7 @@ const withCurrentUser = (checkAccess, deniedMessage) => async (req, res, next) =
 };
 
 const isAdmin = withCurrentUser(
-    (user) => user.role === "admin" || user.role === "developper",
+    (user) => user.role === "admin",
     "Accès refusé. Réservé aux administrateurs."
 );
 
@@ -204,8 +204,18 @@ const isDevelopper = withCurrentUser(
 );
 
 const isClient = withCurrentUser(
+    (user) => user.role !== "developper",
+    "Accès refusé. Cet espace n'est pas accessible aux développeurs."
+);
+
+const isAuthenticated = withCurrentUser(
     () => true,
     "Accès refusé. Vous n'êtes pas connecté."
+);
+
+const isTicketAgent = withCurrentUser(
+    (user) => user.role === "admin" || user.role === "developper",
+    "Accès refusé. Réservé à l'équipe support."
 );
 
 module.exports = {
@@ -213,6 +223,8 @@ module.exports = {
     isDevelopper,
     isDev: isDevelopper,
     isClient,
+    isAuthenticated,
+    isTicketAgent,
     enforceAccountStatus,
     getCurrentUser,
     DENIAL_REASONS

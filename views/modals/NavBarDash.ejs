@@ -32,7 +32,7 @@
                     <!-- User Card -->
                     <div class="w-100 d-flex align-items-center justify-content-center py-3">
                         <div class="user-info text-center">
-                            <img src="<%= user.avatar || 'https://i.pravatar.cc/150' %>"
+                            <img src="<%= assetUrl(user.avatar || 'https://i.pravatar.cc/150') %>"
                                 alt="Avatar de <%= user.pseudo %>"
                                 class="rounded-circle border border-2 border-secondary shadow-sm"
                                 style="width: 5rem; height: 5rem; object-fit: cover;">
@@ -116,7 +116,7 @@
                     <div class="dropup">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none"
                             id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="<%= user.avatar || 'https://i.pravatar.cc/150' %>"
+                            <img src="<%= assetUrl(user.avatar || 'https://i.pravatar.cc/150') %>"
                                 alt="Avatar de <%= user.pseudo %>" width="32" height="32"
                                 class="rounded-circle me-2 border border-secondary" style="object-fit: cover;">
                             <div class="flex-grow-1 min-w-0 me-2">

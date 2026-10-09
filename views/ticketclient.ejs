@@ -5,12 +5,19 @@
     <div class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <a href="/dashboard" class="text-decoration-none text-secondary small"><i class="bi bi-arrow-left"></i> Retour au Dashboard</a>
-                <h1 class="h3 fw-bold text-white mt-2">Mes Tickets de Support</h1>
+                <% if (isTicketStaff) { %>
+                    <a href="/client/ticket" class="text-decoration-none text-secondary small"><i class="bi bi-arrow-left"></i> Actualiser</a>
+                    <h1 class="h3 fw-bold text-white mt-2">Espace Tickets Support</h1>
+                <% } else { %>
+                    <a href="/dashboard" class="text-decoration-none text-secondary small"><i class="bi bi-arrow-left"></i> Retour au Dashboard</a>
+                    <h1 class="h3 fw-bold text-white mt-2">Mes Tickets de Support</h1>
+                <% } %>
             </div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTicketModal">
-                <i class="bi bi-plus-lg me-1"></i> Nouveau Ticket
-            </button>
+            <% if (canCreateTicket) { %>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTicketModal">
+                    <i class="bi bi-plus-lg me-1"></i> Nouveau Ticket
+                </button>
+            <% } %>
         </div>
 
         <% if (typeof messages !== 'undefined' && messages) { %>
@@ -227,7 +234,7 @@
     </div>
 
     <!-- Bootstrap Bundle JS uniquement -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    <script src="/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"></script>
     <%- include("partials/cookie-consent") %>

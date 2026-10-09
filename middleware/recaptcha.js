@@ -1,8 +1,8 @@
 const https = require("https");
 
 const getRecaptchaConfig = () => ({
-    siteKey: process.env.RECAPTCHA_SITE_KEY || "",
-    secretKey: process.env.RECAPTCHA_SECRET_KEY || ""
+    siteKey: process.env.RECAPTCHA_SITE_KEY?.trim() || "",
+    secretKey: process.env.RECAPTCHA_SECRET_KEY?.trim() || ""
 });
 
 const verifyRecaptcha = (action) => async (req, res, next) => {

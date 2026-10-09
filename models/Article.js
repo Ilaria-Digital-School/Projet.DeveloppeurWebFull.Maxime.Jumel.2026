@@ -27,5 +27,8 @@ const articleSchema = new mongoose.Schema({
   }
 });
 
+articleSchema.index({ createdAt: -1 });
+articleSchema.index({ category: 1, createdAt: -1 });
+
 // ✅ Vérifier si le modèle existe déjà
 module.exports = mongoose.models.Article || mongoose.model('Article', articleSchema);

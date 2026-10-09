@@ -45,5 +45,7 @@ const projectSchema = new mongoose.Schema({
   }
 });
 
+projectSchema.index({ createdAt: -1 });
+
 // ✅ Vérifier si le modèle existe déjà
 module.exports = mongoose.models.Project || mongoose.model('Project', projectSchema);

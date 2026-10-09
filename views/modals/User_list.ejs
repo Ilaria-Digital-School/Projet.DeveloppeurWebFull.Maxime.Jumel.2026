@@ -71,7 +71,7 @@
                                     <td class="ps-3 text-muted" style="font-size:.8rem;"><%= index + 1 %></td>
                                     <td>
                                         <div class="d-flex align-items-center gap-2">
-                                            <img src="<%= u.avatar || 'https://i.pravatar.cc/32?u=' + u._id %>"
+                                            <img src="<%= assetUrl(u.avatar || 'https://i.pravatar.cc/32?u=' + u._id) %>"
                                                  alt="Avatar de <%= u.pseudo %>"
                                                  width="32" height="32"
                                                  class="rounded-circle border border-secondary"
