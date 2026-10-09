@@ -1,93 +1,75 @@
 # Souflydev Backend
 
-Application web Node.js pour la gestion des comptes clients, des demandes de devis et du support projet de Souflydev.
+Backend Node.js/Express de Souflydev. L'application sert les pages EJS du site
+`https://souflyhub.dev`, gere les comptes utilisateurs, les demandes de devis,
+les articles, le catalogue de services, les commandes et les tickets support.
+Les donnees sont stockees dans MongoDB avec Mongoose.
 
-Le projet utilise Express, MongoDB/Mongoose et des vues EJS. Les pages existantes sont servies par le backend, mais la documentation ci-dessous se concentre sur l'architecture serveur et les workflows metier.
+## Sommaire
+
+- [Fonctionnalites](#fonctionnalites)
+- [Prerequis](#prerequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Commandes](#commandes)
+- [Architecture](#architecture)
+- [API HTTP](#api-http)
+- [Authentification et roles](#authentification-et-roles)
+- [Format des reponses et erreurs](#format-des-reponses-et-erreurs)
+- [Securite](#securite)
+- [Docker et reverse proxy](#docker-et-reverse-proxy)
+- [Tests](#tests)
+- [Depannage](#depannage)
 
 ## Fonctionnalites
 
-- Inscription et connexion securisees
-- Activation du compte par verification email avec token expire
-- Gestion de session et controle des roles `user`, `admin` et `developper`
-- Demandes de devis client avec budget, prestation, description et date souhaitee
-- Suivi des demandes de devis par le client
-- Gestion des statuts de devis par les administrateurs
-- Tickets de support et reponses admin/client
-- Upload d'avatar WebP avec limite de taille
-- Headers HTTP de securite et protection des routes API
-- Rate limiting actif hors environnement de developpement
-
-## Stack technique
-
-- Node.js et Express 5
-- MongoDB avec Mongoose
-- EJS
-- Nodemailer pour la verification email
-- express-session pour les sessions
-- bcryptjs pour le hashage des mots de passe
-- express-rate-limit pour la limitation des requetes
-- Multer pour les uploads
+- Inscription, verification email, connexion et deconnexion.
+- Sessions securisees avec les roles `user`, `admin` et `developper`.
+- Protection reCAPTCHA v3 invisible sur connexion, inscription et mot de passe
+  oublie.
+- Recuperation de mot de passe avec token a usage unique expire.
+- Demandes de devis et pre-demandes d'articles par les clients.
+- Administration des utilisateurs, bannissements, commandes, articles,
+  categories et services.
+- Tickets support avec reponses client/admin.
+- Journal d'activite MongoDB affiche dans le dashboard administrateur.
+- Uploads d'images en memoire, limites a 5 Mo, stockes en data URI MongoDB.
+- Rate limiting, CSP avec nonce, HSTS en production et en-tetes HTTP de securite.
 
 ## Prerequis
 
-- Node.js 18 ou plus recent
-- npm
-- MongoDB accessible depuis l'environnement d'execution
-- Un compte SMTP pour l'activation des comptes en production
-- Des clés reCAPTCHA v3 pour la protection invisible des formulaires de connexion,
-  d'inscription et de demande de réinitialisation
-
-## Demarrage avec Docker
-
-Docker Desktop doit etre installe et demarre.
-
-Construire et lancer l'application avec MongoDB :
-
-```bash
-docker compose up -d --build
-```
-
-L'application est disponible sur `http://localhost:3000`. MongoDB est accessible uniquement
-sur le reseau Docker et ses donnees sont conservees dans le volume `mongodb_data`.
-
-Voir les journaux :
-
-```bash
-docker compose logs -f app
-```
-
-Arreter les conteneurs sans supprimer les donnees :
-
-```bash
-docker compose down
-```
-
-Le fichier `.env` est charge par Compose pour les secrets SMTP et les autres variables.
-Compose remplace automatiquement `MONGO_URL` par l'URL du service MongoDB interne.
+- Node.js 18 ou plus recent.
+- npm.
+- MongoDB 6 ou plus recent, local ou distant.
+- Un compte SMTP pour les emails de verification et de reinitialisation.
+- En production, une paire de cles reCAPTCHA v3.
 
 ## Installation
 
 ```bash
 npm install
-```
-
-Copier `.env.example` vers `.env`, puis renseigner les valeurs correspondant a ton environnement. Ne jamais versionner `.env`.
-
-Demarrer en developpement :
-
-```bash
+copy exemple.env .env
 npm run dev
 ```
 
-Demarrer en production :
+Sous macOS/Linux, remplacer `copy` par `cp`.
+
+Le serveur demarre par defaut sur `http://localhost:3000`. L'URL publique
+attendue en production est `https://souflyhub.dev`.
+
+## Commandes
+
+Commandes disponibles :
 
 ```bash
-npm start
+npm run dev                 # developpement avec nodemon
+npm start                   # demarrage production
+npm run security:rate-limit # test du limiteur de requetes
 ```
 
-Le serveur est disponible par defaut sur `http://localhost:3000`.
+## Configuration
 
-## Variables d'environnement
+Les secrets ne doivent jamais etre commites. Exemple de configuration :
 
 ```env
 PORT=3000
@@ -96,95 +78,401 @@ APP_URL=https://souflyhub.dev
 MONGO_URL=mongodb://localhost:27017/souflydev
 JWT_SECRET=une-valeur-secrete-longue
 SESSION_SECRET=une-valeur-secrete-longue
+SESSION_COOKIE_NAME=soufly.sid
 SECURITY_CONTACT_EMAIL=security@example.com
+SUPPORT_EMAIL=contact@example.com
+
+# reCAPTCHA v3 invisible
 RECAPTCHA_SITE_KEY=cle-publique-recaptcha-v3
 RECAPTCHA_SECRET_KEY=cle-secrete-recaptcha-v3
 
+EMAIL_MODE=smtp
 SMTP_HOST=smtp.example.com
 SMTP_PORT=587
 SMTP_SECURE=false
+SMTP_FAMILY=4
 SMTP_USER=utilisateur-smtp
 SMTP_PASSWORD=mot-de-passe-smtp
 MAIL_FROM="Souflydev <no-reply@example.com>"
 ```
 
-Le compte reste inactif tant que le lien de verification email n'a pas ete utilise. Le token expire apres 24 heures.
+En production, `JWT_SECRET`, `SESSION_SECRET`, `MONGO_URL`, les parametres SMTP
+et `RECAPTCHA_SECRET_KEY` sont obligatoires. Si le secret reCAPTCHA manque en
+production, les formulaires proteges renvoient `503` au lieu de fonctionner
+sans verification.
 
-## Organisation du projet
+Le compte est cree avec le statut `inactive` et devient utilisable apres
+verification de l'email. Les tokens de verification expirent apres 24 heures.
+
+## Architecture
 
 ```text
-app.js                 Point d'entree Express et middlewares globaux
-config.js              Configuration de l'application
-middleware/            Authentification et autorisation
-models/                Schemas Mongoose
-router/                Routes HTML et API
-script/                Connexion MongoDB et demarrage serveur
-services/mailer.js     Envoi des emails de verification
-views/                 Templates EJS servis par Express
-public/                Ressources statiques et uploads
+app.js                       Point d'entree, rate limiting et erreurs globales
+config.js                    Configuration depuis les variables d'environnement
+router/api.js                Pages HTML et endpoints HTTP
+middleware/authMiddleware.js Sessions, roles et statut des comptes
+middleware/recaptcha.js      Verification serveur reCAPTCHA v3
+middleware/securityHeaders.js CSP et en-tetes de securite
+models/                      Schemas Mongoose (User, Article, ActivityLog, ...)
+services/mailer.js            Emails de verification et de reinitialisation
+services/activityLogger.js    Ecriture du journal d'activite
+script/serverRun.js            Express, session, Mongo et fichiers statiques
+views/                        Templates EJS
+public/                       CSS, JavaScript et images
 ```
 
-## Routes principales
+## API HTTP
 
-| Methode | Route | Acces | Description |
-| --- | --- | --- | --- |
-| `POST` | `/register` | Public | Cree un compte inactif et envoie un email de verification |
-| `GET` | `/verify-email?token=...` | Public | Active un compte avec un token valide |
-| `POST` | `/login` | Public | Ouvre une session apres verification du compte |
-| `GET` | `/dashboard` | Connecte | Affiche l'espace client ou administrateur |
-| `POST` | `/api/quotes` | Client | Cree une demande de devis |
-| `POST` | `/api/admin/quotes/:userId/:quoteId/status` | Admin | Met a jour le statut d'un devis |
-| `GET` | `/client/ticket` | Connecte | Affiche les tickets de support |
+### Conventions
 
-Toutes les routes sous `/api` necessitent une session authentifiee. Les routes d'administration verifient en plus le role de l'utilisateur.
+- Base URL locale : `http://localhost:3000`.
+- Base URL production : `https://souflyhub.dev`.
+- Les requetes JSON doivent envoyer `Content-Type: application/json`.
+- Les cookies de session sont geres automatiquement par le navigateur.
+- Une route `/api` necessite une session sauf indication contraire.
+- Les routes marquees **Admin** acceptent `admin` et `developper`.
+- Les routes marquees **Client** necessitent un compte connecte.
+- Les endpoints avec upload utilisent `multipart/form-data`.
 
-## Test du rate limiting
+### Authentification
 
-Le test local utilise uniquement des identifiants fictifs et est limite a 20 requetes :
+#### `POST /register` — Public
 
-```bash
-npm run security:rate-limit
+Creer un compte inactif et envoyer le lien de verification.
+
+```json
+{
+  "pseudo": "alice",
+  "email": "alice@example.com",
+  "password": "MotDePasse1!"
+}
 ```
 
-Le rate limiting est desactive lorsque `NODE_ENV=development` et actif dans les autres environnements.
+Avec reCAPTCHA actif, ajouter `recaptchaToken`. Le pseudo accepte 3 a 30
+caracteres alphanumeriques, `_`, `.` ou `-`. Le mot de passe doit contenir une
+minuscule, une majuscule, un chiffre et un caractere special.
+
+#### `POST /login` — Public
+
+Ouvrir une session.
+
+```json
+{
+  "email": "alice@example.com",
+  "password": "MotDePasse1!",
+  "recaptchaToken": "token-recaptcha-v3"
+}
+```
+
+Reponse de succes :
+
+```json
+{
+  "success": true,
+  "errcode": 200,
+  "message": "Connexion réussie ! Redirection...",
+  "redirect": "/dashboard"
+}
+```
+
+#### `POST /forgot-password` — Public
+
+Demander un lien de reinitialisation. La reponse reste volontairement identique
+que l'adresse existe ou non.
+
+```json
+{
+  "email": "alice@example.com",
+  "recaptchaToken": "token-recaptcha-v3"
+}
+```
+
+#### `POST /reset-password/:token` — Public
+
+Definir un nouveau mot de passe avec le token recu par email.
+
+```json
+{
+  "password": "NouveauMotDePasse1!",
+  "confirmation": "NouveauMotDePasse1!"
+}
+```
+
+#### `GET /logout` — Connecte
+
+Detruire la session et rediriger vers `/login`.
+
+### Demandes client
+
+#### `POST /api/quotes` — Client
+
+Creer une demande de devis.
+
+```json
+{
+  "title": "Site vitrine",
+  "description": "Creation d'un site pour une entreprise locale.",
+  "service": "Developpement web",
+  "budget": 2500,
+  "desiredDate": "2026-12-01"
+}
+```
+
+`budget` et `desiredDate` sont optionnels. La description est limitee a 3000
+caracteres et le budget a 1 000 000.
+
+#### `POST /api/article-requests` — Client
+
+Creer une pre-demande d'article.
+
+```json
+{
+  "title": "Guide du e-commerce",
+  "category": "Marketing",
+  "format": "Article de blog",
+  "description": "Brief editorial.",
+  "budget": 400,
+  "desiredDate": "2026-11-15"
+}
+```
+
+#### `POST /api/tickets/create` — Client
+
+Creer un ticket support.
+
+```json
+{
+  "title": "Question sur mon projet",
+  "message": "Bonjour, pouvez-vous me donner une mise a jour ?"
+}
+```
+
+#### `GET /api/tickets/views/:id` — Client
+
+Lire un ticket accessible a l'utilisateur courant.
+
+#### `POST /api/tickets/:id/reply` — Client
+
+Ajouter une reponse a un ticket :
+
+```json
+{
+  "replyMessage": "Voici les informations demandees."
+}
+```
+
+### Administration des devis, commandes et tickets
+
+#### `POST /api/admin/quotes/:userId/:quoteId/status` — Admin
+
+Mettre a jour un devis. `status` accepte `pending`, `reviewing`, `sent`,
+`accepted` ou `declined`. `adminNote` est optionnel.
+
+#### `POST /api/orders/create` — Admin
+
+Creer une commande pour un client identifie par son pseudo.
+
+```json
+{
+  "name": "Site vitrine",
+  "client_name": "alice",
+  "description": "Commande de developpement.",
+  "price": 2500,
+  "quantity": 1,
+  "status": "En cours"
+}
+```
+
+Les statuts acceptes sont `En cours`, `Complété`, `En attente` et `Annulé`.
+
+#### `POST /api/orders/:orderId/status` — Admin
+
+Mettre a jour le statut d'une commande avec `{ "status": "Complété" }`.
+
+#### `POST /api/orders/:orderId/delete` — Admin
+
+Supprimer une commande.
+
+#### `POST /api/admin/tickets/:userId/:ticketId/reply` — Admin
+
+Repondre a un ticket et modifier son statut :
+
+```json
+{
+  "replyMessage": "Votre demande a ete prise en compte.",
+  "status": "repondu"
+}
+```
+
+#### `POST /api/admin/tickets/:userId/:ticketId/delete` — Admin
+
+Supprimer un ticket.
+
+#### `POST /api/tickets/:id/update` — Admin
+
+Mettre a jour `title`, `message` et/ou `status` d'un ticket. Cette route
+retourne une redirection pour une requete HTML et une reponse JSON pour une
+requete XHR.
+
+#### `POST /api/admin/users/update` — Admin
+
+Mettre a jour un utilisateur. Champs disponibles : `userId`, `pseudo`, `email`,
+`role`, `status`, `solde`, `credits`, `avatar`, `emailVerified`, `isBan`,
+`banReason` et `password`.
+
+#### `POST /api/admin/users/:userId/toggle-ban` — Admin
+
+Basculer le bannissement d'un utilisateur.
+
+### Contenu et catalogue
+
+#### Articles
+
+| Methode | Route | Acces |
+| --- | --- | --- |
+| `POST` | `/articles` | Admin |
+| `PUT` | `/articles/:id` | Admin |
+| `DELETE` | `/articles/:id` | Admin |
+
+Les champs principaux sont `title`, `description`, `category` et `image`.
+Les images peuvent etre envoyees comme fichier `image` (JPEG, PNG ou WebP,
+5 Mo maximum) ou comme data URI lors de la creation.
+
+#### Projets
+
+`POST /projects` — **Admin**, `multipart/form-data`.
+
+Champs : `title`, `description`, `projectType`, `client`, `location`, `budget`,
+`duration`, `result` et fichier `image` optionnel.
+
+#### Categories et services
+
+| Methode | Route | Acces |
+| --- | --- | --- |
+| `POST` | `/create-category` | Admin |
+| `PUT` | `/update-category/:id` | Admin |
+| `DELETE` | `/delete-category/:id` | Admin |
+| `POST` | `/create-service` | Admin |
+| `PUT` | `/update-service/:id` | Admin |
+| `DELETE` | `/delete-service/:id` | Admin |
+
+Une categorie utilise `name`, `description` et `icon`. Un service utilise
+`name`, `description` et `categoryId`.
+
+#### Profil
+
+`POST /profile/update/:id` — **Client**, `multipart/form-data`.
+
+Le profil accepte notamment `pseudo`, `email`, `password` et le fichier
+`avatar` (JPEG, PNG ou WebP, 5 Mo maximum).
+
+### Newsletter et contact
+
+#### `POST /subscribe` — Public
+
+Inscrire une adresse a la newsletter :
+
+```json
+{
+  "email": "alice@example.com"
+}
+```
+
+Cette route est limitee a 100 requetes par IP toutes les 15 minutes.
+
+#### `POST /contact` — Public
+
+Creer un ticket temporaire dans la session avec `full-name`, `email`, `subject`
+et `message`. Cette route HTML redirige/rend une vue, elle ne constitue pas une
+API JSON stable.
+
+### Pages HTML principales
+
+| Methode | Route | Description |
+| --- | --- | --- |
+| `GET` | `/` | Accueil |
+| `GET` | `/about` | Presentation |
+| `GET` | `/blog` | Articles |
+| `GET` | `/portfolio` | Projets |
+| `GET` | `/project?id=...` | Detail d'un projet |
+| `GET` | `/services` | Catalogue de services |
+| `GET` | `/dashboard` | Dashboard connecte |
+| `GET` | `/client/ticket` | Tickets du client |
+| `GET` | `/.well-known/security.txt` | Contact de securite |
+
+## Format des reponses et erreurs
+
+Les reponses JSON de succes utilisent generalement :
+
+```json
+{
+  "success": true,
+  "message": "Operation reussie.",
+  "errcode": 200
+}
+```
+
+Les erreurs suivent le meme format :
+
+```json
+{
+  "success": false,
+  "errcode": 400,
+  "message": "Les champs fournis sont invalides."
+}
+```
+
+Codes courants :
+
+| Code | Signification |
+| --- | --- |
+| `400` | Requete invalide ou validation echouee |
+| `401` | Session absente ou invalide |
+| `403` | Role insuffisant, compte inactif/banni ou CAPTCHA refuse |
+| `404` | Ressource introuvable |
+| `409` | Conflit, par exemple doublon |
+| `429` | Trop de requetes |
+| `500` | Erreur serveur |
+| `503` | Protection reCAPTCHA indisponible en production |
+
+## Authentification et roles
+
+L'application utilise une session Express stockee dans un cookie HTTP-only,
+`SameSite=Lax`, avec `secure=true` en production.
+
+- `user` : acces a son dashboard, profil, devis et tickets.
+- `admin` : acces aux operations d'administration.
+- `developper` : acces aux operations admin selon les middlewares existants.
+
+Les routes API sont protegees par `router.use("/api", isClient)`, puis les
+routes sensibles ajoutent `isAdmin`. Le statut de compte est verifie sur chaque
+requete authentifiee : bannissement, inactivite, email non verifie et session
+obsolete provoquent un refus.
 
 ## Securite
 
-- `.env` est exclu du depot Git.
 - Les mots de passe sont hashes avec bcrypt.
-- Les tokens de verification email sont hashes avant stockage.
-- Les messages API sont inseres dans le DOM sans interpretation HTML cote client.
-- Les erreurs JSON malforme renvoient HTTP 400.
-- CSP, HSTS en production, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` et `X-Content-Type-Options` sont configures par `middleware/securityHeaders.js`.
-- La CSP utilise un nonce par requete : tout script inline doit porter `nonce="<%= cspNonce %>"`. Bootstrap est charge depuis `https://cdn.jsdelivr.net` et reCAPTCHA v3 depuis `https://www.google.com` / `https://www.gstatic.com` ; le reste est servi depuis `public/` (voir ci-dessous).
-- Les attributs `onclick`/`onchange`/`oninput` et les URL `javascript:` sont bloques par la CSP : utiliser des attributs `data-*` avec un ecouteur delegue.
-- Le canal de signalement est publie sur `/.well-known/security.txt` (et `/security.txt`). Le contact provient de `SECURITY_CONTACT_EMAIL`.
-- `X-Powered-By` est desactive et l'en-tete `Server` est retire.
+- Les tokens email et reset sont hashes avant stockage.
+- reCAPTCHA v3 est verifie cote serveur avec controle de l'action et du score.
+- Le rate limiting global est actif hors environnement `development`.
+- Les routes d'authentification ont un limiteur dedie.
+- La CSP utilise un nonce par requete et autorise uniquement les CDN necessaires.
+- HSTS est active uniquement en production sur HTTPS.
+- `X-Powered-By` et `Server` sont retires.
+- Les fichiers uploades sont limites a 5 Mo et restreints a JPEG, PNG et WebP.
+- Les erreurs JSON malforme renvoient `400`.
+- Les activites de connexion et d'inscription sont stockees dans `ActivityLog`
+  et visibles dans « Activite recente » pour les administrateurs.
 
-### Mot de passe oublie
+## Docker et reverse proxy
 
-Parcours complet : `/forgot-password` (demande) puis `/reset-password/:token` (nouveau mot de passe), avec `/reset-password/termine` en confirmation. Le lien est aussi accessible depuis `/login`.
+```bash
+docker compose up -d --build
+docker compose logs -f app
+docker compose down
+```
 
-- Le jeton est tire au hasard (32 octets), stocke **hache en SHA-256** et valable 1 heure.
-- Usage unique : il est efface des la premiere reussite, un rejeu est refuse.
-- La reponse de `POST /forgot-password` est identique que le compte existe ou non : la page ne revele jamais quelles adresses sont enregistrees. Un compte banni ne peut pas utiliser cette voie.
-- `POST /forgot-password` est limite a 5 appels par heure et par IP.
-- Un changement de mot de passe incremente `sessionVersion` : toutes les sessions ouvertes avec l'ancien mot de passe sont invalidees au chargement suivant.
-
-### Bannissement et acces
-
-`middleware/authMiddleware.js` exporte `enforceAccountStatus`, monte dans `script/serverRun.js` juste apres la session et avant le routeur. Il relit le compte en base a chaque requete et :
-
-- laisse passer les visiteurs non connectes sans toucher a la base ;
-- coupe l'acces immediatement si `isBan`, `status !== "active"` ou email non verifie ;
-- detruit la session serveur et supprime le cookie : le bannissement est immediat, sans attendre l'expiration ;
-- affiche `views/banned.ejs` (avec le motif saisi par l'admin) pour les pages, renvoie `403` JSON pour les appels `/api`.
-
-Les routes protegees (`isAdmin`, `isClient`, `isDevelopper`) reutilisent le meme chargement de compte, memorise sur la requete : une seule lecture Mongo par requete. Toute route qui exige une session doit passer par l'un de ces middlewares.
-
-### Reverse proxy nginx
-
-Si l'application est derriere nginx, ajouter dans le `server{}` pour masquer la version serveur :
+Le reverse proxy doit transmettre au minimum :
 
 ```nginx
 server_tokens off;
@@ -197,35 +485,55 @@ location / {
 }
 ```
 
-`server_tokens off;` transforme `Server: nginx/1.22.1` en `Server: nginx`. Les en-tetes de securite sont emis par Express ; nginx peut aussi les renvoyer en defense en profondeur.
+En production, Express active `trust proxy` afin de reconnaitre HTTPS et
+l'adresse IP d'origine derriere le proxy.
 
-### Dependances front-end
+## Tests
 
-Bootstrap est charge depuis le CDN jsdelivr, avec une empreinte SRI : le navigateur refuse le fichier s'il ne correspond pas a la somme de controle, ce qui neutralise le risque d'injection par un tiers compromis. La CSP autorise explicitement `https://cdn.jsdelivr.net` pour les scripts et les styles.
+Le test fourni du rate limiting envoie uniquement des requetes fictives et reste
+limite :
 
-| Ressource | Origine | Version |
-| --- | --- | --- |
-| `bootstrap.min.css` | CDN jsdelivr + `integrity` | Bootstrap 5.3.8 |
-| `bootstrap.bundle.min.js` | CDN jsdelivr + `integrity` | Bootstrap 5.3.8 (bundle) |
-| `public/css/vendor/bootstrap-icons/1.13.1/` | local | bootstrap-icons 1.13.1 (CSS + woff2/woff) |
-| `public/css/vendor/font-awesome/all.min.css` | local | Font Awesome 6.6.0 |
-| `public/css/vendor/webfonts/` | local | Font Awesome 6.6.0 (fa-solid, fa-regular, fa-brands, v4compat) |
-| `public/css/vendor/fonts.css` + `public/fonts/` | local | Inter + Outfit (latin / latin-ext, normale + italique) |
+```bash
+npm run security:rate-limit
+```
 
-Les ressources locales sont generees par `node script/fetch-vendor.js` et `node script/fetch-fonts.js` : a relancer uniquement pour mettre a jour une version. Les chemins relatifs de polices declares dans les CSS sont preserves, ne pas deplacer ces fichiers a la main.
+Avant une mise en production, verifier manuellement :
 
-Si la CSP doit etre resserree a nouveau, il faut d'abord repasser Bootstrap en local : retablir `script-src 'self'`, `style-src 'self' 'unsafe-inline'` et retirer les attributs `integrity` / `crossorigin` des vues.
+1. inscription et reception du mail de verification ;
+2. connexion avec et sans token reCAPTCHA ;
+3. mot de passe oublie et expiration du token ;
+4. acces d'un compte `user` a une route admin ;
+5. bannissement puis invalidation immediate de la session ;
+6. upload d'un type de fichier non autorise ;
+7. apparition de l'activite dans le dashboard admin.
+
+## Depannage
+
+### MongoDB inaccessible
+
+Verifier `MONGO_URL`, l'accessibilite du serveur MongoDB et les logs :
+
+```bash
+docker compose logs -f mongo
+```
+
+### Emails non envoyes
+
+Verifier `EMAIL_MODE`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`,
+`SMTP_PASSWORD`, `MAIL_FROM` et `APP_URL`. En developpement, utiliser le mode
+console si aucun SMTP n'est disponible.
+
+### CAPTCHA refuse
+
+Verifier que le domaine `souflyhub.dev` est autorise dans la console Google
+reCAPTCHA, que `RECAPTCHA_SITE_KEY` correspond a `RECAPTCHA_SECRET_KEY` et que
+l'action envoyee correspond a `login`, `register` ou `forgot_password`.
+
+### Erreur `SESSION_SECRET`
+
+Definir une valeur longue et aleatoire dans `.env`, puis redemarrer le serveur.
 
 ## Licence
 
-Projet prive de Souflydev. Voir les informations du depot pour les conditions de distribution.
-### Protection CAPTCHA et journal d'activité
-
-En production, renseignez `RECAPTCHA_SITE_KEY` et `RECAPTCHA_SECRET_KEY` dans
-`.env`. Les formulaires sensibles utilisent reCAPTCHA v3 sans afficher de
-challenge à l'utilisateur. La vérification est effectuée côté serveur et
-échoue fermement si le secret n'est pas configuré.
-
-Les connexions réussies et les inscriptions sont enregistrées dans la collection
-MongoDB `activitylogs` et affichées dans le bloc « Activité Récente » du
-dashboard des administrateurs.
+Projet prive Souflydev. Consulter le fichier `package.json` pour les
+informations de licence du projet.
