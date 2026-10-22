@@ -1,0 +1,708 @@
+"use client";
+
+import Footer from "./Composent/Footer";
+import TypingText from "./Composent/TypingText";
+import SiteNavbar from "./Composent/SiteNavbar";
+import Image from "next/image";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  ProgressBar,
+  Carousel,
+} from "react-bootstrap";
+
+export default function App() {
+  return (
+    <>
+      <SiteNavbar />
+
+      <main className="content overflow-hidden">
+        <section
+          className="hero-content bg-dark text-white d-flex align-items-center"
+          aria-label="Présentation principale"
+        >
+          <Container fluid className="p-0 ps-lg-5">
+            {/* Hauteur adaptée en mobile, 100vh uniquement sur desktop (lg) */}
+            <Row className="align-items-center g-0 min-vh-lg-100 flex-column-reverse flex-lg-row pt-3 pt-lg-0">
+              {/* Colonne Texte */}
+              <Col
+                lg={6}
+                xs={12}
+                md={6}
+                className="order-2 order-lg-1 px-4 py-4 py-lg-0 text-center text-lg-start"
+                data-aos="fade-right"
+                data-aos-delay="300"
+                data-aos-duration="700"
+              >
+                <h1 className="fw-bold display-5 display-lg-3 mb-3 fs-lg-1">
+                  We Make{" "}
+                  <span className="text-warning">Creative things</span>
+                  <br className="d-none d-sm-inline" /> Everyday
+                </h1>
+                <p className="lead mb-4 mx-auto mx-lg-0 col-12 col-md-10">
+                  We are a digital agency that helps create immersive and
+                  engaging user experiences.
+                </p>
+                <Button
+                  variant="warning"
+                  href="/contact"
+                  className="text-dark fw-bold px-4 py-3 shadow"
+                  aria-label="Contactez-nous pour toute demande"
+                >
+                  Contactez-nous
+                </Button>
+              </Col>
+
+              {/* Colonne Image (Remontée juste sous la navbar en mobile) */}
+              <Col
+                lg={6}
+                xs={12}
+                md={6}
+                className="order-1 order-lg-2 px-3 px-lg-0 text-center text-lg-end"
+                data-aos="fade-left"
+                data-aos-delay="300"
+                data-aos-duration="700"
+              >
+                <div
+                  className="w-100 position-relative"
+                  style={{ minHeight: "500px" }}
+                >
+                  <Image
+                    src="https://assets.souflyhub.dev/images/upload/souflydev.webp"
+                    alt="Visuel de présentation Souflydev"
+                    width={500}
+                    height={500}
+                    priority
+                    className="rounded-4 rounded-lg-start-5 rounded-lg-0"
+                    style={{
+                      objectFit: "cover",
+                      display: "block",
+                      width: "100%",
+                      maxWidth: "50rem",
+                      height: "auto",
+                      marginLeft: "auto",
+                      marginRight: 0,
+                    }}
+                  />
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+
+        <section
+          className="contact-info bg-dark mx-auto p-4 text-white m-0 justify-content-center text-center"
+          aria-label="Coordonnées de contact"
+        >
+          <Container fluid className="p-0 px-lg-5">
+            <div
+              className="row g-0 text-center py-5 px-3 text-lg-start"
+              style={{ maxWidth: "1000px", margin: "0 auto" }}
+            >
+              <div className="col-lg-6 col-12">
+                <p className="shimmer-text">45 avenue johanes brams</p>
+                <p className="shimmer-text">75017 Paris</p>
+              </div>
+              <div className="col-lg-6 col-12">
+                <p className="shimmer-text fw-bold">
+                  <a
+                    href="tel:0140000042"
+                    className="text-white text-decoration-none"
+                    aria-label="Téléphone : 01 40 00 00 42"
+                  >
+                    01 40 00 00 42
+                  </a>
+                </p>
+                <p className="shimmer-text fw-bold">
+                  <a
+                    href="mailto:contact-me@souflyhub.fr"
+                    className="text-white text-decoration-none"
+                    aria-label="Email : contact-me@souflyhub.fr"
+                  >
+                    contact-me@souflyhub.fr
+                  </a>
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        <div className="bg-primary text-center py-5" aria-hidden="true">
+          <TypingText text="Développement Web " style={{ color: "white" }} />
+        </div>
+
+        <section
+          className="services bg-body-tertiary text-body py-5"
+          aria-label="Nos services"
+        >
+          <Container fluid className="p-2 px-lg-5">
+            <div className="row g-0 text-center py-5 px-5 text-lg-start">
+              <div className="col-lg-6 col-12 mb-5 mb-lg-0">
+                <i
+                  className="bi bi-gear-fill fs-1 text-success mb-3 d-inline-block"
+                  aria-hidden="true"
+                ></i>
+                <h2 className="fw-bold display-6 mb-3">Développement Web</h2>
+                <p className="text-body-secondary">
+                  Nous créons des sites web modernes et performants, adaptés à
+                  vos besoins et à votre image de marque.
+                </p>
+              </div>
+              <div className="col-lg-6 col-12 mb-5 mb-lg-0">
+                <i
+                  className="bi bi-lightning-fill fs-1 text-success mb-3 d-inline-block"
+                  aria-hidden="true"
+                ></i>
+                <h2 className="fw-bold display-6 mb-3">Marketing Digital</h2>
+                <p className="text-body-secondary">
+                  Nous offrons une large gamme de services pour vous aider à
+                  atteindre vos objectifs.
+                </p>
+              </div>
+              <div className="col-lg-6 col-12 mb-5 mb-lg-0">
+                <i
+                  className="bi bi-people-fill fs-1 text-success mb-5 d-inline-block"
+                  aria-hidden="true"
+                ></i>
+                <h2 className="fw-bold display-6 mb-3">
+                  Nos Seo optimisées avec analytics
+                </h2>
+                <p className="text-body-secondary">
+                  Nos stratégies de référencement naturel sont conçues pour
+                  améliorer votre visibilité en ligne et attirer plus de
+                  visiteurs qualifiés.
+                </p>
+              </div>
+              <div className="col-lg-6 col-12 mb-5 mb-lg-0">
+                <i
+                  className="bi bi-people-fill fs-1 text-success mb-3 d-inline-block"
+                  aria-hidden="true"
+                ></i>
+                <h2 className="fw-bold display-6 mb-3">Security</h2>
+                <p className="text-body-secondary">
+                  Nous mettons en place des mesures de sécurité robustes pour
+                  protéger vos données et votre infrastructure.
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        <Container
+          fluid
+          className="py-5 mb-5 mx-auto"
+          style={{
+            backgroundColor: "#eaff00",
+            borderRadius: "2px",
+            top: "20px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          }}
+          data-bs-theme="light"
+          aria-label="À propos de nous"
+        >
+          <Row className="g-0 text-center py-5 px-3 text-lg-start">
+            <Col lg={6} xs={12}>
+              <Image
+                src="https://assets.souflyhub.dev/images/upload/souflydev.webp"
+                alt="Photo de profil de l'équipe Souflydev"
+                width={900}
+                height={900}
+                style={{
+                  width: "70%",
+                  height: "auto",
+                  justifyContent: "center",
+                  display: "block",
+                  margin: "0 auto",
+                }}
+              />
+            </Col>
+            <Col lg={6} xs={12}>
+              <h2 className="display-6 mb-3 text-center fw-bold text-body">
+                À propos de nous
+              </h2>
+              <p
+                className="text-secondary mb-3 text-center fw-bold mx-auto my-4"
+                style={{ maxWidth: "600px" }}
+              >
+                Nous sommes une équipe passionnée par le développement web et le
+                marketing digital. Notre objectif est de fournir des solutions
+                innovantes et efficaces pour aider nos clients à réussir en
+                ligne.
+              </p>
+              <p className="text-secondary mb-3 text-center fw-bold">
+                Nous croyons en l&apos;importance de la collaboration et de la
+                communication avec nos clients pour comprendre leurs besoins et
+                créer des solutions sur mesure.
+              </p>
+              <div className="d-flex flex-column gap-2 mt-5">
+                <span className="text-secondary mb-5 gap-1 d-block">
+                  <strong>Compétences :</strong> Développement Web
+                  <ProgressBar
+                    variant="dark"
+                    now={80}
+                    aria-label="Compétence en Développement Web : 80%"
+                  />
+                </span>
+                <span className="text-secondary mb-5 gap-1 d-block">
+                  <strong>Compétences :</strong> Seo Optimisation AI
+                  <ProgressBar
+                    variant="dark"
+                    now={86}
+                    aria-label="Compétence en Seo Optimisation AI : 86%"
+                  />
+                </span>
+                <span className="text-secondary mb-5 gap-1 d-block">
+                  <strong>Compétences :</strong> Marketing Digital
+                  <ProgressBar
+                    variant="dark"
+                    now={75}
+                    aria-label="Compétence en Marketing Digital : 75%"
+                  />
+                </span>
+                <span className="text-secondary mb-5 gap-1 d-block">
+                  <strong>Compétences :</strong> Security
+                  <ProgressBar
+                    variant="dark"
+                    now={90}
+                    aria-label="Compétence en Sécurité : 90%"
+                  />
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container aria-label="Projets sélectionnés">
+          <div className="text-center">
+            <h2 className="display-6 text-center fw-bold mt-5 mb-5">
+              Nos Discover our selected projects
+            </h2>
+          </div>
+          <div
+            className="text-center mb-5"
+            style={{
+              maxWidth: "50rem",
+              margin: "0 auto",
+              captionSide: "bottom",
+            }}
+          >
+            <Container fluid>
+              <Carousel>
+                <Carousel.Item>
+                  <Carousel.Caption>
+                    <h3 className="h5 text-center text-light fw-bold">
+                      Creation de AI assistant chatbot
+                    </h3>
+                    <p className="text-center text-light">
+                      Pour une meilleure expérience utilisateur.
+                    </p>
+                  </Carousel.Caption>
+                  <Image
+                    className="d-block w-100"
+                    src="https://assets.souflyhub.dev/images/projet/menu/projet_1.webp"
+                    alt="Illustration du projet 1 : Création de chatbot IA assistant"
+                    width={800}
+                    height={450}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <Carousel.Caption>
+                    <h3 className="h5 text-center">
+                      Seo de vente de produits alimentaires
+                    </h3>
+                    <p>Boutique en ligne pour la vente de Bonbon.</p>
+                  </Carousel.Caption>
+                  <Image
+                    className="d-block w-100"
+                    src="https://assets.souflyhub.dev/images/projet/menu/projet_2.webp"
+                    alt="Illustration du projet 2 : Boutique de produits alimentaires"
+                    width={800}
+                    height={450}
+                  />
+                </Carousel.Item>
+                <Carousel.Item>
+                  <Carousel.Caption>
+                    <h3 className="h5 text-center text-dark">
+                      Vente de produits de livre pour artistes
+                    </h3>
+                    <p className="text-center text-dark">
+                      Boutique en ligne pour la vente de livres pour artistes.
+                    </p>
+                  </Carousel.Caption>
+                  <Image
+                    className="d-block w-100"
+                    src="https://assets.souflyhub.dev/images/projet/menu/projet_3.webp"
+                    alt="Illustration du projet 3 : Vente de livres pour artistes"
+                    width={800}
+                    height={450}
+                  />
+                </Carousel.Item>
+              </Carousel>
+            </Container>
+          </div>
+        </Container>
+
+        <Container className="py-5" aria-label="Historique et étapes">
+          <div className="border-top border-2 py-4 py-md-5">
+            <Row className="align-items-center text-center text-md-start gy-3">
+              <Col className="col-12 col-md-2">
+                <h3 className="mb-0">2024</h3>
+              </Col>
+              <Col className="col-12 col-md-8">
+                <h4 className="fw-bold display-6 mb-2">
+                  The Blue Design twitter
+                </h4>
+                <p className="fw-bold mb-0">
+                  We bring to life the most complex projects, specialize
+                </p>
+              </Col>
+              <Col className="col-12 col-md-2">
+                <p className="mb-0">DEVELOPER</p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-top border-2 py-4 py-md-5">
+            <Row className="align-items-center text-center text-md-start gy-3">
+              <Col className="col-12 col-md-2">
+                <h3 className="mb-0">2022</h3>
+              </Col>
+              <Col className="col-12 col-md-8">
+                <h4 className="fw-bold display-6 mb-2">
+                  The Blue Design Google
+                </h4>
+                <p className="fw-bold mb-0">
+                  We bring to life the most complex projects, specialize
+                </p>
+              </Col>
+              <Col className="col-12 col-md-2">
+                <p className="mb-0">CREATIVE DIRECTOR</p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-top border-2 py-4 py-md-5">
+            <Row className="align-items-center text-center text-md-start gy-3">
+              <Col className="col-12 col-md-2">
+                <h3 className="mb-0">2019</h3>
+              </Col>
+              <Col className="col-12 col-md-8">
+                <h4 className="fw-bold display-6 mb-2">
+                  The Blue Design Jurry
+                </h4>
+                <p className="fw-bold mb-0">
+                  We bring to life the most complex projects, specialize
+                </p>
+              </Col>
+              <Col className="col-12 col-md-2">
+                <p className="mb-0">ANIMATOR</p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-top border-2 py-4 py-md-5">
+            <Row className="align-items-center text-center text-md-start gy-3">
+              <Col className="col-12 col-md-2">
+                <h3 className="mb-0">2017</h3>
+              </Col>
+              <Col className="col-12 col-md-8">
+                <h4 className="fw-bold display-6 mb-2">
+                  The Blue Design Awards
+                </h4>
+                <p className="fw-bold mb-0">
+                  We bring to life the most complex projects, specialize
+                </p>
+              </Col>
+              <Col className="col-12 col-md-2">
+                <p className="mb-0">ANIMATOR</p>
+              </Col>
+            </Row>
+          </div>
+        </Container>
+
+        <Container aria-label="Vidéo de présentation">
+          <div
+            className="container mx-auto align-items-center justify-content-center d-flex mb-5"
+            style={{ maxWidth: "800px", minHeight: "300px" }}
+          >
+            <iframe
+              width="798"
+              height="449"
+              src="https://www.youtube.com/embed/hm7XoVN2tYU"
+              title="Le Vent Est Grand ( Aze Max )"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="w-100"
+              style={{ maxHeight: "450px", border: 0 }}
+            ></iframe>
+          </div>
+        </Container>
+
+        <Container className="py-5 text-center" aria-label="Articles et actualités">
+          <h2 className="display-6 text-center fw-bold mt-5 mb-5">
+            Read Our Articles And news
+          </h2>
+          <Row className="g-0 text-center py-5 px-3 text-lg-start justify-content-center gap-4">
+            <Col lg={3} xs={12} md={6} className="mb-5 mb-lg-0">
+              <article>
+                <Card
+                  className="card"
+                  style={{ maxWidth: "20rem", minHeight: "20rem" }}
+                >
+                  <Image
+                    src="https://assets.souflyhub.dev/images/projet/projet_menu/reload.webp"
+                    className="img-fluid"
+                    alt="Visuel graphique bleu et blanc pour un projet créatif"
+                    width={320}
+                    height={320}
+                  />
+                  <div
+                    className="card-body d-flex flex-column position-absolute bottom-0 p-4 bg-black bg-opacity-75 text-white"
+                    style={{
+                      top: 0,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div className="d-flex">
+                      <span className="badge mb-2">March 26 2024</span>
+                      <span className="badge mb-2">Branding</span>
+                    </div>
+
+                    <h3 className="card-title h5 fw-bold">
+                      Artificial Intelligence
+                    </h3>
+                    <p className="card-text">
+                      Our artificial intelligence experts will support you in
+                      the digital transformation of your business.
+                    </p>
+                    <a
+                      href="#"
+                      className="btn d-block display-6 border-light text-white"
+                      aria-label="Lire l'article : Intelligence Artificielle"
+                      data-bs-toggle="modal"
+                      data-bs-target="#articleModal"
+                    >
+                      Read Article
+                    </a>
+                  </div>
+                </Card>
+              </article>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="mb-5 mb-lg-0">
+              <article>
+                <Card
+                  className="card"
+                  style={{ maxWidth: "20rem", minHeight: "20rem" }}
+                >
+                  <Image
+                    src="https://assets.souflyhub.dev/images/projet/projet_menu/reload.webp"
+                    className="img-fluid"
+                    alt="Visuel graphique bleu et blanc pour un projet créatif"
+                    width={320}
+                    height={320}
+                  />
+                  <div
+                    className="card-body d-flex flex-column position-absolute bottom-0 p-4 bg-black bg-opacity-75 text-white"
+                    style={{
+                      top: 0,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div className="d-flex">
+                      <span className="badge mb-2">March 26 2024</span>
+                      <span className="badge mb-2">Branding</span>
+                    </div>
+
+                    <h3 className="card-title h5 fw-bold">
+                      Artificial Intelligence
+                    </h3>
+                    <p className="card-text">
+                      Our artificial intelligence experts will support you in
+                      the digital transformation of your business.
+                    </p>
+                    <a
+                      href="#"
+                      className="btn d-block display-6 border-light text-white"
+                      aria-label="Lire l'article : Intelligence Artificielle"
+                      data-bs-toggle="modal"
+                      data-bs-target="#articleModal"
+                    >
+                      Read Article
+                    </a>
+                  </div>
+                </Card>
+              </article>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="mb-5 mb-lg-0">
+              <article>
+                <Card
+                  className="card"
+                  style={{ maxWidth: "20rem", minHeight: "20rem" }}
+                >
+                  <Image
+                    src="https://assets.souflyhub.dev/images/projet/projet_menu/reload.webp"
+                    className="img-fluid"
+                    alt="Visuel graphique bleu et blanc pour un projet créatif"
+                    width={320}
+                    height={320}
+                  />
+                  <div
+                    className="card-body d-flex flex-column position-absolute bottom-0 p-4 bg-black bg-opacity-75 text-white"
+                    style={{
+                      top: 0,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div className="d-flex">
+                      <span className="badge mb-2">March 26 2024</span>
+                      <span className="badge mb-2">Branding</span>
+                    </div>
+
+                    <h3 className="card-title h5 fw-bold">
+                      Artificial Intelligence
+                    </h3>
+                    <p className="card-text">
+                      Our artificial intelligence experts will support you in
+                      the digital transformation of your business.
+                    </p>
+                    <a
+                      href="#"
+                      className="btn d-block display-6 border-light text-white"
+                      aria-label="Lire l'article : Intelligence Artificielle"
+                      data-bs-toggle="modal"
+                      data-bs-target="#articleModal"
+                    >
+                      Read Article
+                    </a>
+                  </div>
+                </Card>
+              </article>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container aria-label="Partenaires">
+          <Row>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_0.webp"
+                  alt="Image de logo d'entreprise partenaire 1"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_1.webp"
+                  alt="Deuxième image de logo d'entreprise partenaire 2"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_2.webp"
+                  alt="Troisième image de logo d'entreprise partenaire 3"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_3.webp"
+                  alt="Quatrième image de logo d'entreprise partenaire 4"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_4.webp"
+                  alt="Cinquième image de logo d'entreprise partenaire 5"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_5.webp"
+                  alt="Sixième image de logo d'entreprise partenaire 6"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_6.webp"
+                  alt="Septième image de logo d'entreprise partenaire 7"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+            <Col lg={3} xs={12} md={6} className="text-center py-1">
+              <div className="bg-light text-center py-1 px-5 rounded-4">
+                <Image
+                  src="https://assets.souflyhub.dev/images/logo/logo_7.webp"
+                  alt="Huitième image de logo d'entreprise partenaire 8"
+                  width={240}
+                  height={100}
+                  style={{ width: "100%", maxWidth: "240px", height: "auto" }}
+                />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+
+        <Container
+          fluid
+          className="bg-warning text-white py-5 text-center mt-5"
+          style={{ maxWidth: "100%", minHeight: "35rem" }}
+          aria-label="Appel à l'action"
+        >
+          <h2 className="display-3 text-center fw-bold mt-5 mb-5 text-dark">
+            Lets Create Something Great
+          </h2>
+          <p className="text-center fw-bold mt-5 mb-5 text-dark fs-4">
+            We shift you from today&apos;s challenges to tomorrow&apos;s opportunities
+          </p>
+          <Button
+            variant="dark"
+            href="/contact"
+            className="text-white fw-bold px-4 py-3 shadow mt-5"
+            aria-label="Contactez-nous dès maintenant"
+          >
+            Contactez-nous
+          </Button>
+        </Container>
+      </main>
+
+      <Footer />
+    </>
+  );
+}
+

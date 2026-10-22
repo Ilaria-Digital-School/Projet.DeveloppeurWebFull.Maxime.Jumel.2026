@@ -1,0 +1,35 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Inlined at build time: URL used by the browser to reach the API
+        NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL:-http://localhost:3222}
+    container_name: souflydev-nextjs
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: souflydev-backend
+    ports:
+      - "3222:3445"
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/mabase
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:8
+    container_name: souflydev-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb_data:/data/db
+volumes:
+  mongodb_data:
