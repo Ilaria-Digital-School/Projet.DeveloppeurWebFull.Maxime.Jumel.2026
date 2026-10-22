@@ -14,6 +14,7 @@ Projet réalisé par **Maxime Jumel** dans le cadre de la formation Développeur
 - [Variables d'environnement](#variables-denvironnement)
 - [Scripts disponibles](#scripts-disponibles)
 - [API](#api)
+- [Production](#production)
 - [Déploiement](#déploiement)
 - [Sécurité](#sécurité)
 
@@ -127,6 +128,13 @@ Ces fichiers ne doivent jamais être commités (ils sont déjà dans `.gitignore
 | `GET` | `/api/me` | JWT | Profil de l'utilisateur connecté |
 
 Le token est transmis dans l'en-tête `Authorization: Bearer <token>`.
+
+## Production
+
+| Service | URL |
+| --- | --- |
+| Frontend | <https://souflyhub.dev> |
+| API | <https://api.souflyhub.dev> |
 
 ## Déploiement
 
