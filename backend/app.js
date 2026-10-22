@@ -42,6 +42,10 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (rawEmail, pass
   }
 }));
 
+app.get('/', (req, res) => {
+  res.redirect('https://souflyhub.dev');
+});
+
 app.post('/api/login', passport.authenticate('local', { session: false }), (req, res) => {
   const token = jwt.sign({ id: req.user.id, role: req.user.role }, JWT_SECRET, { expiresIn: '1h' });
   res.json({ message: 'Logged in successfully', token });
