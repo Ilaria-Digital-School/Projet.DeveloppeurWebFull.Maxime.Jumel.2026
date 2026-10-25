@@ -23,28 +23,37 @@ export function useUser() {
 }
 
 export function logout() {
-  localStorage.removeItem("token")
-  window.location.replace("/login")
+  fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/logout`, {
+    method: "POST",
+    credentials: "include",
+  }).finally(() => window.location.replace("/login"))
 }
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<CurrentUser | null>(null)
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      window.location.replace("/login")
-      return
-    }
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/me`, {
-      headers: { Authorization: `Bearer ${token}` },
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/me`, {
+      credentials: "include",
     })
       .then((res) => {
         if (!res.ok) throw new Error("Unauthorized")
         return res.json()
       })
-      .then(setUser)
-      .catch(logout)
+      .then(({ user: u }) => {
+        setUser({
+          id: u.id,
+          pseudo: u.username,
+          email: u.email,
+          role: u.roles?.[0] ?? "user",
+          solde: u.solde ?? 0,
+          credits: 0,
+          prj: 0,
+          cmd: 0,
+          ticket: u.tickets ?? 0,
+        })
+      })
+      .catch(() => window.location.replace("/login"))
   }, [])
 
   return user ? <UserContext.Provider value={user}>{children}</UserContext.Provider> : null

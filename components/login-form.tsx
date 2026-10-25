@@ -17,7 +17,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
-  const [form, setForm] = useState({ email: "", password: "" })
+  const [form, setForm] = useState({ username: "", password: "" })
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -30,16 +30,15 @@ export function LoginForm({
     setError(null)
     setLoading(true)
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
+        credentials: "include",
       })
       if (!res.ok) {
-        throw new Error(res.status === 401 ? "Invalid email or password" : "Login failed")
+        throw new Error(res.status === 401 ? "Invalid username or password" : "Login failed")
       }
-      const data = await res.json()
-      localStorage.setItem("token", data.token)
       window.location.href = "/dashboard"
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed")
@@ -58,12 +57,12 @@ export function LoginForm({
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold">Login to your account</h1>
           <p className="text-sm text-balance text-muted-foreground">
-            Enter your email below to login to your account
+            Enter your username below to login to your account
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="m@example.com" required />
+          <FieldLabel htmlFor="username">Username</FieldLabel>
+          <Input id="username" name="username" type="text" value={form.username} onChange={handleChange} required />
         </Field>
         <Field>
           <div className="flex items-center">

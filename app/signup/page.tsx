@@ -5,6 +5,7 @@ import { GalleryVerticalEndIcon } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 interface RegisterForm {
+  username: string;
   email: string;
   password: string;
   date: string;
@@ -15,6 +16,7 @@ interface RegisterForm {
 }
 export default function SignupPage() {
   const [form, setForm] = useState<RegisterForm>({
+    username: "",
     email: "",
     password: "",
     date: "",
@@ -32,16 +34,26 @@ export default function SignupPage() {
      e.preventDefault();
      setError(null);
      try {
-       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/registers`, {
+       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/register`, {
          method: "POST",
          headers: {
            "Content-Type": "application/json",
          },
-         body: JSON.stringify(form),
+         body: JSON.stringify({
+           username: form.username,
+           email: form.email,
+           password: form.password,
+           confirmPassword: form.password,
+           birthdate: form.date,
+           address: form.address,
+           postalCode: form.postcode,
+           city: form.city,
+         }),
+         credentials: "include" 
        });
        if (!res.ok) {
          const data = await res.json().catch(() => null);
-         throw new Error(data?.error ?? "Failed to sign up");
+         throw new Error(data?.message ?? "Failed to sign up");
        }
        window.location.href = "/login";
      }
@@ -69,6 +81,7 @@ export default function SignupPage() {
               Create your account by entering your email and password below
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <Input type="text" name="username" value={form.username} onChange={handleChange} placeholder="Username" required />
             <Input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Email" required />
             <Input type="password" name="password" value={form.password} onChange={handleChange} placeholder="Password" required />
             <Input type="date" name="date" value={form.date} onChange={handleChange} placeholder="Date of Birth" required />
