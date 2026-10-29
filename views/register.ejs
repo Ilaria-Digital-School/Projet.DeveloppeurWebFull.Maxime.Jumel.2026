@@ -53,6 +53,10 @@
                     <label for="inputPassword" class="form-label text-light small font-weight-bold">Mot de passe</label>
                     <input type="password" class="form-control form-control-custom" id="inputPassword" placeholder="•••••••• (min 6 caractères)" aria-label="Mot de passe" autocomplete="new-password" required>
                 </div>
+                <div class="form-check mb-4 text-start">
+                    <input class="form-check-input" type="checkbox" id="inputTerms" required>
+                    <label class="form-check-label text-light small" for="inputTerms">J'ai lu et j'accepte les <a href="/cgu" target="_blank" rel="noopener" class="text-light">CGU</a> et la <a href="/confidentialite" target="_blank" rel="noopener" class="text-light">politique de confidentialité</a>. *</label>
+                </div>
                 <button type="submit" id="btnSubmit" class="btn btn-login btn-primary w-100 text-light uppercase">S'inscrire</button>
             </form>
         </section>
@@ -105,7 +109,7 @@
             const response = await fetch("/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ pseudo, email, password, recaptchaToken })
+                body: JSON.stringify({ pseudo, email, password, recaptchaToken, acceptTerms: document.getElementById("inputTerms").checked })
             });
 
             const data = await response.json();

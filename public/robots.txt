@@ -1,0 +1,14 @@
+# Les robots des moteurs de recherche et des assistants IA sont autorisés
+# sur les pages publiques. L'espace connecté et l'API sont exclus.
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /client/
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+
+Sitemap: https://souflyhub.dev/sitemap.xml

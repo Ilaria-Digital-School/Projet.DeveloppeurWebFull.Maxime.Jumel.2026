@@ -22,7 +22,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 app.locals.assetUrl = (value) => {
     if (typeof value !== "string" || !value.trim()) return value;
-    if (/^(?:data:|https?:|\/\/)/i.test(value)) return value;
+    if (/^(?:data:|https?:|\/\/)/i.test(value) || value === "/images/avatar-default.svg") return value;
     return `https://assets.souflyhub.dev/${value.replace(/^\/+/, "")}`;
 };
 

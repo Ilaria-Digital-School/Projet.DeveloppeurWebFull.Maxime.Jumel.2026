@@ -84,6 +84,8 @@ if (isRateLimitEnabled) {
     console.log("🟡 Rate limiting désactivé en mode développement");
 }
 
+app.locals.legal = require("./legalInfo");
+app.use("/", require("./router/legal"));
 app.use("/", apiRouter);
 
 // Les erreurs de parsing JSON doivent rester des erreurs client, pas des 500.

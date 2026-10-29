@@ -39,7 +39,7 @@
                         <div class="d-flex align-items-center gap-3">
                             <div class="position-relative">
                                 <img id="editUserAvatarPreview"
-                                     src="https://i.pravatar.cc/80"
+                                     src="/images/avatar-default.svg"
                                      alt="Aperçu avatar"
                                      class="rounded-circle shadow-sm border border-2 border-primary border-opacity-25"
                                      style="width: 64px; height: 64px; object-fit: cover;">
@@ -240,7 +240,7 @@ function previewEditAvatar(url) {
         preview.src = url.trim();
     } else {
         const id = document.getElementById('editUserId')?.value || 'default';
-        preview.src = 'https://i.pravatar.cc/80?u=' + encodeURIComponent(id);
+        preview.src = '/images/avatar-default.svg';
     }
 }
 

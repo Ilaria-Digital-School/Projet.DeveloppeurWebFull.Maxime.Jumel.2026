@@ -2,9 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 const CONSENT_COOKIE = "cookie_consent";
-const CONSENT_VERSION = "1";
+const CONSENT_VERSION = "2";
 const CONSENT_MAX_AGE = 180 * 24 * 60 * 60 * 1000;
-const CONSENT_CATEGORIES = ["necessary", "preferences", "analytics", "marketing"];
+const CONSENT_CATEGORIES = ["necessary", "media"];
 
 const isProduction = process.env.NODE_ENV === "production";
 const cookieOptions = {
@@ -17,9 +17,7 @@ const cookieOptions = {
 const emptyConsent = () => ({
     version: CONSENT_VERSION,
     necessary: true,
-    preferences: false,
-    analytics: false,
-    marketing: false
+    media: false
 });
 
 const normalizeConsent = (value) => {

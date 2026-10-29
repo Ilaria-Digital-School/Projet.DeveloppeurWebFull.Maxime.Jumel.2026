@@ -23,7 +23,7 @@ const getTransporter = () => {
     });
 };
 
-const sendWelcomeEmail = async ({ email }) => {
+const sendWelcomeEmail = async ({ email, unsubscribeUrl }) => {
   if (process.env.EMAIL_MODE === "console") {
     console.log(`[WELCOME EMAIL - CONSOLE] To: ${email}`);
     return { mode: "console" };
@@ -35,12 +35,13 @@ const sendWelcomeEmail = async ({ email }) => {
     from: process.env.MAIL_FROM,
     to: email,
     subject: "Merci de vous être inscrit à la newsletter !",
-    text: "Bonjour,\n\nMerci pour votre inscription à notre newsletter. Nous sommes ravis de vous compter parmi nos abonnés.\n\nÀ bientôt,\nL'équipe Souflydev",
+    text: `Bonjour,\n\nMerci pour votre inscription à notre newsletter. Nous sommes ravis de vous compter parmi nos abonnés.\n\nÀ bientôt,\nL'équipe Souflydev\n\nSe désinscrire : ${unsubscribeUrl}`,
     html: `
       <p>Bonjour,</p>
       <p>Merci pour votre inscription à notre newsletter.</p>
       <p>Nous sommes ravis de vous compter parmi nos abonnés.</p>
       <p>À bientôt,<br>L'équipe Souflydev</p>
+      <p style="font-size:12px"><a href="${unsubscribeUrl}">Se désinscrire</a></p>
     `
   });
 

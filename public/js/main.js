@@ -15,7 +15,7 @@
       const res = await fetch('/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ email })
+        body: new URLSearchParams({ email, consent: document.getElementById('newsletter-consent').checked ? '1' : '' })
       });
 
       const data = await res.json();

@@ -3,8 +3,7 @@
     <div class="row gy-5">
       <div class="col-md-6">
         <h3 class="h4 fw-bold">
-          Get valuable strategy, culture and brand insights straight to your
-          inbox
+          Recevez nos conseils et actualités directement dans votre boîte mail
         </h3>
         <form class="mt-4" style="max-width: 25rem"  action="/subscribe" method="POST"  id="newsletter-form" autocomplete="off">
           <label for="newsletter-email" class="visually-hidden">Votre adresse email</label>
@@ -21,12 +20,17 @@
               <i class="bi bi-arrow-up-right fs-4" aria-hidden="true"></i>
             </button>
           </div>
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" id="newsletter-consent" name="consent" value="1" required>
+            <label class="form-check-label small" for="newsletter-consent">
+              J'accepte de recevoir la newsletter de <%= legal.siteName %> par email. Je peux me désinscrire à tout moment. *
+            </label>
+          </div>
           <div id="newsletter-alert" class="mt-3" aria-live="polite"></div>
         </form>
-        <p class="text-secondary fw-bold text-black mt-3 mb-0">
-          By signing up to receive emails from Motto, you agree to our
-          <a href="/page" class="text-dark text-decoration-underline">Privacy Policy</a>. We treat your info
-          responsibly.
+        <p class="text-dark small mt-3 mb-0">
+          Votre email sert uniquement à l'envoi de la newsletter (base légale : votre consentement). Voir la
+          <a href="/confidentialite" class="text-dark text-decoration-underline">politique de confidentialité</a>.
         </p>
       </div>
 
@@ -47,9 +51,9 @@
     <div class="row mt-5">
       <div class="col-md-6">
         <h4 class="h5 fw-bold">Contact</h4>
-        <p class="mt-3 mb-1">27 Division St,<br>77120 Coulommiers, France</p>
-        <a href="tel:+33647497528" class="d-block text-dark text-decoration-none mb-1">+33 6 47 49 75 28</a>
-        <a href="mailto:contact-me@souflyhub.fr" class="d-block text-dark text-decoration-none">contact-me@souflyhub.fr</a>
+        <p class="mt-3 mb-1"><%= legal.address %></p>
+        <a href="tel:<%= legal.phone.replace(/\s/g, '') %>" class="d-block text-dark text-decoration-none mb-1"><%= legal.phone %></a>
+        <a href="mailto:<%= legal.email %>" class="d-block text-dark text-decoration-none"><%= legal.email %></a>
       </div>
     </div>
 
@@ -57,7 +61,17 @@
 
     <div class="row align-items-center pt-3">
       <div class="col-6">
-        <p class="mb-0">Copyright © <%= new Date().getFullYear() %></p>
+        <p class="mb-2">© <%= new Date().getFullYear() %> <%= legal.siteName %> - <%= legal.publisherName %></p>
+        <nav aria-label="Informations légales">
+          <ul class="list-inline mb-0 small">
+            <li class="list-inline-item"><a href="/mentions-legales" class="text-dark">Mentions légales</a></li>
+            <li class="list-inline-item"><a href="/confidentialite" class="text-dark">Confidentialité</a></li>
+            <li class="list-inline-item"><a href="/cookies" class="text-dark">Cookies</a></li>
+            <li class="list-inline-item"><a href="/cgv" class="text-dark">CGV</a></li>
+            <li class="list-inline-item"><a href="/cgu" class="text-dark">CGU</a></li>
+            <li class="list-inline-item"><button type="button" class="btn btn-link btn-sm p-0 text-dark align-baseline" data-cookie-settings>Gérer mes cookies</button></li>
+          </ul>
+        </nav>
       </div>
       <div class="col-6 text-end">
         <a href="https://facebook.com" class="text-dark mx-2" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook fs-5" aria-hidden="true"></i></a>

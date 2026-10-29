@@ -1,0 +1,61 @@
+<%- include("../partials/legal-top", { title: "Conditions générales de vente | Souflydev", description: "Conditions générales de vente des prestations de développement web de Souflydev.", canonical: legal.siteUrl + "/cgv" }) %>
+<h1 class="fw-bold mb-4">Conditions générales de vente</h1>
+<p class="text-muted">Dernière mise à jour : <%= legal.lastUpdate %></p>
+<p class="alert alert-warning" role="note">Texte à faire relire par un professionnel du droit avant mise en ligne. Les champs entre crochets sont à compléter.</p>
+
+<h2 class="h4 mt-5">1. Vendeur</h2>
+<p><%= legal.publisherName %>, <%= legal.legalForm %>, SIRET <%= legal.siret %>, <%= legal.address %>. Email : <a href="mailto:<%= legal.email %>"><%= legal.email %></a>, téléphone : <%= legal.phone %>. TVA : <%= legal.vatNumber %>. Voir les <a href="/mentions-legales">mentions légales</a>.</p>
+
+<h2 class="h4 mt-5">2. Champ d'application</h2>
+<p>Les présentes conditions s'appliquent à toutes les prestations de services (création et maintenance de sites web, développement sur mesure, gestion de boutiques en ligne) vendues à des <strong>consommateurs</strong> (particuliers) et à des <strong>professionnels</strong>. Les articles réservés à une catégorie de clients sont signalés. Le client déclare les avoir lues et acceptées avant de signer le devis.</p>
+
+<h2 class="h4 mt-5">3. Prestations et devis</h2>
+<p>Chaque prestation fait l'objet d'un devis gratuit décrivant ses caractéristiques essentielles, son périmètre, les délais et le prix. Le contrat est conclu lorsque le client retourne le devis signé, avec la mention « Bon pour accord », après avoir coché ou indiqué qu'il accepte les présentes CGV. Aucun paiement en ligne n'est proposé sur le site.</p>
+
+<h2 class="h4 mt-5">4. Prix et paiement</h2>
+<p>Les prix sont indiqués sur le devis, en euros, toutes taxes comprises pour les consommateurs (hors taxes pour les professionnels), avec le détail de ce qui est inclus. Moyens de paiement acceptés : [À COMPLÉTER : virement, chèque, etc.]. Acompte : [À COMPLÉTER : ex. 30 % à la signature]. Solde : [À COMPLÉTER : ex. à la livraison, délai de paiement]. Une facture est remise pour chaque paiement.</p>
+
+<h2 class="h4 mt-5">5. Exécution et délais</h2>
+<p>Les prestations sont fournies à distance. Les délais indiqués au devis dépendent de la fourniture, par le client, des contenus et validations nécessaires. Aucun frais de livraison ne s'applique pour une prestation dématérialisée.</p>
+
+<h2 class="h4 mt-5">6. Droit de rétractation (consommateurs uniquement)</h2>
+<p>Le consommateur dispose de <strong>14 jours</strong> à compter de la conclusion du contrat pour se rétracter, sans motif, en envoyant le formulaire ci-dessous ou toute déclaration non équivoque à <a href="mailto:<%= legal.email %>"><%= legal.email %></a>. Si le client demande expressément que la prestation commence avant la fin de ce délai, il paiera un montant proportionnel à ce qui a été fourni jusqu'à la rétractation. Une fois la prestation entièrement exécutée, le droit de rétractation est perdu si le client l'a demandé expressément et a reconnu perdre ce droit. Il ne s'applique pas non plus aux prestations entièrement personnalisées selon les spécifications du client, lorsque la loi le permet.</p>
+<p>Le droit de rétractation ne s'applique pas aux clients professionnels.</p>
+
+<h2 class="h4 mt-5">7. Garanties légales (consommateurs)</h2>
+<p>Le consommateur bénéficie de la garantie légale de conformité (articles L.217-3 et suivants du Code de la consommation, pendant 2 ans pour les biens et contenus numériques, ou le temps de la fourniture pour les services numériques) et de la garantie des vices cachés (articles 1641 et suivants du Code civil). Ces garanties s'appliquent sans frais, indépendamment de toute garantie commerciale.</p>
+
+<h2 class="h4 mt-5">8. Propriété intellectuelle</h2>
+<p>Les droits d'exploitation sur les livrables sont cédés au client à compter du paiement intégral du prix, dans les limites prévues au devis. Jusqu'à ce paiement, le prestataire reste propriétaire des livrables (réserve de propriété). Le prestataire peut citer la réalisation dans son portfolio, sauf opposition écrite du client.</p>
+
+<h2 class="h4 mt-5">9. Clients professionnels : retard de paiement</h2>
+<p>Toute facture non payée à l'échéance porte, de plein droit, des pénalités de retard au taux de [À COMPLÉTER : au moins 3 fois le taux d'intérêt légal ; ex. 3 × le taux légal], ainsi qu'une indemnité forfaitaire de <strong>40 €</strong> pour frais de recouvrement (article L.441-10 du Code de commerce), sans préjudice d'une indemnisation complémentaire sur justificatif.</p>
+
+<h2 class="h4 mt-5">10. Responsabilité</h2>
+<p>Le prestataire est tenu d'une obligation de moyens. Sa responsabilité est limitée aux dommages directs et, pour les clients professionnels, plafonnée au montant payé pour la prestation concernée. Ces limites ne s'appliquent pas à l'égard des consommateurs lorsque la loi l'interdit.</p>
+
+<h2 class="h4 mt-5">11. Données personnelles</h2>
+<p>Voir la <a href="/confidentialite">politique de confidentialité</a>.</p>
+
+<h2 class="h4 mt-5">12. Réclamations</h2>
+<p>Toute réclamation peut être adressée à <a href="mailto:<%= legal.email %>"><%= legal.email %></a>. Une réponse est apportée dans un délai de [À COMPLÉTER : ex. 15 jours].</p>
+
+<h2 class="h4 mt-5">13. Médiation (consommateurs)</h2>
+<p>En cas de litige non résolu, le consommateur peut recourir gratuitement au médiateur de la consommation : <%= legal.mediator.name %>, <%= legal.mediator.address %>, <%= legal.mediator.website %>. Il peut aussi utiliser la plateforme européenne de règlement en ligne des litiges : <a href="https://ec.europa.eu/consumers/odr" rel="noopener noreferrer">ec.europa.eu/consumers/odr</a>.</p>
+
+<h2 class="h4 mt-5">14. Droit applicable et tribunal compétent</h2>
+<p>Les CGV sont soumises au droit français. Pour les consommateurs, le litige relève des juridictions compétentes selon les règles légales. Pour les professionnels, le tribunal compétent est celui de [À COMPLÉTER : ville du siège, ex. Meaux], même en cas de pluralité de défendeurs.</p>
+
+<h2 class="h4 mt-5" id="retractation">Annexe : formulaire type de rétractation</h2>
+<p>(À remplir et renvoyer uniquement si vous souhaitez vous rétracter.)</p>
+<p>À l'attention de <%= legal.publisherName %>, <%= legal.address %>, <%= legal.email %> :</p>
+<p>Je/Nous (*) vous notifie/notifions (*) par la présente ma/notre (*) rétractation du contrat portant sur la prestation de services ci-dessous :</p>
+<ul>
+  <li>Commandé le (*) / reçu le (*) : ______</li>
+  <li>Nom du/des consommateur(s) : ______</li>
+  <li>Adresse du/des consommateur(s) : ______</li>
+  <li>Signature (uniquement en cas de notification sur papier) : ______</li>
+  <li>Date : ______</li>
+</ul>
+<p class="small text-muted">(*) Rayez la mention inutile.</p>
+<%- include("../partials/legal-bottom") %>

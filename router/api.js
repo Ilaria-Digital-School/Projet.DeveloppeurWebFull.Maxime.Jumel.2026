@@ -298,9 +298,31 @@ router.delete("/articles/:id", isAdmin, async (req, res) => {
   }
 });
 // newletter routes
+const newsletterToken = (email) => crypto
+    .createHmac("sha256", process.env.SESSION_SECRET || process.env.JWT_SECRET)
+    .update(email)
+    .digest("hex");
+const newsletterUnsubscribeUrl = (email) =>
+    `${(process.env.APP_URL || "").replace(/\/$/, "")}/unsubscribe?email=${encodeURIComponent(email)}&token=${newsletterToken(email)}`;
+
+router.get("/unsubscribe", async (req, res) => {
+    const email = typeof req.query.email === "string" ? req.query.email.trim().toLowerCase() : "";
+    const token = typeof req.query.token === "string" ? req.query.token : "";
+    const expected = email ? newsletterToken(email) : "";
+    const valid = expected.length === token.length &&
+        crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(token));
+    if (!valid) {
+        return res.status(400).send("Lien de désinscription invalide.");
+    }
+    await NewLetter.deleteOne({ email });
+    return res.send("Vous êtes désinscrit de la newsletter. Votre adresse a été supprimée.");
+});
 router.post("/subscribe", rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }), async (req, res) => {
-    console.log("📩 [subscribe] req.body:", req.body);
-    const email = req.body?.email?.trim();
+    const email = req.body?.email?.trim().toLowerCase();
+
+    if (req.body?.consent !== "1") {
+        return res.json({ success: false, message: "Veuillez accepter de recevoir la newsletter." });
+    }
 
     if (!email || !emailPattern.test(email)) {
         return res.json({ success: false, message: "Adresse email invalide." });
@@ -313,12 +335,12 @@ router.post("/subscribe", rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }), asy
             return res.json({ success: false, message: "Vous êtes déjà inscrit." });
         }
 
-        const newLetter = new NewLetter({ email });
+        const newLetter = new NewLetter({ email, consentAt: new Date() });
         await newLetter.save();
 
         // Tu peux envoyer un mail de bienvenue ici si tu veux
         try {
-            await sendWelcomeEmail({ email });
+            await sendWelcomeEmail({ email, unsubscribeUrl: newsletterUnsubscribeUrl(email) });
         } catch (emailError) {
             console.error("Erreur envoi mail bienvenue:", emailError);
         }
@@ -374,9 +396,12 @@ router.get("/verify-email", async (req, res) => {
 });
 
 router.post("/register", verifyRecaptcha("register"), async (req, res) => {
-    const { email, pseudo, password } = req.body || {};
+    const { email, pseudo, password, acceptTerms } = req.body || {};
     const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : email;
     const normalizedPseudo = typeof pseudo === "string" ? pseudo.trim() : pseudo;
+    if (acceptTerms !== true) {
+        return res.status(400).json({ message: "Vous devez accepter les CGU et la politique de confidentialité.", errcode: 400, success: false });
+    }
     try {
         const validationError = validateCredentials({ email: normalizedEmail, pseudo: normalizedPseudo, password }, true);
         if (validationError) {

@@ -1,0 +1,24 @@
+<%- include("../partials/legal-top", { title: "Politique de cookies | Souflydev", description: "Liste des cookies et traceurs utilisés par le site Souflydev, leur finalité et leur durée.", canonical: legal.siteUrl + "/cookies" }) %>
+<h1 class="fw-bold mb-4">Politique de cookies</h1>
+<p class="text-muted">Dernière mise à jour : <%= legal.lastUpdate %></p>
+<p>Le site n'utilise <strong>aucun outil de mesure d'audience ni de publicité</strong>. Les seuls traceurs soumis à votre accord sont les contenus tiers embarqués (vidéo YouTube, carte Google Maps), chargés <strong>uniquement après votre choix</strong>.</p>
+<p><button type="button" class="btn btn-dark" data-cookie-settings>Gérer mes cookies</button></p>
+
+<h2 class="h4 mt-5">Inventaire</h2>
+<div class="table-responsive">
+<table class="table table-bordered align-middle">
+  <caption class="visually-hidden">Liste des cookies et traceurs</caption>
+  <thead><tr><th scope="col">Nom / service</th><th scope="col">Émetteur</th><th scope="col">Finalité</th><th scope="col">Durée</th><th scope="col">Consentement</th></tr></thead>
+  <tbody>
+    <tr><td>soufly.sid</td><td>Ce site</td><td>Session de connexion et sécurité</td><td>1 heure</td><td>Non (strictement nécessaire)</td></tr>
+    <tr><td>cookie_consent</td><td>Ce site</td><td>Mémoriser votre choix de cookies</td><td>6 mois</td><td>Non (strictement nécessaire)</td></tr>
+    <tr><td>Google reCAPTCHA v3</td><td>Google LLC</td><td>Protection anti-robots des pages de connexion, d'inscription et de mot de passe oublié</td><td>Selon Google</td><td>Non demandé : mesure de sécurité (voir la <a href="/confidentialite">politique de confidentialité</a>)</td></tr>
+    <tr><td>YouTube (vidéo de la page d'accueil)</td><td>Google LLC</td><td>Lecture de la vidéo</td><td>Selon Google</td><td>Oui, avant chargement</td></tr>
+    <tr><td>Google Maps (pages Contact et À propos)</td><td>Google LLC</td><td>Affichage de la carte</td><td>Selon Google</td><td>Oui, avant chargement</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="h4 mt-5">Gérer votre choix</h2>
+<p>Votre choix est conservé 6 mois, puis nous vous le redemandons. Vous pouvez le modifier ou le retirer à tout moment avec le bouton ci-dessus ou le lien « Gérer mes cookies » en bas de chaque page. Vous pouvez aussi supprimer les cookies depuis les paramètres de votre navigateur.</p>
+<%- include("../partials/legal-bottom") %>

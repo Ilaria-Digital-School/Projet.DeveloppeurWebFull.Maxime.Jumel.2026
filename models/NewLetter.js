@@ -5,6 +5,7 @@ const NewLetterSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
     subscribed: { type: Boolean, default: true },
+    consentAt: { type: Date },
 });
 
 NewLetterSchema.pre('save', async function () {
