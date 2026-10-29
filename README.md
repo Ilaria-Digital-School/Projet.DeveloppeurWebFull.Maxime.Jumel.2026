@@ -46,6 +46,7 @@ Les donnees sont stockees dans MongoDB avec Mongoose.
 - [Authentification et roles](#authentification-et-roles)
 - [Format des reponses et erreurs](#format-des-reponses-et-erreurs)
 - [Securite](#securite)
+- [Conformite legale](#conformite-legale)
 - [Docker et reverse proxy](#docker-et-reverse-proxy)
 - [Tests](#tests)
 - [Depannage](#depannage)
@@ -63,6 +64,8 @@ Les donnees sont stockees dans MongoDB avec Mongoose.
 - 🎫 Tickets support avec reponses client/admin.
 - 📊 Journal d'activite MongoDB affiche dans le dashboard administrateur.
 - 🖼️ Uploads d'images en memoire, limites a 5 Mo, stockes en data URI MongoDB.
+- ⚖️ Pages legales (mentions, confidentialite, cookies, CGV, CGU), bandeau cookies
+  et consentement newsletter : voir [Conformite legale](#conformite-legale).
 - 🚦 Rate limiting, CSP avec nonce, HSTS en production et en-tetes HTTP de securite.
 
 ## Versions et stack
@@ -199,11 +202,14 @@ Creer un compte inactif et envoyer le lien de verification.
 {
   "pseudo": "alice",
   "email": "alice@example.com",
-  "password": "MotDePasse1!"
+  "password": "MotDePasse1!",
+  "acceptTerms": true
 }
 ```
 
-Avec reCAPTCHA actif, ajouter `recaptchaToken`. Le pseudo accepte 3 a 30
+`acceptTerms` doit valoir `true` (acceptation des CGU et de la politique de
+confidentialite), sinon la route repond `400`. Avec reCAPTCHA actif, ajouter
+`recaptchaToken`. Le pseudo accepte 3 a 30
 caracteres alphanumeriques, `_`, `.` ou `-`. Le mot de passe doit contenir une
 minuscule, une majuscule, un chiffre et un caractere special.
 
@@ -429,11 +435,14 @@ Inscrire une adresse a la newsletter :
 
 ```json
 {
-  "email": "alice@example.com"
+  "email": "alice@example.com",
+  "consent": "1"
 }
 ```
 
-Cette route est limitee a 100 requetes par IP toutes les 15 minutes.
+Le champ `consent` est obligatoire (case non pre-cochee dans le pied de page).
+Le mail de bienvenue contient un lien `GET /unsubscribe?email=...&token=...`
+(token HMAC) qui supprime l'adresse. Cette route est limitee a 100 requetes par IP toutes les 15 minutes.
 
 #### `POST /contact` — Public
 
@@ -451,6 +460,11 @@ API JSON stable.
 | `GET` | `/portfolio` | Projets |
 | `GET` | `/project?id=...` | Detail d'un projet |
 | `GET` | `/services` | Catalogue de services |
+| `GET` | `/mentions-legales` | Mentions legales |
+| `GET` | `/confidentialite` | Politique de confidentialite |
+| `GET` | `/cookies` | Politique de cookies |
+| `GET` | `/cgv` | Conditions generales de vente |
+| `GET` | `/cgu` | Conditions generales d'utilisation |
 | `GET` | `/dashboard` | Dashboard connecte |
 | `GET` | `/client/ticket` | Tickets du client |
 | `GET` | `/.well-known/security.txt` | Contact de securite |
@@ -520,6 +534,30 @@ obsolete provoquent un refus.
 - Les erreurs JSON malforme renvoient `400`.
 - Les activites de connexion et d'inscription sont stockees dans `ActivityLog`
   et visibles dans « Activite recente » pour les administrateurs.
+
+## Conformite legale
+
+Le site applique le RGPD, la LCEN et les regles CNIL sur les cookies.
+
+- **Identite de l'editeur** : toutes les informations affichees (mentions
+  legales, CGV, pied de page) viennent de `legalInfo.js`. Les champs
+  `[A COMPLETER]` et `[MEDIATEUR A CHOISIR]` doivent etre remplis avant la mise
+  en ligne (SIRET, TVA, hebergeur, mediateur de la consommation).
+- **Pages** : `router/legal.js` sert les vues de `views/legal/`.
+- **Cookies** : seuls les cookies `soufly.sid` (session) et `cookie_consent`
+  (choix, 180 jours) sont necessaires. YouTube et Google Maps ne sont charges
+  qu'apres consentement (`data-embed-src` dans les vues, charges par
+  `public/js/cookie-consent.js`). Le lien « Gerer mes cookies » du pied de page
+  rouvre le bandeau. Categories gerees par `middleware/cookieManager.js` :
+  `necessary` et `media`.
+- **reCAPTCHA** reste charge sans consentement sur les pages de connexion,
+  d'inscription et de mot de passe oublie. C'est un point a risque documente
+  dans la politique de confidentialite ; une alternative sans traceur est
+  recommandee.
+- **Referencement et IA** : `public/robots.txt`, `public/sitemap.xml` et
+  `public/llms.txt`.
+- Les textes juridiques (CGV, CGU) sont des bases a faire relire par un
+  professionnel du droit.
 
 ## Docker et reverse proxy
 
