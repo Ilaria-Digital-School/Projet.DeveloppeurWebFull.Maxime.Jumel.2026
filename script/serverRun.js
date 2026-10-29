@@ -5,6 +5,7 @@ const app = express();
 const config = require("../config");
 const port = config.port;
 const path = require("path");
+const fs = require("fs");
 const chalk = require("chalk");
 const { exposeCookieConsent, router: cookieRouter } = require("../middleware/cookieManager");
 const { securityHeaders } = require("../middleware/securityHeaders");
@@ -20,10 +21,17 @@ if (process.env.NODE_ENV === "production") {
 }
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
+const publicDir = path.join(__dirname, "../public");
+// Sert l'image depuis public/ si elle y existe, sinon depuis le domaine d'assets.
 app.locals.assetUrl = (value) => {
     if (typeof value !== "string" || !value.trim()) return value;
-    if (/^(?:data:|https?:|\/\/)/i.test(value) || value === "/images/avatar-default.svg") return value;
-    return `https://assets.souflyhub.dev/${value.replace(/^\/+/, "")}`;
+    if (/^(?:data:|https?:|\/\/)/i.test(value)) return value;
+    const relative = value.replace(/^\/+/, "");
+    const localFile = path.resolve(publicDir, relative);
+    if (localFile.startsWith(publicDir + path.sep) && fs.existsSync(localFile)) {
+        return `/${relative}`;
+    }
+    return `https://assets.souflyhub.dev/${relative}`;
 };
 
 const SESSION_COOKIE_NAME = process.env.SESSION_COOKIE_NAME || "soufly.sid";
