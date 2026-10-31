@@ -1,0 +1,35 @@
+<%- include("../partials/legal-top", { title: "Mentions légales | Souflydev", description: "Mentions légales du site Souflydev : éditeur, hébergeur et contact.", canonical: legal.siteUrl + "/mentions-legales" }) %>
+<h1 class="fw-bold mb-4">Mentions légales</h1>
+<p class="text-muted">Dernière mise à jour : <%= legal.lastUpdate %></p>
+
+<h2 class="h4 mt-5">Éditeur du site</h2>
+<ul>
+  <li>Site : <%= legal.siteName %> (<%= legal.siteUrl %>)</li>
+  <li>Éditeur : <%= legal.publisherName %>, <%= legal.legalForm %></li>
+  <li>SIRET : <%= legal.siret %></li>
+  <li>TVA : <%= legal.vatNumber %></li>
+  <li>Adresse : <%= legal.address %></li>
+  <li>Email : <a href="mailto:<%= legal.email %>"><%= legal.email %></a></li>
+  <li>Téléphone : <a href="tel:<%= legal.phone.replace(/\s/g, '') %>"><%= legal.phone %></a></li>
+  <li>Directeur de la publication : <%= legal.publicationDirector %></li>
+</ul>
+
+<h2 class="h4 mt-5">Hébergeur</h2>
+<ul>
+  <li>Nom : <%= legal.host.name %></li>
+  <li>Adresse : <%= legal.host.address %></li>
+  <li>Téléphone : <%= legal.host.phone %></li>
+</ul>
+
+<h2 class="h4 mt-5">Propriété intellectuelle</h2>
+<p>Les textes, images, logos et le code du site sont, sauf mention contraire, la propriété de l'éditeur. Toute reproduction sans autorisation écrite est interdite. Les projets présentés dans le portfolio restent la propriété de leurs auteurs et clients respectifs.</p>
+
+<h2 class="h4 mt-5">Données personnelles et cookies</h2>
+<p>Voir la <a href="/confidentialite">politique de confidentialité</a> et la <a href="/cookies">politique de cookies</a>.</p>
+
+<h2 class="h4 mt-5">Médiation de la consommation</h2>
+<p>Voir les <a href="/cgv">conditions générales de vente</a> (article « Médiation »).</p>
+
+<h2 class="h4 mt-5">Liens externes</h2>
+<p>L'éditeur n'est pas responsable du contenu des sites tiers vers lesquels le site renvoie.</p>
+<%- include("../partials/legal-bottom") %>

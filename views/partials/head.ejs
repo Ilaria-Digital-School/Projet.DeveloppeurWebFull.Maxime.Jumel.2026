@@ -1,0 +1,143 @@
+<%
+  // En-tête partagé. Locaux attendus (tous optionnels sauf `title`) :
+  //   title       : titre de la page
+  //   description : meta description (SEO)
+  //   canonical   : URL canonique, sert aussi d'og:url par défaut
+  //   keywords    : meta keywords
+  //   social      : booléen, émet le bloc Open Graph / Twitter (défaut true)
+  //   image       : image de partage (défaut : logo Souflydev)
+  //   imageType   : type MIME de l'image (défaut image/webp)
+  //   locale      : og:locale (défaut en_US)
+  //   language    : meta language (défaut English)
+  //   styles      : tableau de feuilles de style locales, ex. ["/css/style.css"]
+//   stylesLast  : charge les styles locaux apres Bootstrap (defaut false)
+//   icons       : charge bootstrap-icons en plus (défaut true)
+//   fontAwesome : charge Font Awesome en plus (défaut false)
+//   vendor      : charge Bootstrap + icônes/FA locales (défaut true)
+  //   extra       : HTML additionnel injecté avant la fermeture du head
+  const title = locals.title;
+  const description = locals.description || "";
+  const canonical = locals.canonical || "";
+  const keywords = locals.keywords || "";
+  const social = locals.social !== false;
+  const image = locals.image || "/images/upload/soulfydev.webp";
+  const imageType = locals.imageType || "image/webp";
+  const locale = locals.locale || "fr_FR";
+  const language = locals.language || "French";
+  const styles = locals.styles || ["/css/style.css"];
+  const stylesLast = locals.stylesLast === true;
+  const icons = locals.icons !== false;
+  const fontAwesome = locals.fontAwesome === true;
+  const vendor = locals.vendor !== false;
+  const extra = locals.extra || "";
+
+  const ogUrl = canonical;
+  const siteName = "Souflydev";
+  const author = "Maxime Jumel";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: canonical || "https://souflyhub.dev",
+    description,
+    inLanguage: "fr-FR",
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      url: "https://souflyhub.dev",
+      founder: {
+        "@type": "Person",
+        name: author
+      }
+    }
+  };
+%>
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/img-fallback.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181a1b">
+  <meta name="color-scheme" content="light">
+  <title><%= title %></title>
+
+  <% if (!stylesLast) { styles.forEach((href) => { %>
+  <link rel="stylesheet" href="<%= href %>">
+  <% }); } %>
+
+  <!-- SEO -->
+  <% if (description) { %>
+  <meta name="description" content="<%= description %>">
+  <% } %>
+  <% if (canonical) { %>
+  <link rel="canonical" href="<%= canonical %>">
+  <% } %>
+  <% if (keywords) { %>
+  <meta name="keywords" content="<%= keywords %>">
+  <% } %>
+  <meta name="author" content="<%= author %>">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="content-language" content="fr">
+  <meta name="language" content="<%= language %>">
+  <meta name="rating" content="general">
+  <meta name="distribution" content="global">
+  <meta name="category" content="Portfolio">
+  <meta name="geo.region" content="FR-IDF">
+  <meta name="geo.placename" content="Coulommiers">
+  <meta name="geo.position" content="48.8096;3.0822">
+  <meta name="ICBM" content="48.8096, 3.0822">
+  <script type="application/ld+json"><%- JSON.stringify(structuredData) %></script>
+
+  <% if (social) { %>
+  <!-- Open Graph -->
+  <meta property="og:title" content="<%= title %>">
+  <% if (description) { %>
+  <meta property="og:description" content="<%= description %>">
+  <% } %>
+  <% if (ogUrl) { %>
+  <meta property="og:url" content="<%= ogUrl %>">
+  <% } %>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="<%= locale %>">
+  <meta property="og:site_name" content="<%= siteName %>">
+  <meta property="og:image" content="<%= image %>">
+  <meta property="og:image:secure_url" content="<%= image %>">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="<%= siteName %>">
+  <meta property="og:image:type" content="<%= imageType %>">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <% if (description) { %>
+  <meta name="twitter:description" content="<%= description %>">
+  <% } %>
+  <meta name="twitter:image" content="<%= image %>">
+  <meta name="twitter:image:width" content="1920">
+  <meta name="twitter:image:height" content="1080">
+  <meta name="twitter:image:alt" content="<%= siteName %>">
+  <meta name="twitter:image:type" content="<%= imageType %>">
+  <meta name="twitter:site" content="@soulfydev">
+  <meta name="twitter:creator" content="@soulfydev">
+  <% } %>
+
+  <% if (vendor) { %>
+  <!-- Bootstrap 5.3.8 servi localement depuis public/ -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Ressources servies en local (public/) : polices + bootstrap-icons 1.13.1 -->
+  <link href="/css/vendor/fonts.css" rel="stylesheet">
+  <% if (icons) { %>
+  <link rel="stylesheet" href="/css/vendor/bootstrap-icons/1.13.1/bootstrap-icons.min.css">
+  <% } %>
+  <% } %>
+  <% if (fontAwesome) { %>
+  <link rel="stylesheet" href="/css/vendor/font-awesome/all.min.css">
+  <% } %>
+
+  <% if (stylesLast) { styles.forEach((href) => { %>
+  <link rel="stylesheet" href="<%= href %>">
+  <% }); } %>
+
+  <%- extra %>
+</head>

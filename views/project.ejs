@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+  <%- include("partials/head", { title: "Souflydev | Project Case Study", description: "Read this Souflydev case study to discover project goals, solutions, and measurable outcomes in web development.", canonical: "https://souflyhub.dev/project", keywords: "Portfolio, Web and mobile application developer" }) %>
+
+  <body>
+    <!-- Navigation Bar -->
+<%- include("partials/header", { active: "portfolio", variant: "light" }) %>
+
+  <main id="main-content" class="content">
+    <div class="container">
+      <nav
+        style="--bs-breadcrumb-divider: &quot;|&quot;"
+        aria-label="breadcrumb"
+        class="px-3 mt-5 py-2"
+      >
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="./" class="text-decoration-none text-dark">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="./portfolio.html" class="text-decoration-none text-dark"
+              >Portfolio</a
+            >
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= project ? project.title : "Projet introuvable" %>
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="container">
+        <div id="carouselExampleFade" class="carousel slide carousel-fade mt-5">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-aos="zoom-in" data-aos-delay="200">
+              <img
+                src="<%= assetUrl(project && project.imageUrl ? project.imageUrl : 'images/projet/menu/geralt-data-4404730.webp') %>"
+                class="d-block w-75 mx-auto mt-5 image-project"
+                style="max-height: 50rem; object-fit: contain"
+                alt="magazin de bonbon ">
+            </div>
+            <div class="carousel-item" data-aos="zoom-in" data-aos-delay="200">
+              <img
+                src="<%= assetUrl(project && project.imageUrl ? project.imageUrl : 'images/projet/menu/jutube-candy-8962561_1920.webp') %>"
+                class="d-block w-75 mx-auto mt-5 image-project"
+                style="max-height: 50rem; object-fit: contain"
+                alt="magazin de bonbon livre de boutique ">
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleFade"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleFade"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="container mb-5 mt-5">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <h1 id="title-project"><%= project ? project.title : "Projet introuvable" %></h1>
+            <div class="fs-4" style="width: auto">
+              <div id="description-project"><%= project ? project.description : "Ce projet n'existe pas." %></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 mt-5 p-3 m-3 rounded w-50 h-25">
+            <h1
+              class="text-start fs-1 d-block w-100 display-3 m-4"
+              id="challenge-solution"
+            >
+              <i class="bi bi-arrow-up-right"></i>               Défi et solution
+            </h1>
+            <p
+              class="text-start fs-5 d-block"
+              id="description-challenge-solution"
+            >
+              <%= project && project.description ? project.description : "Aucune information disponible." %>
+            </p>
+          </div>
+          <div
+            class="col-6 col-md-3 mt-5 p-3 m-3 rounded w-25 h-25"
+            style="min-width: 6.25rem"
+          >
+            <span class="text-start fs-3 d-block" style="width: 100%">
+              <i class="bi bi-arrow-down-right"></i> Client</span
+            >
+            <p class="text-start fs-5 d-block client_pseudo"><%= project?.client || "Non renseigné" %></p>
+
+            <span class="text-start d-block w-100 fs-3">
+              <i class="bi bi-arrow-down-right"></i>Project Type</span
+            >
+            <p class="text-start fs-5 d-block projetType"><%= project?.projectType || "Non renseigné" %></p>
+
+            <span class="text-start d-block w-100 fs-3">
+              <i class="bi bi-arrow-down-right"></i>Location</span
+            >
+            <p class="text-start fs-5 d-block Location"><%= project?.location || "Non renseigné" %></p>
+
+            <span class="text-start d-block w-100 fs-3">
+              <i class="bi bi-arrow-down-right"></i>Budget</span
+            >
+            <p class="text-start fs-5 d-block budjet"><%= project?.budget || "Non renseigné" %></p>
+
+            <span class="text-start d-block w-100 fs-3">
+              <i class="bi bi-arrow-down-right"></i>Duration</span
+            >
+            <p class="text-start fs-5 d-block duration"><%= project?.duration || "Non renseigné" %></p>
+          </div>
+          <div class="col-12 col-md-6 p-3 m-3 bg-light rounded w-100">
+            <span class="text-start fs-1 m-4 px-3 py-2">
+              <i class="bi bi-arrow-right"></i> Final Result</span
+            >
+            <p class="text-start fs-5 d-block">
+              <%= project?.result || project?.description || "Aucun résultat renseigné." %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5 col-md-5 mb-2">
+          <a
+            href="./"
+            class="btn bg-light rounded text-dark d-flex justify-content-center align-items-center p-3 w-100 text-decoration-none fs-5"
+          >
+            <i class="bi bi-arrow-left me-2"></i>
+            Previous Post
+          </a>
+        </div>
+        <div class="col-lg-5 col-md-5 mb-2">
+          <a
+            href="./"
+            class="btn bg-light rounded text-dark d-flex justify-content-center align-items-center p-3 w-100 text-decoration-none fs-5"
+          >
+            Next Post
+            <i class="bi bi-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="container-fluid p-4 mx-auto text-center"
+      style="background-color: rgb(2, 6, 255)"
+    >
+      <div class="p-5 mx-auto text-center">
+        <h2
+          id="typing-text"
+          class="h4"
+          style="color: rgb(250, 250, 250); margin: 0"
+        >
+          What we can do for our clients
+        </h2>
+      </div>
+    </div>
+
+  </main>
+
+<%- include("partials/footer") %>
+    <script src="/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+   
+      <%- include("partials/cookie-consent") %>
+</body>
+</html>

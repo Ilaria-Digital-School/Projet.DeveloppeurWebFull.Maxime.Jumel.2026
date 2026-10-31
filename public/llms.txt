@@ -1,0 +1,20 @@
+# Souflydev
+
+> Site de Maxime Jumel, développeur web full stack à Coulommiers (77, France). Création de sites web, développement sur mesure et gestion de boutiques en ligne, pour particuliers et professionnels.
+
+## Pages principales
+
+- [Accueil](https://souflyhub.dev/): présentation, réalisations et vidéo
+- [À propos](https://souflyhub.dev/about): qui je suis et comment je travaille
+- [Services](https://souflyhub.dev/services): prestations proposées
+- [Portfolio](https://souflyhub.dev/portfolio): projets réalisés
+- [Blog](https://souflyhub.dev/blog): articles
+- [Contact](https://souflyhub.dev/contact): demande de devis ou de renseignements
+
+## Informations légales
+
+- [Mentions légales](https://souflyhub.dev/mentions-legales)
+- [Politique de confidentialité](https://souflyhub.dev/confidentialite)
+- [Politique de cookies](https://souflyhub.dev/cookies)
+- [Conditions générales de vente](https://souflyhub.dev/cgv)
+- [Conditions générales d'utilisation](https://souflyhub.dev/cgu)

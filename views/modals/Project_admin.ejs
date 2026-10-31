@@ -1,0 +1,38 @@
+<div class="modal fade" id="modalProjectAdmin" tabindex="-1" aria-labelledby="modalProjectAdminLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <h2 class="modal-title h5" id="modalProjectAdminLabel">Créer un contenu portfolio</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <form action="/projects" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="project-admin-title" class="form-label">Titre</label>
+                        <input id="project-admin-title" name="title" class="form-control" maxlength="160" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="project-admin-description" class="form-label">Description</label>
+                        <textarea id="project-admin-description" name="description" class="form-control" rows="5" maxlength="5000" required></textarea>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label" for="project-admin-type">Type</label><input id="project-admin-type" name="projectType" class="form-control"></div>
+                        <div class="col-md-6"><label class="form-label" for="project-admin-client">Client</label><input id="project-admin-client" name="client" class="form-control"></div>
+                        <div class="col-md-6"><label class="form-label" for="project-admin-location">Lieu</label><input id="project-admin-location" name="location" class="form-control"></div>
+                        <div class="col-md-6"><label class="form-label" for="project-admin-budget">Budget</label><input id="project-admin-budget" name="budget" class="form-control"></div>
+                        <div class="col-md-6"><label class="form-label" for="project-admin-duration">Durée</label><input id="project-admin-duration" name="duration" class="form-control"></div>
+                        <div class="col-md-6"><label class="form-label" for="project-admin-image">Image</label><input id="project-admin-image" name="image" type="file" class="form-control" accept="image/jpeg,image/png,image/webp"></div>
+                    </div>
+                    <div class="mt-3">
+                        <label for="project-admin-result" class="form-label">Résultat final</label>
+                        <textarea id="project-admin-result" name="result" class="form-control" rows="3" maxlength="3000"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Créer le contenu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

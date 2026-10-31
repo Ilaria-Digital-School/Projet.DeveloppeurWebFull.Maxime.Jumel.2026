@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<%- include("partials/head", { title: "Souflydev | About Maxime Jumel - Full Stack Developer", description: "Discover Maxime Jumel, full stack web developer, and explore how Souflydev builds high-performance websites for business growth.", canonical: "https://souflyhub.dev/page", keywords: "Maxime Jumel, développeur web, full stack, e-commerce, création site internet", stylesLast: true }) %>
+<body class="bg-light">
+
+  <!-- Navigation Bar -->
+<%- include("partials/header", { active: "page", variant: "light" }) %>
+
+  <main id="main-content">
+    <section>
+      <div class="row align-items-center gy-5 container-fluid m-auto">
+        <!-- Portrait Box -->
+        <div class="col-12 col-md-6 col-lg-5">
+          <div class="position-relative">
+            <!-- decorative background square -->
+            <div class="position-absolute rounded-4 opacity-10 top-0 start-0 translate-middle-x mt-4 ms-4 w-100 h-100" ></div>
+            <div class="card border-0 shadow-lg overflow-hidden rounded-4">
+              <img src="/images/upload/soulfydev.webp" class="card-img-top img-fluid w-100" style="object-fit: cover; min-height: 28.125rem;" alt="Photo de profil de Maxime Jumel, développeur web full stack">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bio text Box -->
+        <div class="col-12 col-md-6 offset-lg-1 col-lg-6">
+          <h1 class="fw-bold display-6 mb-4">
+            Hello, my name is <span class="text-primary text-gradient fw-extrabold">Maxime Jumel</span>,<br>
+            full stack web developer and creator of websites
+          </h1>
+          <p class="fs-5 text-muted leading-relaxed mb-4">
+            I create websites and specialize in managing online stores. My goal is to support you from start to finish in the realization of your web projects, to help you achieve your goals and ensure optimal performance according to the specific needs of each project.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="/contact" class="btn btn-primary btn-lg px-4 py-3 fw-bold rounded-3 shadow-sm transition-all hover-up">Contact me</a>
+            <a href="/portfolio" class="btn btn-outline-dark btn-lg px-4 py-3 fw-bold rounded-3">See my portfolio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills and Features section for richer aesthetics -->
+    <section class="container py-5 my-5">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Why work with me?</h2>
+        <p class="text-muted">Technical skills to boost your online projects</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 transition-all hover-shadow">
+            <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-4" style="width: 3.75rem; height: 3.75rem;">
+              <i class="bi bi-code-slash fs-3"></i>
+            </div>
+            <h3 class="h5 fw-bold mb-3">Tailor-made Development</h3>
+            <p class="text-muted mb-0">Creation of web solutions adapted to your specifications, performant, secure and scalable.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 transition-all hover-shadow">
+            <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-4" style="width: 3.75rem; height: 3.75rem;">
+              <i class="bi bi-cart3 fs-3"></i>
+            </div>
+            <h3 class="h5 fw-bold mb-3">E-Commerce Expertise</h3>
+            <p class="text-muted mb-0">Management of product catalog, stock automation, billing tunnels and secure payment integrations.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm p-4 rounded-4 transition-all hover-shadow">
+            <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-4" style="width: 3.75rem; height: 3.75rem;">
+              <i class="bi bi-lightning fs-3"></i>
+            </div>
+            <h3 class="h5 fw-bold mb-3">Optimisation & Performance</h3>
+            <p class="text-muted mb-0">Lightweight sites, clean code optimized for natural referencing (SEO) and ultra-fast loading times.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>
+  <script src="/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+    <%- include("partials/cookie-consent") %>
+</body>
+</html>

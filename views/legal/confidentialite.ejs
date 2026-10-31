@@ -1,0 +1,47 @@
+<%- include("../partials/legal-top", { title: "Politique de confidentialité | Souflydev", description: "Comment Souflydev collecte, utilise et protège vos données personnelles (RGPD).", canonical: legal.siteUrl + "/confidentialite" }) %>
+<h1 class="fw-bold mb-4">Politique de confidentialité</h1>
+<p class="text-muted">Dernière mise à jour : <%= legal.lastUpdate %></p>
+
+<h2 class="h4 mt-5">Responsable du traitement</h2>
+<p><%= legal.publisherName %>, <%= legal.address %>. Contact pour toute question sur vos données : <a href="mailto:<%= legal.email %>"><%= legal.email %></a>. Voir aussi les <a href="/mentions-legales">mentions légales</a>.</p>
+
+<h2 class="h4 mt-5">Traitements réalisés</h2>
+<div class="table-responsive">
+<table class="table table-bordered align-middle small">
+  <caption class="visually-hidden">Traitements de données personnelles</caption>
+  <thead><tr><th scope="col">Traitement</th><th scope="col">Données</th><th scope="col">Finalité</th><th scope="col">Base légale</th><th scope="col">Conservation</th></tr></thead>
+  <tbody>
+    <tr><td>Compte utilisateur</td><td>Pseudo, email, mot de passe (haché, non lisible), avatar, rôle, statut, dates de connexion, dernière adresse IP</td><td>Créer et gérer votre compte, sécuriser l'accès</td><td>Contrat (CGU) ; intérêt légitime pour la sécurité</td><td>Durée du compte. Comptes inactifs supprimés après [À COMPLÉTER : ex. 3 ans]</td></tr>
+    <tr><td>Espace client : tickets, devis, commandes</td><td>Contenu de vos demandes, budget, dates, historique des commandes</td><td>Répondre à vos demandes, établir devis et factures</td><td>Contrat et mesures précontractuelles</td><td>Durée de la relation, puis 5 ans (prescription) ; pièces comptables 10 ans (obligation légale)</td></tr>
+    <tr><td>Formulaire de contact</td><td>Nom, email, objet, message</td><td>Répondre à votre demande</td><td>Intérêt légitime / mesures précontractuelles</td><td>[À COMPLÉTER : ex. 12 mois après le dernier échange]</td></tr>
+    <tr><td>Newsletter</td><td>Adresse email, date d'inscription</td><td>Envoi d'informations par email</td><td>Consentement (case à cocher)</td><td>Jusqu'à désinscription, puis suppression</td></tr>
+    <tr><td>Emails de service</td><td>Email, jeton de vérification ou de réinitialisation</td><td>Valider l'adresse email, réinitialiser le mot de passe</td><td>Contrat</td><td>Jetons à durée de validité limitée</td></tr>
+    <tr><td>Anti-robots (reCAPTCHA)</td><td>Adresse IP, données techniques du navigateur transmises à Google</td><td>Empêcher les inscriptions et connexions automatisées</td><td>Intérêt légitime (sécurité)</td><td>Selon Google</td></tr>
+    <tr><td>Journal d'activité</td><td>Action, auteur, date</td><td>Sécurité et traçabilité des actions d'administration</td><td>Intérêt légitime</td><td>[À COMPLÉTER : ex. 12 mois]</td></tr>
+    <tr><td>Journaux techniques de l'hébergeur</td><td>Adresse IP, date, pages demandées</td><td>Sécurité et fonctionnement du service</td><td>Obligation légale (LCEN) et intérêt légitime</td><td>12 mois maximum</td></tr>
+    <tr><td>Contenus embarqués (YouTube, Google Maps)</td><td>Adresse IP et données de navigation transmises à Google</td><td>Affichage de la vidéo et de la carte</td><td>Consentement</td><td>Selon Google</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="h4 mt-5">Destinataires</h2>
+<ul>
+  <li>L'éditeur du site.</li>
+  <li>L'hébergeur : <%= legal.host.name %>.</li>
+  <li>Google LLC, pour reCAPTCHA, YouTube, Google Maps et l'envoi des emails du site via son service SMTP.</li>
+</ul>
+<p>Aucune donnée n'est vendue.</p>
+
+<h2 class="h4 mt-5">Transferts hors Union européenne</h2>
+<p>Google LLC est établi aux États-Unis. Les transferts s'appuient sur le Data Privacy Framework (décision d'adéquation de la Commission européenne) ou, à défaut, sur les clauses contractuelles types. Pays de l'hébergeur : <%= legal.host.country %>.</p>
+
+<h2 class="h4 mt-5">Vos droits</h2>
+<p>Vous disposez d'un droit d'accès, de rectification, d'effacement, d'opposition, de limitation et de portabilité de vos données. Vous pouvez retirer à tout moment un consentement donné. Pour exercer vos droits, écrivez à <a href="mailto:<%= legal.email %>"><%= legal.email %></a> ; nous répondons sous un mois.</p>
+<p>En cas de désaccord, vous pouvez saisir la CNIL : <a href="https://www.cnil.fr/fr/plaintes" rel="noopener noreferrer">cnil.fr/fr/plaintes</a>.</p>
+
+<h2 class="h4 mt-5">Sécurité</h2>
+<p>Les mots de passe sont hachés, les cookies de session sont protégés (HttpOnly, SameSite) et les connexions se font en HTTPS.</p>
+
+<h2 class="h4 mt-5">Cookies</h2>
+<p>Voir la <a href="/cookies">politique de cookies</a>.</p>
+<%- include("../partials/legal-bottom") %>

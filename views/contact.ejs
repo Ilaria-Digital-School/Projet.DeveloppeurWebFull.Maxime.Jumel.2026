@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<%- include("partials/head", { title: "Souflydev | Contact Web & Mobile Developer", description: "Contact Souflydev for modern websites, mobile applications, and digital solutions tailored to your business needs.", canonical: "https://souflyhub.dev/contact", keywords: "contact web developer, mobile developer, digital solutions", language: "French" }) %>
+
+
+<body>
+    <!-- Navigation Bar -->
+<%- include("partials/header", { active: "contact", variant: "light" }) %>
+
+    <main id="main-content">
+    <!-- hero section -->
+    <div class="container-fluid p-0">
+        <!-- Hero -->
+        <div class="text-center mt-5"
+            style="background-image: url('/images/upload/image_contact.webp'); height: 43.75rem; background-size: cover; background-position: center;">
+            <section class="bg-transparent mx-auto"
+                style="max-width: 37.5rem; display: flex; flex-direction: column; justify-content: center; height: 100%; text-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.5); color: #fff;">
+                <h1 class="display-4 fw-bold text-black box" style="font-size: 4.5rem; box-shadow: #f2ff02 0.1875rem 0.1875rem 0rem 0rem;">Contact Our Web and Mobile Development Team</h1>
+            </section>
+        </div>
+    </div>
+
+    <!-- contact  -->
+    <section class="container-fluid">
+        <div class="container mx-auto">
+            <div class="row my-5">
+                <div class="col-12 col-md-4 mb-5 text-start opacity">
+                    <div class="card bg-white border-0 rounded-4 p-5 mx-auto w-75 h-100">
+                        <i class="bi bi-envelope-fill text-dark fs-1"></i>
+                        <h2 class="h3">Headquarters</h2>
+                        <p>27 Division St, 77120 Coulommiers, France</p>
+                        <span><a href="#">Get directions</a><i class="bi bi-arrow-right ms-2 mb-0"></i></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-5 text-start opacity">
+                    <div class="card bg-white border-0 rounded-4 p-5 mx-auto w-75 h-100">
+                        <i class="bi bi-envelope-heart text-dark fs-1"></i>
+                        <h2 class="h3">Email support</h2>
+                       <a href="mailto:contact-me@souflyhub.fr" class="text-dark text-decoration-none">contact-me@souflyhub.fr</a>
+                        <span><a href="#">Get directions</a><i class="bi bi-arrow-right ms-2 mb-0"></i></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-5 text-start opacity">
+                    <div class="card bg-white border-0 rounded-4 p-5 mx-auto w-75 h-100">
+                        <i class="bi bi-phone-fill text-dark fs-1"></i>
+                        <h2 class="h3">Phone</h2>
+                        <a href="tel:+33647497528" class="text-dark text-decoration-none">+33 6 47 49 75 28</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- google map section -->   
+    <section class="container-fluid"
+        style="background-color: #f2ff02; margin-top: 8rem; position: relative; min-height: 70vh; overflow: visible;">
+        <div class="row g-0 align-items-stretch" style="min-height: 31.25rem; margin-top: 12.5rem;">
+
+            <!-- Image Column -->
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center  "
+                style="min-height: 31.25rem; overflow: visible;">
+                <div class="embed-placeholder border rounded-3 p-4 text-center bg-light text-dark" data-embed-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21020.384280924303!2d3.0712362249498333!3d48.80960407750392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e8b0cab161e73f%3A0xc745547de035ea2c!2s77120%20Coulommiers!5e0!3m2!1sfr!2sfr!4v1781185429487!5m2!1sfr!2sfr" data-embed-title="Carte Google Maps : Coulommiers" style="width:100%;height:25rem;">
+  <p class="mb-3">Cette carte Google Maps dépose des cookies. Elle ne se charge qu'avec votre accord.</p>
+  <button type="button" class="btn btn-dark" data-embed-accept>Autoriser la carte Google Maps</button>
+</div>
+            </div>
+
+            <!-- Form Column -->
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center" style="padding: 3rem 2rem;">
+                <% if (typeof contactSuccess !== "undefined" && contactSuccess) { %>
+                    <div class="alert alert-success" role="status"><%= contactSuccess %></div>
+                <% } %>
+                <% if (typeof contactError !== "undefined" && contactError) { %>
+                    <div class="alert alert-danger" role="alert"><%= contactError %></div>
+                <% } %>
+                <form method="post" action="/contact" class="d-flex gap-3 flex-column">
+                    <h3 class="fw-bold text-start display-6">Have a project in mind ?</h3>
+                    <p class="text-start text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+                        quod.</p>
+
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                      <label for="contact-full-name" class="visually-hidden">Full Name</label>
+                      <input type="text" class="form-control  border-1 border-dark" name="full-name"
+                        id="contact-full-name" placeholder="Full Name" aria-label="Full Name" maxlength="120" required>
+                      <label for="contact-email" class="visually-hidden">Email</label>
+                      <input type="email" class="form-control  border-1 border-dark" name="email"
+                        id="contact-email" placeholder="Email" aria-label="Email" maxlength="254" required>
+                    </div>
+
+                    <label for="contact-subject" class="visually-hidden">Subject</label>
+                    <input type="text" class="form-control  border-1 border-dark" name="subject"
+                      id="contact-subject" placeholder="Subject" aria-label="Subject" maxlength="120" required>
+                    <label for="contact-message" class="visually-hidden">Message</label>
+                    <textarea class="form-control  border-1 border-dark" name="message" id="contact-message"
+                        placeholder="Message" rows="4" aria-label="Message" maxlength="3000" required></textarea>
+
+                    <p class="small mb-0">Tous les champs sont obligatoires. Ces données servent uniquement à répondre à votre demande. Voir la <a href="/confidentialite">politique de confidentialité</a>.</p>
+                    <div>
+                        <button type="submit" class="btn btn-dark px-4" aria-label="Send">Send</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- typing text section -->
+    <div class="container-fluid p-4 mx-auto text-center" style=" background-color: rgb(2, 6, 255);">
+        <div class="p-5 mx-auto text-center">
+            <h2 id="typing-text" class="h1" style="color: rgb(250, 250, 250); margin: 0;">What we can do for our clients</h2>
+        </div>
+    </div>
+    </main>
+  
+<!-- footer section -->
+<%- include("partials/footer") %>
+
+
+
+
+
+  <script src="/js/script.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+    <%- include("partials/cookie-consent") %>
+</body>
+
+</html>

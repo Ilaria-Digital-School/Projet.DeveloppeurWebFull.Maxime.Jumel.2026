@@ -1,0 +1,120 @@
+<!-- Module : création d'un article -->
+<div class="modal fade" id="modalArticleCreate" tabindex="-1"
+     aria-labelledby="modalArticleCreateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="modalArticleCreateLabel">Créer un article</h5>
+                    <p class="text-muted small mb-0">Publiez un article avec son image.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <form id="articleAdminForm" action="/articles" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="article-title" class="form-label">Titre</label>
+                        <input type="text" class="form-control" id="article-title" name="title"
+                               maxlength="160" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article-category" class="form-label">Catégorie</label>
+                        <select class="form-select" id="article-category" name="category" required>
+                            <option value="">Choisir une catégorie</option>
+                            <% (categories || []).forEach((category) => { %>
+                                <option value="<%= category.name %>"><%= category.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article-description" class="form-label">Contenu</label>
+                        <textarea class="form-control" id="article-description" name="description"
+                                  rows="6" maxlength="5000" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="article-image" class="form-label">
+                            Image du post <span class="text-muted small">(JPEG, PNG ou WebP, 5 Mo max)</span>
+                        </label>
+                        <input type="file" class="form-control" id="article-image" name="image"
+                               accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" required>
+                    </div>
+                    <div class="card border-primary-subtle bg-light" aria-live="polite">
+                        <div class="card-body">
+                            <h3 class="h6">Aperçu de l'article</h3>
+                            <img id="articlePreviewImage" class="img-fluid rounded mb-3 d-none"
+                                 style="max-height: 14rem; object-fit: cover;" alt="Aperçu de l'image de l'article">
+                            <p id="articlePreviewCategory" class="badge text-bg-primary d-none"></p>
+                            <h4 id="articlePreviewTitle" class="h5">Titre de l'article</h4>
+                            <p id="articlePreviewDescription" class="text-muted mb-0">La description apparaîtra ici.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" id="articleAdminSubmit">Enregistrer l'article</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script nonce="<%= locals.cspNonce || '' %>">
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("modalArticleCreate");
+    const form = document.getElementById("articleAdminForm");
+    if (!modal || !form) return;
+    const title = document.getElementById("article-title");
+    const category = document.getElementById("article-category");
+    const description = document.getElementById("article-description");
+    const imageInput = document.getElementById("article-image");
+    const previewImage = document.getElementById("articlePreviewImage");
+    const updatePreview = () => {
+        document.getElementById("articlePreviewTitle").textContent = title.value || "Titre de l'article";
+        document.getElementById("articlePreviewCategory").textContent = category.value;
+        document.getElementById("articlePreviewCategory").classList.toggle("d-none", !category.value);
+        document.getElementById("articlePreviewDescription").textContent =
+            description.value || "La description apparaîtra ici.";
+    };
+    [title, category, description].forEach((input) => input.addEventListener("input", updatePreview));
+    imageInput.addEventListener("change", () => {
+        const file = imageInput.files?.[0];
+        if (!file) { previewImage.classList.add("d-none"); return; }
+        previewImage.src = URL.createObjectURL(file);
+        previewImage.classList.remove("d-none");
+    });
+    modal.addEventListener("show.bs.modal", (event) => {
+        const trigger = event.relatedTarget;
+        const editing = trigger?.dataset.articleAction === "edit";
+        form.dataset.editId = editing ? trigger.dataset.articleId : "";
+        form.reset();
+        document.getElementById("article-title").value = editing ? trigger.dataset.articleTitle : "";
+        document.getElementById("article-category").value = editing ? trigger.dataset.articleCategory : "";
+        document.getElementById("article-description").value = editing ? trigger.dataset.articleDescription : "";
+        document.getElementById("article-image").required = !editing;
+        previewImage.classList.toggle("d-none", !editing);
+        if (editing) previewImage.src = trigger.dataset.articleImage || "";
+        updatePreview();
+        document.getElementById("modalArticleCreateLabel").textContent = editing ? "Modifier l'article" : "Créer un article";
+        document.getElementById("articleAdminSubmit").textContent = editing ? "Enregistrer les modifications" : "Enregistrer l'article";
+    });
+    form.addEventListener("submit", async (event) => {
+        const id = form.dataset.editId;
+        if (!id) return;
+        event.preventDefault();
+        const button = document.getElementById("articleAdminSubmit");
+        button.disabled = true;
+        try {
+            const response = await fetch(`/articles/${encodeURIComponent(id)}`, {
+                method: "PUT", body: new FormData(form), headers: { Accept: "application/json" }
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || "Modification impossible.");
+            window.location.reload();
+        } catch (error) {
+            button.disabled = false;
+            const alert = document.getElementById("articleAdminAlert");
+            if (alert) { alert.className = "alert alert-danger"; alert.textContent = error.message; }
+        }
+    });
+});
+</script>
