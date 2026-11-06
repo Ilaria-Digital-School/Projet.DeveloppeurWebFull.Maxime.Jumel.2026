@@ -232,14 +232,17 @@ router.get("/page", (req, res) => {
 // Ajouter un article avec image stockée directement dans MongoDB.
 router.post("/articles", isAdmin, upload.single("image"), async (req, res) => {
   try {
-    const { title, description, category } = req.body || {};
+    const { title, slogan, description, category } = req.body || {};
     const normalizedTitle = typeof title === "string" ? title.trim() : "";
+    const normalizedSlogan = typeof slogan === "string" ? slogan.trim() : "";
     const normalizedDescription = typeof description === "string" ? description.trim() : "";
     const normalizedCategory = typeof category === "string" ? category.trim() : "";
     const image = imageDataUri(req.file) || (typeof req.body?.image === "string" ? req.body.image.trim() : "");
 
     if (!normalizedTitle || normalizedTitle.length > 160 ||
+        !normalizedSlogan || normalizedSlogan.length > 160 ||
         !normalizedDescription || normalizedDescription.length > 5000 ||
+
         !normalizedCategory || normalizedCategory.length > 80 || !image) {
       return res.status(400).json({
         success: false,
@@ -251,6 +254,7 @@ router.post("/articles", isAdmin, upload.single("image"), async (req, res) => {
       title: normalizedTitle,
       description: normalizedDescription,
       image,
+    slogan: normalizedSlogan,
       category: normalizedCategory,
       date: new Date().toLocaleDateString()
     });
@@ -267,13 +271,14 @@ router.post("/articles", isAdmin, upload.single("image"), async (req, res) => {
 
 router.put("/articles/:id", isAdmin, upload.single("image"), async (req, res) => {
   try {
-    const { title, description, category } = req.body || {};
+    const { title, slogan, description, category } = req.body || {};
     const patch = {
       title: typeof title === "string" ? title.trim() : "",
+      slogan: typeof slogan === "string" ? slogan.trim() : "",
       description: typeof description === "string" ? description.trim() : "",
       category: typeof category === "string" ? category.trim() : ""
     };
-    if (!patch.title || patch.title.length > 160 || !patch.description ||
+    if (!patch.title || patch.title.length > 160 || !patch.slogan || patch.slogan.length > 160 || !patch.description ||
         patch.description.length > 5000 || !patch.category || patch.category.length > 80) {
       return res.status(400).json({ success: false, message: "Les champs de l'article sont invalides." });
     }

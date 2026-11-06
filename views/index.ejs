@@ -51,8 +51,7 @@
 
         <span class="text-center">
           <a href="tel:+33647497528" class=" mb-1 text-white text-decoration-none">No found</a><br>
-          <a href="mailto:support@souflyhub.dev"
-            class=" mb-1 text-white text-decoration-none">Contacts me</a>
+          <a href="mailto:support@souflyhub.dev" class=" mb-1 text-white text-decoration-none">Contacts me</a>
         </span>
       </div>
 
@@ -323,10 +322,13 @@
       </section>
 
       <div class="container mx-auto align-items-center justify-content-center d-flex mb-5" style="max-width: 90%">
-        <div class="embed-placeholder border rounded-3 p-4 text-center bg-light text-dark" data-embed-src="https://www.youtube.com/embed/hm7XoVN2tYU" data-embed-title="Le Vent Est Grand ( Aze Max )" data-embed-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" data-embed-ratio="16/9" style="width:100%;max-width:798px;">
-  <p class="mb-3">Cette vidéo YouTube dépose des cookies. Elle ne se charge qu'avec votre accord.</p>
-  <button type="button" class="btn btn-dark" data-embed-accept>Autoriser la vidéo YouTube</button>
-</div>
+        <div class="embed-placeholder border rounded-3 p-4 text-center bg-light text-dark"
+          data-embed-src="https://www.youtube.com/embed/hm7XoVN2tYU" data-embed-title="Le Vent Est Grand ( Aze Max )"
+          data-embed-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          data-embed-ratio="16/9" style="width:100%;max-width:798px;">
+          <p class="mb-3">Cette vidéo YouTube dépose des cookies. Elle ne se charge qu'avec votre accord.</p>
+          <button type="button" class="btn btn-dark" data-embed-accept>Autoriser la vidéo YouTube</button>
+        </div>
       </div>
 
       <section class="py-5 mb-5">
@@ -353,6 +355,9 @@
                     <div class="card-body d-flex flex-column position-relative z-2 h-100 p-4 
                 bg-black bg-opacity-75 text-white justify-content-center">
 
+                      <!-- Slogan -->
+
+
                       <!-- Badges -->
                       <div class="d-flex gap-2 mb-3 flex-wrap">
                         <span class="badge bg-secondary">
@@ -367,17 +372,16 @@
                       <h3 class="card-title h5 fw-bold mb-3">
                         <%= article.title %>
                       </h3>
-
-                      <!-- Description -->
                       <p class="card-text mb-4">
-                        <%= article.description %>
+                        <%= article.slogan %>
                       </p>
+                      
+
 
                       <!-- Button -->
                       <a href="#" class="btn btn-outline-light align-self-start" data-bs-toggle="modal"
                         data-bs-target="#articleModal" data-article-title="<%= article.title %>"
-                        data-article-image="<%= article.image %>"
-                        data-article-description="<%= article.description %>"
+                        data-article-image="<%= article.image %>" data-article-description="<%= article.description %>"
                         data-article-category="<%= article.category %>"
                         data-article-date="<%= article.date || article.createdAt %>">
                         Read Article
@@ -493,8 +497,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
             <div class="modal-body">
-              <img src="" alt="" class="img-fluid rounded-3 mb-4 w-100"
-                style="max-height: 26rem; object-fit: cover;"
+              <img src="" alt="" class="img-fluid rounded-3 mb-4 w-100" style="max-height: 26rem; object-fit: cover;"
                 id="articleModalImage">
               <p id="articleModalDescription" class="fs-5 mb-4"></p>
               <p class="text-muted mb-0">
@@ -519,7 +522,7 @@
 
           const title = trigger.dataset.articleTitle || "Article";
           const image = trigger.dataset.articleImage || "";
-          const description = trigger.dataset.articleDescription || "";
+          
           const category = trigger.dataset.articleCategory || "";
           const rawDate = trigger.dataset.articleDate || "";
           const parsedDate = rawDate ? new Date(rawDate) : null;
@@ -530,7 +533,7 @@
           document.getElementById("articleModalLabel").textContent = title;
           document.getElementById("articleModalImage").src = image;
           document.getElementById("articleModalImage").alt = `Illustration de l'article « ${title} »`;
-          document.getElementById("articleModalDescription").textContent = description;
+          
           document.getElementById("articleModalCategory").textContent = category;
           document.getElementById("articleModalDate").textContent = date ? `Publié le ${date}` : "";
         });

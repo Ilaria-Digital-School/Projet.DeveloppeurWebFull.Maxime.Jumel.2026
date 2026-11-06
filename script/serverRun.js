@@ -10,6 +10,7 @@ const chalk = require("chalk");
 const { exposeCookieConsent, router: cookieRouter } = require("../middleware/cookieManager");
 const { securityHeaders } = require("../middleware/securityHeaders");
 const { enforceAccountStatus } = require("../middleware/authMiddleware");
+const NativeServer = require("../server/NativeServer");
 
 const sessionSecret = config.session?.secret || process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -49,8 +50,8 @@ app.use(express.static(path.join(__dirname, "../public"), {
     lastModified: true
 }));
 
-app.use(cookieParser(sessionSecret));
-app.use(session({
+const cookieMiddleware = cookieParser(sessionSecret);
+const sessionMiddleware = session({
     name: SESSION_COOKIE_NAME,
     secret: sessionSecret,
     resave: false,
@@ -62,7 +63,9 @@ app.use(session({
         sameSite: "lax",
         path: "/"
     }
-}));
+});
+app.use(cookieMiddleware);
+app.use(sessionMiddleware);
 
 // Couture immediate : un compte banni perd l'acces sur la requete suivante,
 // partout (pages ET API), et sa session est detruite cote serveur.
@@ -88,7 +91,21 @@ app.get("/.well-known/security.txt", sendSecurityTxt);
 app.get("/security.txt", sendSecurityTxt);
 
 const scriptRun = (portToUse = port) => {
-    const server = app.listen(portToUse, () => {
+    // Serveur http natif en façade : route "/" écrite à la main, le reste via Express.
+    // La route native contourne les limiteurs Express (app.js) : elle a donc le sien,
+    // avec un handler qui répond en http pur (pas de res.status / res.json).
+    const guard = process.env.NODE_ENV === "development" ? null : require("express-rate-limit")({
+        windowMs: 15 * 60 * 1000,
+        max: 100,
+        standardHeaders: true,
+        legacyHeaders: false,
+        handler: (req, res) => {
+            res.writeHead(429, { "Content-Type": "text/plain; charset=utf-8" });
+            res.end("Trop de requêtes. Veuillez réessayer dans quelques minutes.");
+        }
+    });
+    const native = new NativeServer(app, { cookieParser: cookieMiddleware, session: sessionMiddleware, guard });
+    const server = native.listen(portToUse, () => {
         console.log(chalk.green(`🟢=> Server running on http://localhost:${portToUse}`));
     });
     console.log("🟢=> Server is ready!");

@@ -632,3 +632,9 @@ Definir une valeur longue et aleatoire dans `.env`, puis redemarrer le serveur.
 
 Projet prive Souflydev. Consulter le fichier `package.json` pour les
 informations de licence du projet.
+
+## POO, serveur natif et schema de donnees
+
+- `classes/` : entites serveur avec heritage (`BaseEntity` > `ContentEntity` > `ArticleEntity` / `ProjectEntity`).
+- `server/NativeServer.js` : `http.createServer` en facade. La page d'accueil `GET /` est ecrite a la main (session, CSP, rate limit, rendu EJS) ; toutes les autres routes sont deleguees a Express.
+- `docs/schema-donnees.md` : schema des collections, relations, et equivalent MySQL.
