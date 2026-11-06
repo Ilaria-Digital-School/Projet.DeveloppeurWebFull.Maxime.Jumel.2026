@@ -1,0 +1,92 @@
+<div class="modal fade" id="modalProjectList" tabindex="-1" aria-labelledby="modalProjectListLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header text-white" style="background:#181a1b;">
+                <div>
+                    <h2 class="h5 modal-title mb-1" id="modalProjectListLabel">Gestion des projets</h2>
+                    <small class="text-white-50"><%= (projects || []).length %> projet<%= (projects || []).length !== 1 ? 's' : '' %></small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div id="projectAdminAlert" class="alert d-none" role="alert"></div>
+                <button type="button" class="btn btn-primary btn-sm mb-3"
+                        data-bs-toggle="modal" data-bs-target="#modalProjectAdmin"
+                        data-project-action="create">
+                    <i class="fa-solid fa-plus me-1" aria-hidden="true"></i>Nouveau projet
+                </button>
+                <% if (!(projects || []).length) { %>
+                    <p class="text-muted mb-0">Aucun projet enregistré.</p>
+                <% } else { %>
+                    <div class="row g-3">
+                        <% projects.forEach((project) => { %>
+                            <div class="col-12 col-md-6">
+                                <article class="card h-100 border shadow-sm">
+                                    <% if (project.imageUrl) { %>
+                                        <img src="<%= project.imageUrl %>" class="card-img-top"
+                                             style="height: 10rem; object-fit: cover;"
+                                             alt="Illustration de « <%= project.title %> »">
+                                    <% } %>
+                                    <div class="card-body">
+                                        <% if (project.category) { %><span class="badge text-bg-primary mb-2"><%= project.category %></span><% } %>
+                                        <h3 class="h5"><%= project.title %></h3>
+                                        <p class="small text-muted"><%= project.description.slice(0, 160) %><%= project.description.length > 160 ? '…' : '' %></p>
+                                        <% if ((project.tags || []).length) { %>
+                                            <p class="mb-2">
+                                                <% project.tags.forEach((tag) => { %><span class="badge text-bg-light border me-1">#<%= tag %></span><% }) %>
+                                            </p>
+                                        <% } %>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-warning btn-sm"
+                                                    data-bs-toggle="modal" data-bs-target="#modalProjectAdmin"
+                                                    data-project-action="edit"
+                                                    data-project-id="<%= project._id %>"
+                                                    data-project-title="<%= project.title %>"
+                                                    data-project-description="<%= project.description %>"
+                                                    data-project-category="<%= project.category || '' %>"
+                                                    data-project-tags="<%= (project.tags || []).join(', ') %>"
+                                                    data-project-type="<%= project.projectType || '' %>"
+                                                    data-project-client="<%= project.client || '' %>"
+                                                    data-project-location="<%= project.location || '' %>"
+                                                    data-project-budget="<%= project.budget || '' %>"
+                                                    data-project-duration="<%= project.duration || '' %>"
+                                                    data-project-result="<%= project.result || '' %>">
+                                                Modifier
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                                    data-delete-project="<%= project._id %>"
+                                                    data-project-name="<%= project.title %>">
+                                                Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script nonce="<%= locals.cspNonce || '' %>">
+document.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-delete-project]");
+    if (!button || !window.confirm(`Supprimer le projet « ${button.dataset.projectName} » ?`)) return;
+    button.disabled = true;
+    try {
+        const response = await fetch(`/projects/${encodeURIComponent(button.dataset.deleteProject)}`, {
+            method: "DELETE", headers: { Accept: "application/json" }
+        });
+        if (!response.ok) throw new Error();
+        window.location.reload();
+    } catch {
+        button.disabled = false;
+        const alert = document.getElementById("projectAdminAlert");
+        if (alert) { alert.className = "alert alert-danger"; alert.textContent = "Impossible de supprimer le projet."; }
+    }
+});
+</script>

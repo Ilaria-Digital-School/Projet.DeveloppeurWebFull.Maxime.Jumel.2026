@@ -557,6 +557,7 @@
     <%- include("modals/Project_request") %>
     <% if (user && (user.role === 'admin' || user.role === 'developper')) { %>
         <%- include("modals/Project_admin") %>
+        <%- include("modals/Project_list", { projects: projects }) %>
     <% } %>
     <%- include("modals/Article_request") %>
     <%- include("modals/Article_admin") %>

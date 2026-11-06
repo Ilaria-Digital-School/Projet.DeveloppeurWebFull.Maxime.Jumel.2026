@@ -29,6 +29,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
+    "test": "node --test test/",
     "start": "node app.js",
     "security:rate-limit": "node script/security-rate-limit-test.js"
   },

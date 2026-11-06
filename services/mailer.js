@@ -105,5 +105,35 @@ const sendPasswordResetEmail = async ({ email, pseudo, token }) => {
     return { mode: "smtp", resetUrl };
 };
 
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]
+));
 
-module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail };
+// Envoie le message du formulaire de contact à l'adresse du site (CONTACT_TO, sinon MAIL_FROM).
+const sendContactEmail = async ({ fullName, email, title, message }) => {
+    if (process.env.EMAIL_MODE === "console") {
+        console.log(`[CONTACT EMAIL - CONSOLE] De: ${fullName} <${email}> | ${title}\n${message}`);
+        return { mode: "console" };
+    }
+
+    const transporter = getTransporter();
+    // Les en-têtes ne doivent jamais contenir de saut de ligne (injection d'en-têtes).
+    const oneLine = (value) => String(value).replace(/[\r\n]+/g, " ");
+
+    await transporter.sendMail({
+        from: process.env.MAIL_FROM,
+        to: process.env.CONTACT_TO || process.env.MAIL_FROM,
+        replyTo: `"${oneLine(fullName).replace(/"/g, "")}" <${oneLine(email)}>`,
+        subject: `[Contact] ${oneLine(title)}`,
+        text: `Message de ${fullName} <${email}>\n\n${message}`,
+        html: `
+            <p><strong>${escapeHtml(fullName)}</strong> &lt;${escapeHtml(email)}&gt;</p>
+            <p><strong>Sujet :</strong> ${escapeHtml(title)}</p>
+            <p style="white-space:pre-wrap">${escapeHtml(message)}</p>
+        `
+    });
+
+    return { mode: "smtp" };
+};
+
+module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendContactEmail };

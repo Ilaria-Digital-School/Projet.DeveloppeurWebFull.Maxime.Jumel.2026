@@ -19,7 +19,8 @@ const {
 } = require("../middleware/authMiddleware");
 const { getRecaptchaConfig, verifyRecaptcha } = require("../middleware/recaptcha");
 const { recordActivity } = require("../services/activityLogger");
-const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require("../services/mailer");
+const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendContactEmail } = require("../services/mailer");
+const { parseProjectInput } = require("../services/projectInput");
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const pseudoPattern = /^[A-Za-z0-9_.-]{3,30}$/;
@@ -136,7 +137,7 @@ router.get("/contact", (req, res) => {
     });
 });
 
-router.post("/contact", (req, res) => {
+router.post("/contact", async (req, res) => {
     const fullName = typeof req.body?.["full-name"] === "string"
         ? req.body["full-name"].trim()
         : "";
@@ -159,7 +160,7 @@ router.post("/contact", (req, res) => {
         });
     }
 
-    req.session.contactTicket = {
+    const ticket = {
         id: crypto.randomUUID(),
         fullName,
         email,
@@ -169,10 +170,22 @@ router.post("/contact", (req, res) => {
         createdAt: new Date()
     };
 
+    try {
+        await sendContactEmail(ticket);
+    } catch (error) {
+        console.error("Erreur envoi du message de contact:", error);
+        return res.status(502).render("contact", {
+            user: req.session?.user || null,
+            contactTicket: null,
+            contactError: "Votre message n'a pas pu être envoyé. Merci de réessayer plus tard."
+        });
+    }
+
+    req.session.contactTicket = ticket;
     return res.render("contact", {
         user: req.session?.user || null,
-        contactTicket: req.session.contactTicket,
-        contactSuccess: "Votre ticket temporaire a bien été créé dans votre session."
+        contactTicket: ticket,
+        contactSuccess: "Votre message a bien été envoyé. Nous vous répondrons rapidement."
     });
 });
 
@@ -201,28 +214,45 @@ router.get("/project", async (req, res) => {
 
 router.post("/projects", isAdmin, upload.single("image"), async (req, res) => {
     try {
-        const { title, description, projectType, client, location, budget, duration, result } = req.body || {};
-        const normalizedTitle = typeof title === "string" ? title.trim() : "";
-        const normalizedDescription = typeof description === "string" ? description.trim() : "";
-        if (!normalizedTitle || normalizedTitle.length > 160 || !normalizedDescription || normalizedDescription.length > 5000) {
-            return res.status(400).json({ success: false, message: "Le titre et la description sont obligatoires." });
-        }
-        const project = await Project.create({
-            title: normalizedTitle,
-            description: normalizedDescription,
-            imageUrl: imageDataUri(req.file),
-            projectType: typeof projectType === "string" ? projectType.trim() : "",
-            client: typeof client === "string" ? client.trim() : "",
-            location: typeof location === "string" ? location.trim() : "",
-            budget: typeof budget === "string" ? budget.trim() : "",
-            duration: typeof duration === "string" ? duration.trim() : "",
-            result: typeof result === "string" ? result.trim() : ""
-        });
+        const { value, error } = parseProjectInput(req.body);
+        if (error) return res.status(400).json({ success: false, message: error });
+        const project = await Project.create({ ...value, imageUrl: imageDataUri(req.file) });
         if (!req.xhr && !req.headers.accept?.includes("json")) return res.redirect("/dashboard?success=project_created");
         res.status(201).json({ success: true, project });
     } catch (error) {
         console.error("Erreur création du projet:", error);
         res.status(500).json({ success: false, message: "Impossible de créer le projet." });
+    }
+});
+
+router.put("/projects/:id", isAdmin, upload.single("image"), async (req, res) => {
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(404).json({ success: false, message: "Projet introuvable." });
+        }
+        const { value, error } = parseProjectInput(req.body);
+        if (error) return res.status(400).json({ success: false, message: error });
+        if (req.file) value.imageUrl = imageDataUri(req.file);
+        const project = await Project.findByIdAndUpdate(req.params.id, value, { new: true, runValidators: true });
+        if (!project) return res.status(404).json({ success: false, message: "Projet introuvable." });
+        return res.json({ success: true, project });
+    } catch (error) {
+        console.error("Erreur modification projet:", error);
+        return res.status(500).json({ success: false, message: "Impossible de modifier le projet." });
+    }
+});
+
+router.delete("/projects/:id", isAdmin, async (req, res) => {
+    try {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(404).json({ success: false, message: "Projet introuvable." });
+        }
+        const project = await Project.findByIdAndDelete(req.params.id);
+        if (!project) return res.status(404).json({ success: false, message: "Projet introuvable." });
+        return res.json({ success: true, message: "Projet supprimé." });
+    } catch (error) {
+        console.error("Erreur suppression projet:", error);
+        return res.status(500).json({ success: false, message: "Impossible de supprimer le projet." });
     }
 });
 

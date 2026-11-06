@@ -38,7 +38,16 @@ const projectSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
-  // ... autres champs
+  category: {
+    type: String,
+    trim: true,
+    maxlength: 80,
+    default: ""
+  },
+  tags: {
+    type: [{ type: String, trim: true, maxlength: 40 }],
+    default: []
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -46,6 +55,7 @@ const projectSchema = new mongoose.Schema({
 });
 
 projectSchema.index({ createdAt: -1 });
+projectSchema.index({ category: 1, createdAt: -1 });
 
 // ✅ Vérifier si le modèle existe déjà
 module.exports = mongoose.models.Project || mongoose.model('Project', projectSchema);
