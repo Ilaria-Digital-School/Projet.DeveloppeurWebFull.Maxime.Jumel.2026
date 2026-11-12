@@ -10,7 +10,7 @@ const chalk = require("chalk");
 const { exposeCookieConsent, router: cookieRouter } = require("../middleware/cookieManager");
 const { securityHeaders } = require("../middleware/securityHeaders");
 const { enforceAccountStatus } = require("../middleware/authMiddleware");
-const NativeServer = require("../server/NativeServer");
+const NativeServer = require("../classe/httpServer");
 
 const sessionSecret = config.session?.secret || process.env.SESSION_SECRET;
 if (!sessionSecret) {
