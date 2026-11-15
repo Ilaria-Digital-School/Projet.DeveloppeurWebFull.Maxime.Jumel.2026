@@ -3,7 +3,11 @@
     "allow": [
       "Bash(node -e ' *)",
       "Bash(npm test *)",
-      "Bash(timeout 8 node app.js)"
+      "Bash(timeout 8 node app.js)",
+      "Bash(git submodule *)",
+      "Bash(git -C classe status -sb)",
+      "Bash(git -C classe log --oneline -3)",
+      "Bash(git -C classe remote -v)"
     ]
   }
 }
