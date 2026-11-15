@@ -22,7 +22,8 @@ const articleSchema = new mongoose.Schema({
     default: () => new Date().toLocaleDateString()
   },
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
     required: true
   },
   createdAt: {

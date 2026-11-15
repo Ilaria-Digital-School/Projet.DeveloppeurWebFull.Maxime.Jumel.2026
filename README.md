@@ -105,7 +105,7 @@ le badge ci-dessus et cette ligne de version.
 
 ```bash
 npm install
-copy exemple.env .env
+copy .env.example .env
 npm run dev
 ```
 
@@ -122,6 +122,7 @@ Commandes disponibles :
 npm run dev                 # developpement avec nodemon
 npm start                   # demarrage production
 npm run security:rate-limit # test du limiteur de requetes
+npm test                     # tests unitaires Node.js
 ```
 
 ## Configuration
@@ -585,10 +586,16 @@ l'adresse IP d'origine derriere le proxy.
 
 ## Tests
 
+Les tests automatisés sont exécutés avec `npm test` (entités métier, validation
+des projets et service d'email). Le script de sécurité complète cette
+vérification avec le rate limiting. Les scénarios d'authentification et de
+contrôle des rôles restent à exécuter sur l'environnement MongoDB de recette.
+
 Le test fourni du rate limiting envoie uniquement des requetes fictives et reste
 limite :
 
 ```bash
+npm test
 npm run security:rate-limit
 ```
 
@@ -635,6 +642,11 @@ informations de licence du projet.
 
 ## POO, serveur natif et schema de donnees
 
-- `classes/` : entites serveur avec heritage (`BaseEntity` > `ContentEntity` > `ArticleEntity` / `ProjectEntity`).
-- `server/NativeServer.js` : `http.createServer` en facade. La page d'accueil `GET /` est ecrite a la main (session, CSP, rate limit, rendu EJS) ; toutes les autres routes sont deleguees a Express.
+- `classe/` : entites serveur avec heritage (`BaseEntity` > `ContentEntity` > `ArticleEntity` / `ProjectEntity`).
+- `classe/httpServer.js` : `http.createServer` en facade. La page d'accueil `GET /` est ecrite a la main (session, CSP, rate limit, rendu EJS) ; toutes les autres routes sont deleguees a Express.
 - `docs/schema-donnees.md` : schema des collections, relations, et equivalent MySQL.
+- `docs/schema-fonctionnel.md` : parcours fonctionnels du visiteur, du client et de l'administrateur.
+- `docs/documentation-technique.md` : architecture, données et commandes d'exécution.
+- `docs/guide-utilisateur.md` : guide d'utilisation du site et du dashboard.
+- `docs/schema-donnees.svg` : export image du schéma des données.
+- `docs/audit-accessibilite-seo.md` : protocole de vérification W3C et Lighthouse.

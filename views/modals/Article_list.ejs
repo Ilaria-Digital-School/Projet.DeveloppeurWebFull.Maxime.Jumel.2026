@@ -26,7 +26,7 @@
                                          style="height: 10rem; object-fit: cover;"
                                          alt="Illustration de « <%= article.title %> »">
                                     <div class="card-body">
-                                        <span class="badge text-bg-primary mb-2"><%= article.category %></span>
+                                        <span class="badge text-bg-primary mb-2"><%= article.category?.name || article.category %></span>
                                         <h3 class="h5"><%= article.title %></h3>
                                         <p class="small text-muted"><%= article.description.slice(0, 160) %><%= article.description.length > 160 ? '…' : '' %></p>
                                         <div class="d-flex gap-2">
@@ -35,7 +35,7 @@
                                                     data-article-action="edit"
                                                     data-article-id="<%= article._id %>"
                                                     data-article-title="<%= article.title %>"
-                                                    data-article-category="<%= article.category %>"
+                                                    data-article-category="<%= article.category?._id || article.category %>"
                                                     data-article-image="<%= article.image %>"
                                                     data-article-description="<%= article.description %>">
                                                 Modifier

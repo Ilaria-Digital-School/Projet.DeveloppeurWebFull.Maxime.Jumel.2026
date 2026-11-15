@@ -57,51 +57,51 @@
                                     </li>
                                     <% if (user && (user.role==='admin' || user.role==='developper' )) { %>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                            <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2"
                                                 data-bs-toggle="modal" data-bs-target="#modalOrderList"><i
                                                     class="fa-solid fa-cart-shopping fa-fw"></i>Gestion des
                                                 commandes</a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                            <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2"
                                                 data-bs-toggle="modal" data-bs-target="#modalUserList"><i
                                                     class="fa-solid fa-users fa-fw"></i>Gestion des utilisateurs</a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                            <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2"
                                                 data-bs-toggle="modal" data-bs-target="#modalServiceList"><i
                                                     class="fa-solid fa-cubes fa-fw"></i>Gestion des services</a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalServiceList"><i
+                                            <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalServiceList"><i
                                                     class="fa-solid fa-layer-group fa-fw"></i>Gestion des catégories</a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                            <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2"
                                                 data-bs-toggle="modal" data-bs-target="#modalProjectList"
                                                 aria-controls="modalProjectList"><i
                                                     class="fa-solid fa-diagram-project fa-fw"></i>Gestion des
                                                 projets</a>
                                         </li>
                                         <li class="nav-item mb-2">
-                                            <a href="#" class="nav-link text-white d-flex align-items-center gap-2"
+                                            <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2"
                                                 data-bs-toggle="modal" data-bs-target="#modalArticleList">
                                                 <i class="fa-solid fa-newspaper fa-fw"></i>Gestion des Articles</a>
                                         </li>
                                         <% } else { %>
                                             <li class="nav-item mb-2">
 
-                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="/dashboard"><i
                                                         class="fa-solid fa-cart-shopping fa-fw"></i>Mes commandes</a>
                                             </li>
-                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="/dashboard"><i
                                                         class="fa-solid fa-repeat fa-fw"></i>Mes abonnements</a></li>
                                             <li><a class="dropdown-item d-flex align-items-center gap-2"
                                                     href="/client/ticket"><i
                                                         class="fa-solid fa-headset fa-fw"></i>Support</a></li>
-                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="/dashboard"><i
                                                         class="fa-solid fa-user fa-fw"></i>Mon Profil</a></li>
-                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="#"><i
+                                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="/dashboard"><i
                                                         class="fa-solid fa-lock fa-fw"></i>Changer de mot de passe</a>
                                             </li>
                                 </ul>
@@ -116,7 +116,7 @@
                 <!-- Bottom dropup profile menu -->
                 <div class="w-100 p-3 border-top border-secondary border-opacity-25 mt-auto">
                     <div class="dropup">
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none"
+                        <a href="/dashboard" class="d-flex align-items-center text-white text-decoration-none"
                             id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="<%= assetUrl(user.avatar || '/images/avatar-default.svg') %>"
                                 alt="Avatar de <%= user.pseudo %>" width="32" height="32"
@@ -135,7 +135,7 @@
                             aria-labelledby="profileDropdown">
                             
                             <li>
-                                <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-toggle="modal"
+                                <a class="dropdown-item d-flex align-items-center py-2" href="/dashboard" data-bs-toggle="modal"
                                     data-bs-target="#modalAccountProfile">
                                     <i class="fa-solid fa-gear me-2 text-muted" style="width: 1rem;"></i>
                                     <span style="font-size: 0.85rem;">Profile Settings</span>

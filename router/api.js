@@ -78,7 +78,7 @@ router.get("/", async (req, res) => {
     try {
         const [projects, articles] = await Promise.all([
             Project.find().sort({ createdAt: -1 }).lean(),
-            Article.find().sort({ createdAt: -1 }).lean()
+            Article.find().populate("category", "name").sort({ createdAt: -1 }).lean()
         ]);
         
         res.render("index", { 
@@ -105,13 +105,14 @@ router.get("/blog", async (req, res) => {
         const selectedCategory = typeof req.query.category === "string"
             ? req.query.category.trim()
             : "";
-        const [articles, categories] = await Promise.all([
-            Article.find(selectedCategory ? { category: selectedCategory } : {})
-                .collation(NAME_COLLATION)
-                .sort({ createdAt: -1 })
-                .lean(),
-            Category.find().sort({ name: 1 }).lean()
-        ]);
+        const categories = await Category.find().sort({ name: 1 }).lean();
+        const category = selectedCategory
+            ? categories.find(({ name }) => name.localeCompare(selectedCategory, "fr", { sensitivity: "base" }) === 0)
+            : null;
+        const articles = await Article.find(category ? { category: category._id } : {})
+            .populate("category", "name")
+            .sort({ createdAt: -1 })
+            .lean();
         return res.render("blog", {
             user: req.session?.user || null,
             articles,
@@ -273,13 +274,18 @@ router.post("/articles", isAdmin, upload.single("image"), async (req, res) => {
         !normalizedSlogan || normalizedSlogan.length > 160 ||
         !normalizedDescription || normalizedDescription.length > 5000 ||
 
-        !normalizedCategory || normalizedCategory.length > 80 || !image) {
+        !normalizedCategory || !mongoose.isValidObjectId(normalizedCategory) || !image) {
       return res.status(400).json({
         success: false,
         message: "Le titre, la description, la catégorie et l'image sont obligatoires."
       });
     }
     
+    const categoryDocument = await Category.findById(normalizedCategory).select("_id");
+    if (!categoryDocument) {
+      return res.status(400).json({ success: false, message: "La catégorie sélectionnée est invalide." });
+    }
+
     const newArticle = new Article({
       title: normalizedTitle,
       description: normalizedDescription,
@@ -309,8 +315,11 @@ router.put("/articles/:id", isAdmin, upload.single("image"), async (req, res) =>
       category: typeof category === "string" ? category.trim() : ""
     };
     if (!patch.title || patch.title.length > 160 || !patch.slogan || patch.slogan.length > 160 || !patch.description ||
-        patch.description.length > 5000 || !patch.category || patch.category.length > 80) {
+        patch.description.length > 5000 || !patch.category || !mongoose.isValidObjectId(patch.category)) {
       return res.status(400).json({ success: false, message: "Les champs de l'article sont invalides." });
+    }
+    if (!await Category.exists({ _id: patch.category })) {
+      return res.status(400).json({ success: false, message: "La catégorie sélectionnée est invalide." });
     }
     if (req.file) patch.image = imageDataUri(req.file);
     const article = await Article.findByIdAndUpdate(req.params.id, patch, { new: true, runValidators: true });
@@ -1369,7 +1378,7 @@ router.get("/dashboard", isClient, async (req, res) => {
         if (user.role === "admin" || user.role === "developper") {
             [activityLogs, articles, projects, allUsers] = await Promise.all([
                 ActivityLog.find().sort({ createdAt: -1 }).limit(12).lean(),
-                Article.find().sort({ createdAt: -1 }).lean(),
+                Article.find().populate("category", "name").sort({ createdAt: -1 }).lean(),
                 Project.find().sort({ createdAt: -1 }).lean(),
                 User.find({}).lean()
             ]);

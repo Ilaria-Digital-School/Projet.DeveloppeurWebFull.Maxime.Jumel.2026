@@ -364,7 +364,7 @@
                           <%= article.date %>
                         </span>
                         <span class="badge bg-secondary">
-                          <%= article.category %>
+                          <%= article.category?.name || article.category %>
                         </span>
                       </div>
 
@@ -379,10 +379,10 @@
 
 
                       <!-- Button -->
-                      <a href="#" class="btn btn-outline-light align-self-start" data-bs-toggle="modal"
+                      <a href="/blog" class="btn btn-outline-light align-self-start" data-bs-toggle="modal"
                         data-bs-target="#articleModal" data-article-title="<%= article.title %>"
                         data-article-image="<%= article.image %>" data-article-description="<%= article.description %>"
-                        data-article-category="<%= article.category %>"
+                        data-article-category="<%= article.category?.name || article.category %>"
                         data-article-date="<%= article.date || article.createdAt %>">
                         Read Article
                       </a>
@@ -454,7 +454,7 @@
             <p class="lead">
               We shift you from today's challenges to tomorrow's opportunities.
             </p>
-            <a href="#" class="btn btn-dark btn-lg mt-3 p-3">LETS TALK WITH US</a>
+            <a href="/contact" class="btn btn-dark btn-lg mt-3 p-3">LETS TALK WITH US</a>
           </div>
         </div>
       </section>

@@ -85,7 +85,7 @@ class NativeServer {
         try {
             const [projectDocs, articleDocs] = await Promise.all([
                 Project.find().sort({ createdAt: -1 }).lean(),
-                Article.find().sort({ createdAt: -1 }).lean()
+                Article.find().populate('category', 'name').sort({ createdAt: -1 }).lean()
             ]);
             projects = projectDocs.map((doc) => ProjectEntity.fromDocument(doc).toViewModel());
             articles = articleDocs.map((doc) => ArticleEntity.fromDocument(doc).toViewModel());

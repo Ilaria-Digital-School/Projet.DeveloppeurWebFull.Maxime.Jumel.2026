@@ -32,6 +32,10 @@
                     class="img-fluid w-100 rounded" style="height: 18.75rem; object-fit: cover;" alt="<%= project.title %>"><% } %>
                 <p class="fw-bold mt-3"><%= project.title %></p>
                 <span class="text-secondary-emphasis"><%= project.projectType || project.description %></span>
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                    <% if (project.category) { %><span class="badge text-bg-primary"><%= project.category %></span><% } %>
+                    <% (project.tags || []).forEach((tag) => { %><span class="badge text-bg-light border">#<%= tag %></span><% }) %>
+                </div>
             </a>
         </div>
         <% }) %>

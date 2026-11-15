@@ -13,3 +13,10 @@ test("ArticleEntity valide titre, description, slogan et catégorie", () => {
     assert.equal(ok.toViewModel().slogan, "s");
     assert.equal(ArticleEntity.fromDocument({ title: "t", description: "d", category: "c" }).isValid(), false);
 });
+
+test("Article utilise une référence Mongoose vers Category", () => {
+    const Article = require("../models/Article");
+    const path = Article.schema.path("category");
+    assert.equal(path.instance, "ObjectId");
+    assert.equal(path.options.ref, "Category");
+});

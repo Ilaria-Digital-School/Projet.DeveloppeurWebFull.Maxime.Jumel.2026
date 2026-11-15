@@ -23,7 +23,7 @@
                         <select class="form-select" id="article-category" name="category" required>
                             <option value="">Choisir une catégorie</option>
                             <% (categories || []).forEach((category) => { %>
-                                <option value="<%= category.name %>"><%= category.name %></option>
+                                <option value="<%= category._id %>"><%= category.name %></option>
                             <% }) %>
                         </select>
                     </div>

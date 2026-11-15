@@ -7,7 +7,7 @@ soit des **sous-documents embarqués** (équivalent d'une table enfant 1-N).
 ```mermaid
 erDiagram
     CATEGORY ||--o{ SERVICE : "contient (Service.category -> Category._id)"
-    CATEGORY ||--o{ ARTICLE : "classe (Article.category = Category.name, lien par nom)"
+    CATEGORY ||--o{ ARTICLE : "classe (Article.category -> Category._id)"
     USER ||--o{ ORDER : "embarque (User.orders[])"
     USER ||--o{ QUOTE_REQUEST : "embarque (User.quoteRequests[])"
     USER ||--o{ TICKET : "embarque (User.ticketClient[])"
@@ -16,8 +16,8 @@ erDiagram
 
     CATEGORY { ObjectId _id PK  string name UK  string description  string icon }
     SERVICE { ObjectId _id PK  string name  string description  ObjectId category FK }
-    ARTICLE { ObjectId _id PK  string title  string slogan  string description  string image  string category }
-    PROJECT { ObjectId _id PK  string title  string description  string imageUrl  string client }
+    ARTICLE { ObjectId _id PK  string title  string slogan  string description  string image  ObjectId category FK }
+    PROJECT { ObjectId _id PK  string title  string description  string imageUrl  string client  string category  string[] tags }
     USER { ObjectId _id PK  string pseudo UK  string email UK  string role  string status  bool isBan }
     ORDER { string id  string name  number price  number quantity  string status }
     QUOTE_REQUEST { string title  string service  number budget  string status }
@@ -29,11 +29,11 @@ erDiagram
 
 ## Points à connaître
 
-- Seul lien « clé étrangère » réel aujourd'hui : `Service.category -> Category`.
-- `Article.category` est une chaîne (nom de catégorie), pas une référence : une
-  catégorie renommée n'est pas répercutée. Passer à `ObjectId` + `ref: "Category"`
-  est l'évolution naturelle si le jury attend une vraie relation.
-- `Project`, `NewsLetter` sont autonomes (aucune relation).
+- `Service.category` et `Article.category` sont des références Mongoose vers
+  `Category`; les pages publiques utilisent `populate()` pour afficher le nom.
+- `Project.category` et `Project.tags` sont des valeurs éditoriales affichées
+  dans le portfolio et sur chaque fiche projet.
+- `Project` et `NewsLetter` sont autonomes (aucune relation).
 - Commandes, devis et tickets sont embarqués dans `User` (choix document) ; en
   relationnel (MySQL) ce seraient des tables `orders`, `quote_requests`,
   `tickets`, `ticket_replies` avec une clé étrangère `user_id`.

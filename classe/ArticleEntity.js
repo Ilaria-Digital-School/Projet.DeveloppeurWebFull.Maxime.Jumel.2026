@@ -10,7 +10,7 @@ class ArticleEntity extends ContentEntity {
         this.slogan = String(data.slogan ?? "").trim();
         this.image = data.image ?? "";
         this.date = data.date ?? null;
-        this.category = data.category ?? "";
+        this.category = data.category?.name ?? data.category ?? "";
     }
 
     static fromDocument(document) {
