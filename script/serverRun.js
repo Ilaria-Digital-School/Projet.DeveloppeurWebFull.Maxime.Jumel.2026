@@ -109,7 +109,6 @@ const scriptRun = (portToUse = port) => {
     const server = native.listen(portToUse, () => {
         console.log(chalk.green(`🟢=> Server running on http://localhost:${portToUse}`));
     });
-    console.log("🟢=> Server is ready!");
     
     return server;
 };

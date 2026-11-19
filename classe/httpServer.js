@@ -26,6 +26,16 @@ class NativeServer {
     }
 
     listen(port, callback) {
+        this.server.once('error', (error) => {
+            if (error.code === 'EADDRINUSE') {
+                console.error(
+                    `Impossible de démarrer le serveur : le port ${port} est déjà utilisé. ` +
+                    'Arrêtez le processus existant ou configurez un autre PORT.'
+                );
+            } else {
+                console.error(`Impossible de démarrer le serveur sur le port ${port} :`, error);
+            }
+        });
         return this.server.listen(port, callback);
     }
 
