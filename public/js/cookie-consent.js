@@ -45,6 +45,12 @@
     };
 
     const saveConsent = async (mediaChoice) => {
+        // Le choix s'applique tout de suite sur la page, même si l'enregistrement échoue.
+        const hadMedia = currentMedia;
+        currentMedia = mediaChoice;
+        banner.hidden = true;
+        if (mediaChoice) loadEmbeds();
+
         const response = await fetch("/api/cookies/consent", {
             method: "POST",
             headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -52,11 +58,7 @@
             body: JSON.stringify({ consent: { media: mediaChoice } })
         });
         if (!response.ok) throw new Error("Le consentement n'a pas pu être enregistré.");
-        const hadMedia = currentMedia;
-        currentMedia = mediaChoice;
-        banner.hidden = true;
-        if (mediaChoice) loadEmbeds();
-        else if (hadMedia) window.location.reload();
+        if (!mediaChoice && hadMedia) window.location.reload();
     };
 
     const handle = (mediaChoice) => () =>

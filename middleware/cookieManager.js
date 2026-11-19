@@ -6,13 +6,17 @@ const CONSENT_VERSION = "2";
 const CONSENT_MAX_AGE = 180 * 24 * 60 * 60 * 1000;
 const CONSENT_CATEGORIES = ["necessary", "media"];
 
-const isProduction = process.env.NODE_ENV === "production";
-const cookieOptions = {
+// Secure uniquement si la requête arrive réellement en HTTPS (directement ou via
+// un proxy de confiance) : sinon le navigateur rejette le cookie en HTTP.
+const isSecureRequest = (req) =>
+    Boolean(req.secure) || req.headers["x-forwarded-proto"]?.split(",")[0].trim() === "https";
+
+const cookieOptions = (req) => ({
     httpOnly: true,
-    secure: isProduction,
+    secure: isSecureRequest(req),
     sameSite: "lax",
     path: "/"
-};
+});
 
 const emptyConsent = () => ({
     version: CONSENT_VERSION,
@@ -70,7 +74,7 @@ router.post("/consent", (req, res) => {
     }
 
     res.cookie(CONSENT_COOKIE, consent, {
-        ...cookieOptions,
+        ...cookieOptions(req),
         maxAge: CONSENT_MAX_AGE,
         signed: true
     });
@@ -78,7 +82,7 @@ router.post("/consent", (req, res) => {
 });
 
 router.delete("/consent", (req, res) => {
-    res.clearCookie(CONSENT_COOKIE, cookieOptions);
+    res.clearCookie(CONSENT_COOKIE, cookieOptions(req));
     return res.json({ success: true, consent: emptyConsent() });
 });
 

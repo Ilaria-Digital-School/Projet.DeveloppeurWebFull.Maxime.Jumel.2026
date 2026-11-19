@@ -59,7 +59,8 @@ const sessionMiddleware = session({
     cookie: {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        // "auto" : Secure si la requête est en HTTPS, sinon le cookie serait rejeté en HTTP.
+        secure: "auto",
         sameSite: "lax",
         path: "/"
     }
